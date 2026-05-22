@@ -2558,7 +2558,7 @@
           <div class="tpl-icon" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);">🔍</div>
           <div class="tpl-meta">
             <h3>Audit Game Siap Jual</h3>
-            <div class="tpl-sub">Cek kelayakan jual game HTML — skor /100 + rekomendasi detail</div>
+            <div class="tpl-sub">Cek kelayakan jual game  — skor /100 + rekomendasi detail</div>
           </div>
         </div>
         <div class="tpl-tags">
@@ -3011,7 +3011,7 @@ Game ini dimainkan oleh anak usia ${finalAge}. Buat konten yang berbeda per rent
     const spec = GAME_SPECS[primaryGameKey] || DEFAULT_SPEC;
 
     if (!needsMenu) {
-      return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif berbasis HTML. Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
+      return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
 🎨 KETENTUAN IKON & VISUAL (WAJIB — JANGAN GENERIK):
@@ -3064,7 +3064,7 @@ ${spec.flow}
 - Skor real-time di pojok kanan atas
 - Skor akhir: nilai, bintang (1–3), pesan penyemangat, tombol "Main Lagi"${extraSection}
 
-Berikan kode lengkap dalam 1 file (HTML dengan CSS & JS inline). Langsung berikan kodenya tanpa penjelasan — tanpa intro, tanpa komentar di luar kode.`;
+Berikan kode lengkap. Langsung berikan kodenya tanpa penjelasan — tanpa intro, tanpa komentar di luar kode.`;
     }
 
     let menuInstructions = '';
@@ -3076,7 +3076,7 @@ Berikan kode lengkap dalam 1 file (HTML dengan CSS & JS inline). Langsung berika
       menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown)\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     }
 
-    return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif berbasis HTML. Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
+    return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
 🎨 KETENTUAN IKON & VISUAL (WAJIB — JANGAN GENERIK):
@@ -3110,7 +3110,7 @@ ${menuInstructions}
 🌐 BAHASA: Indonesia untuk instruksi, konten soal sesuai materi
 🏆 SKOR AKHIR: nilai, bintang, pesan, tombol "Main Lagi" + "← Pilih Lagi"${extraSection}
 
-Berikan kode lengkap dalam 1 file (HTML dengan CSS & JS inline). Langsung berikan kodenya tanpa penjelasan — tanpa intro, tanpa komentar di luar kode.`;
+Berikan kode lengkap . Langsung berikan kodenya tanpa penjelasan — tanpa intro, tanpa komentar di luar kode.`;
   }
 
   // ══════════════════════════════════════
@@ -3164,7 +3164,7 @@ Berikan kode lengkap dalam 1 file (HTML dengan CSS & JS inline). Langsung berika
       const materi = fv(`t1_materi`, 'materi edukasi');
       const brand  = fv(`t1_brand`, 'kniaWorld');
       const usia   = fv(`t1_usia`, '6-9 tahun');
-    return `Kamu adalah UI/UX designer sekaligus child education specialist dengan pengalaman 10 tahun membuat aplikasi edukasi anak yang memenangkan penghargaan desain. Kamu ahli dalam visual memory game, cognitive load theory untuk anak, dan membuat animasi CSS yang memukau tanpa library eksternal. Setiap elemen visual yang kamu buat memiliki tujuan pedagogis yang jelas — bukan sekadar dekorasi.
+    return `Kamu adalah UI/UX designer sekaligus child education specialist dengan pengalaman 10 tahun membuat aplikasi edukasi anak yang memenangkan penghargaan desain. Kamu ahli dalam visual memory game, cognitive load theory untuk anak, dan membuat animasi CSS yang memukau . Setiap elemen visual yang kamu buat memiliki tujuan pedagogis yang jelas — bukan sekadar dekorasi.
 
 
 🎨 KETENTUAN IKON — CARD FLIP (WAJIB):
@@ -3876,7 +3876,7 @@ FASE 4 — LEVEL COMPLETE:
 - Feedback harus menjelaskan PRINSIP yang benar, bukan hanya memberitahu jawaban
 
 📐 TEKNOLOGI & UI CODING THEME:
-- Syntax highlighting MANUAL (tanpa library):
+- Syntax highlighting MANUAL:
   keyword: <span style="color:#7dd3fc"> — wajib: if, else, for, while, let, const, var, function, return
   string: <span style="color:#86efac">
   number: <span style="color:#fbbf24">
@@ -4240,14 +4240,14 @@ Berikan kode lengkap. Langsung tanpa penjelasan, tanpa teks pembuka, langsung mu
       const extraLine = extra9 ? `\n- Instruksi khusus tambahan: ${extra9}` : '';
       return `Kamu adalah content editor dan curriculum specialist yang berpengalaman dalam merevisi game edukasi. Tugasmu adalah mengganti konten soal dengan presisi bedah — tidak mengubah satu baris CSS pun, tidak merusak satu fungsi pun, tapi menghasilkan soal baru yang akurat, relevan, dan terjaga kualitas edukatifnya.
 
-Aku punya game edukasi HTML yang sudah jadi. Aku ingin melakukan revisi konten: ${jenis9}.
+Aku punya game edukasi  yang sudah jadi. Aku ingin melakukan revisi konten: ${jenis9}.
 
 📋 DETAIL REVISI:
 - Jenis perubahan: ${jenis9}
 - Materi / topik baru: ${materi9}${extraLine}
 
 📎 INSTRUKSI PENTING — CARA MELAKUKAN REVISI YANG BENAR:
-1. Baca SELURUH kode HTML dari atas sampai bawah dengan teliti sebelum mulai
+1. Baca SELURUH kode dari atas sampai bawah dengan teliti sebelum mulai
 2. Identifikasi di mana konten soal/kartu/materi disimpan — biasanya dalam array const di atas <script>
 3. Ganti HANYA konten soal/materi — jangan ubah struktur, logika, animasi, atau desain
 4. Pastikan jumlah soal/item SAMA persis dengan versi asli (jangan kurangi atau tambah kecuali diminta)
@@ -4300,13 +4300,13 @@ Sebelum memberikan kode final, pastikan:
       const extraLine10  = extra10  ? `\n- Instruksi tambahan: ${extra10}`  : '';
       return `Kamu adalah senior front-end developer spesialis progressive enhancement dan game feature integration. Kamu ahli dalam menambahkan fitur baru ke kode yang sudah ada tanpa merusak yang sudah berjalan — seperti seorang ahli bedah yang menambahkan organ baru ke tubuh yang sehat. Kamu selalu mengintegrasikan dengan mulus, menghindari regresi, dan menulis kode yang bersih.
 
-Aku punya game edukasi HTML yang sudah jadi. Aku ingin menambahkan / upgrade fitur: ${jenis10}.
+Aku punya game edukasi  yang sudah jadi. Aku ingin menambahkan / upgrade fitur: ${jenis10}.
 
 📋 DETAIL UPGRADE:
 - Fitur yang ditambahkan: ${jenis10}${detailLine}${extraLine10}
 
 📎 INSTRUKSI UPGRADE YANG BENAR:
-1. Baca SELURUH kode HTML dari atas sampai bawah — pahami semua variabel, fungsi, dan alur
+1. Baca SELURUH kode  dari atas sampai bawah — pahami semua variabel, fungsi, dan alur
 2. Identifikasi titik integrasi: di mana fitur baru perlu disambungkan ke kode yang sudah ada
 3. Integrasikan dengan MULUS — fitur baru harus terasa seperti bagian asli dari game
 4. Pastikan TIDAK ada fitur yang sudah ada yang rusak setelah upgrade
@@ -4343,7 +4343,7 @@ ${jenis10.includes('animasi') || jenis10.includes('efek') ? `UPGRADE ANIMASI & V
 - Screen flash salah: overlay rgba(239,68,68,0.15) shake + flash 300ms
 - Milestone confetti: saat skor mencapai 25, 50, 100 poin — confetti 20 partikel CSS jatuh dari atas
 - Streak fire: streak ≥ 3 → "🔥 ON FIRE!" badge muncul di pojok + glow animasi
-- Semua animasi: CSS @keyframes, tidak perlu library, tidak blocking interaksi
+- Semua animasi: CSS @keyframes, tidak blocking interaksi
 - Durasi: feedback 400-600ms, transisi halaman 350ms, milestone 1.5 detik` : ''}
 ${jenis10.includes('timer') || jenis10.includes('mode timer') ? `MODE TIMER:
 - Timer countdown: 60 atau 90 detik (konfigurasi di const WAKTU_GAME = 60;)
@@ -4464,10 +4464,10 @@ ${jenis10.includes('audio') || jenis10.includes('musik') ? `SISTEM AUDIO (Web Au
         checklist = '\nDiagnosa masalah yang ada, perbaiki secara menyeluruh, dan pastikan game berjalan sempurna.\n';
       }
 
-      return 'Kamu adalah senior debugging engineer dengan kemampuan membaca kode orang lain seperti membaca novel. Kamu ahli dalam mengidentifikasi root cause — bukan hanya symptom — dari bug di game HTML/CSS/JS. Pendekatan kamu sistematis: baca seluruh kode, pahami alur, identifikasi titik rawan, lalu perbaiki dengan tepat sasaran tanpa side effect.\n\nAku punya game edukasi HTML yang sudah jadi tapi ada masalah. Tugas kamu: diagnosa dan perbaiki dengan tuntas.\n\n'
+      return 'Kamu adalah senior debugging engineer dengan kemampuan membaca kode orang lain seperti membaca novel. Kamu ahli dalam mengidentifikasi root cause — bukan hanya symptom — dari bug di game HTML/CSS/JS. Pendekatan kamu sistematis: baca seluruh kode, pahami alur, identifikasi titik rawan, lalu perbaiki dengan tepat sasaran tanpa side effect.\n\nAku punya game edukasi  yang sudah jadi tapi ada masalah. Tugas kamu: diagnosa dan perbaiki dengan tuntas.\n\n'
         + '\uD83D\uDD27 JENIS PERBAIKAN: ' + jenis11 + masalahLine + warnaLine + '\n\n'
         + '\uD83D\uDCCE INSTRUKSI WAJIB \u2014 CARA KERJA YANG BENAR:\n'
-        + '1. Baca SELURUH kode HTML dari atas sampai bawah dengan teliti\n'
+        + '1. Baca SELURUH kode  dari atas sampai bawah dengan teliti\n'
         + '2. Identifikasi ROOT CAUSE dari masalah \u2014 jangan hanya tambal gejala\n'
         + '3. Periksa masalah lain yang terkait dengan masalah utama\n'
         + '4. Pastikan game berjalan sempurna di HP (375px) DAN desktop (1280px)\n'
@@ -4496,7 +4496,7 @@ ${jenis10.includes('audio') || jenis10.includes('musik') ? `SISTEM AUDIO (Web Au
       const m3      = fv('t12_m3',    'Materi 3');
       const brand12 = fv('t12_brand', 'kniaWorld');
       const usia12  = fv('t12_usia',  '7-10 tahun');
-      return `Kamu adalah full-stack game developer dengan portofolio lebih dari 50 game edukasi HTML yang telah dimainkan jutaan anak. Kamu menggabungkan keahlian teknis (HTML/CSS/JS yang optimal), desain visual (UI/UX anak-friendly), dan pemahaman pedagogi (learning objectives yang jelas). Setiap game yang kamu buat adalah produk siap jual — bukan demo, bukan prototipe.
+      return `Kamu adalah full-stack game developer dengan portofolio lebih dari 50 game edukasi yang telah dimainkan jutaan anak. Kamu menggabungkan keahlian teknis code, desain visual (UI/UX anak-friendly), dan pemahaman pedagogi (learning objectives yang jelas). Setiap game yang kamu buat adalah produk siap jual — bukan demo, bukan prototipe.
 
 
 🎨 KETENTUAN IKON & VISUAL (WAJIB — JANGAN GENERIK):
@@ -4661,7 +4661,7 @@ Berikan kode lengkap. Langsung tanpa penjelasan, tanpa teks pembuka, langsung mu
 - Background pattern: sesuai tema (angka mengambang untuk math, huruf untuk language, kode untuk coding)
 - Badge & reward: custom per materi — bukan bintang emas generik untuk semua jenis game
 
-Aku punya worksheet / lembar soal / materi yang ingin diubah menjadi game edukasi HTML interaktif. Buat game yang terasa seperti produk digital final — polished dan siap dijual, bukan demo.
+Aku punya worksheet / lembar soal / materi yang ingin diubah menjadi game edukasi  interaktif. Buat game yang terasa seperti produk digital final — polished dan siap dijual, bukan demo.
 
 📋 SPESIFIKASI KONVERSI:
 - Isi worksheet / materi: ${isi13}
@@ -4769,7 +4769,7 @@ Berikan kode lengkap. Langsung tanpa penjelasan, tanpa teks pembuka, langsung mu
       const harga14  = fv('t14_harga', 'Rp 25.000 – Rp 75.000');
       return `Kamu adalah QA specialist dan product reviewer untuk educational games dengan standar penilaian yang ketat. Kamu telah mengaudit ratusan game edukasi dan memahami apa yang membuat sebuah game layak dijual versus sekadar demo. Audit kamu bersifat konstruktif — memberikan roadmap perbaikan yang actionable.
 
-Aku punya game edukasi HTML: "${nama14}". Target pembeli: orang tua/guru anak usia ${target14}. Rencana harga: ${harga14}.
+Aku punya game edukasi : "${nama14}". Target pembeli: orang tua/guru anak usia ${target14}. Rencana harga: ${harga14}.
 
 Lakukan AUDIT LENGKAP untuk menilai apakah game ini layak dijual. Baca kode dengan teliti, lalu buat laporan audit dengan format persis berikut:
 
@@ -4932,7 +4932,7 @@ Saran Listing Produk:
       if (t15Mode === 'apk') {
         return `Kamu adalah mobile game developer spesialis HTML5-to-APK pipeline. Kamu memahami bagaimana mengoptimalkan game HTML untuk dikemas menjadi APK Android — viewport yang tepat, touch event yang smooth, performa ringan di device low-end, dan ukuran file yang efisien. Kamu telah menghasilkan puluhan game edukasi yang berhasil dijual di marketplace digital Indonesia.
 
-Buatkan game edukasi HTML lengkap dalam SATU FILE (.html) yang DIOPTIMALKAN untuk layar mobile dan siap di-wrap menjadi APK Android menggunakan WebIntoApp atau Gonative.
+Buatkan game edukasi lengkap dalam  yang DIOPTIMALKAN untuk layar mobile dan siap di-wrap menjadi APK Android menggunakan WebIntoApp atau Gonative.
 
 ════════════════════════════════════════
 📱 IDENTITAS APLIKASI

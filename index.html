@@ -1329,9 +1329,120 @@
       <div class="step-item">
         <div class="step-num">4</div>
         <div class="step-content">
-          <h4>Download & Jual Aplikasinya!</h4>
-          <p>Klik Artifacts → download HTML → upload/bagikan ke siapa saja, atau <strong>jual sebagai produk digital!</strong></p>
+          <h4>Download, Deploy & Jual Aplikasinya!</h4>
+          <p>Klik Artifacts → download file HTML → hosting gratis ke <strong>Netlify</strong>, <strong>Vercel</strong>, atau <strong>Cloudflare Pages</strong> → dapat link publik → <strong>jual sebagai produk digital!</strong></p>
+          <button onclick="toggleDeployGuide()" id="btnDeployToggle" style="margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ede9fe,#fae8ff);color:var(--violet-deep);border:1.5px solid rgba(124,58,237,0.2);border-radius:10px;padding:7px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">
+            <i class="fa-solid fa-chevron-down" id="deployChevron" style="transition:transform 0.3s;font-size:10px;"></i> Lihat Cara Deploy
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ACCORDION DEPLOY GUIDE -->
+    <div id="deployGuide" style="display:none;margin-bottom:16px;">
+      <div style="background:white;border-radius:24px;padding:22px;border:1px solid var(--border);box-shadow:var(--shadow-card);">
+        <div style="font-size:15px;font-family:'Sora',sans-serif;font-weight:700;color:var(--dark);margin-bottom:4px;display:flex;align-items:center;gap:8px;">
+          <i class="fa-solid fa-rocket" style="color:var(--violet-deep);"></i> Cara Deploy File HTML
+        </div>
+        <p style="font-size:12px;color:var(--muted);font-weight:500;margin-bottom:18px;">Pilih salah satu platform di bawah — semua gratis & tanpa perlu coding!</p>
+
+        <!-- TAB BUTTONS -->
+        <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
+          <button onclick="switchDeployTab('netlify')" id="tab-netlify" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid #7c3aed;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🟢 Netlify</button>
+          <button onclick="switchDeployTab('vercel')" id="tab-vercel" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid var(--border);background:white;color:var(--muted);font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">⚡ Vercel</button>
+          <button onclick="switchDeployTab('cloudflare')" id="tab-cloudflare" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid var(--border);background:white;color:var(--muted);font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🔶 Cloudflare</button>
+        </div>
+
+        <!-- TAB: NETLIFY -->
+        <div id="content-netlify" style="display:block;">
+          <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-radius:14px;padding:16px;border:1px solid rgba(34,197,94,0.2);margin-bottom:10px;">
+            <p style="font-size:11.5px;font-weight:700;color:#166534;margin-bottom:2px;">✅ Paling mudah — drag & drop langsung!</p>
+            <p style="font-size:11px;color:#15803d;font-weight:500;">Cocok untuk pemula, tidak perlu akun GitHub.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">1</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Daftar / Login ke Netlify</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Buka <a href="https://app.netlify.com/" target="_blank" rel="noopener" style="color:var(--violet-deep);font-weight:700;">app.netlify.com</a> → Sign up gratis pakai email atau Google.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">2</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Download file HTML dari Claude</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di Claude Artifacts → klik tombol Download → simpan file <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">.html</code> ke komputer kamu.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">3</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Buka Tab "Sites" → Deploy Manually</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di dashboard Netlify, scroll ke bawah → ada kotak <strong>"Want to deploy a new site without connecting to Git?"</strong></p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">4</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Drag & Drop file HTML</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Seret file <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">.html</code> ke kotak drop zone → Netlify langsung upload otomatis.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">5</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Dapat Link Publik! 🎉</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Selesai! Netlify kasih link seperti <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">namamu.netlify.app</code> — siap dibagikan atau dijual!</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: VERCEL -->
+        <div id="content-vercel" style="display:none;">
+          <div style="background:linear-gradient(135deg,#f8faff,#eff6ff);border-radius:14px;padding:16px;border:1px solid rgba(59,130,246,0.2);margin-bottom:10px;">
+            <p style="font-size:11.5px;font-weight:700;color:#1e3a8a;margin-bottom:2px;">⚡ Cepat & profesional</p>
+            <p style="font-size:11px;color:#1d4ed8;font-weight:500;">Butuh akun GitHub, tapi link lebih clean dan bisa custom domain.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">1</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Daftar / Login ke Vercel</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Buka <a href="https://vercel.com/" target="_blank" rel="noopener" style="color:#1d4ed8;font-weight:700;">vercel.com</a> → Sign up pakai akun GitHub (gratis).</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">2</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Upload file ke GitHub dulu</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Buka <a href="https://github.com/" target="_blank" rel="noopener" style="color:#1d4ed8;font-weight:700;">github.com</a> → New Repository → Upload file HTML → Commit.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">3</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Import Repository di Vercel</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di dashboard Vercel → klik <strong>Add New → Project</strong> → pilih repo GitHub tadi → klik Import.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">4</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Klik Deploy</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Biarkan semua setting default → klik tombol <strong>Deploy</strong> → tunggu beberapa detik.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">5</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Dapat Link Publik! 🎉</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Vercel kasih link <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">namamu.vercel.app</code> — siap dibagikan atau dijual!</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB: CLOUDFLARE -->
+        <div id="content-cloudflare" style="display:none;">
+          <div style="background:linear-gradient(135deg,#fff7ed,#ffedd5);border-radius:14px;padding:16px;border:1px solid rgba(251,146,60,0.25);margin-bottom:10px;">
+            <p style="font-size:11.5px;font-weight:700;color:#92400e;margin-bottom:2px;">🔶 Performa terbaik & CDN global</p>
+            <p style="font-size:11px;color:#b45309;font-weight:500;">Direct upload tanpa GitHub, cocok juga untuk produk yang butuh loading super cepat.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">1</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Daftar / Login ke Cloudflare</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Buka <a href="https://dash.cloudflare.com/" target="_blank" rel="noopener" style="color:#ea580c;font-weight:700;">dash.cloudflare.com</a> → Sign up gratis pakai email.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">2</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Buka menu Workers & Pages</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di sidebar kiri → klik <strong>Workers & Pages</strong> → klik tombol <strong>Create</strong>.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">3</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Pilih tab "Pages" → Upload Assets</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Pilih tab <strong>Pages</strong> → klik <strong>Upload Assets</strong> → beri nama project kamu.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">4</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Upload file HTML</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Klik <strong>Select from computer</strong> → pilih file <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">.html</code> → klik <strong>Deploy site</strong>.</p></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#ea580c,#fb923c);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">5</div>
+              <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Dapat Link Publik! 🎉</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Link seperti <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">namamu.pages.dev</code> langsung aktif — siap dibagikan atau dijual!</p></div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1675,6 +1786,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t1_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 4px 14px rgba(124,58,237,0.3);" onclick="generateTemplate(1)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -1735,6 +1850,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t2_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 4px 14px rgba(245,158,11,0.35);" onclick="generateTemplate(2)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -1794,6 +1913,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t3_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0891b2,#22d3ee);box-shadow:0 4px 14px rgba(8,145,178,0.3);" onclick="generateTemplate(3)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -1853,6 +1976,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t4_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#dc2626,#f97316);box-shadow:0 4px 14px rgba(220,38,38,0.3);" onclick="generateTemplate(4)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -1912,6 +2039,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t5_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#16a34a,#4ade80);box-shadow:0 4px 14px rgba(22,163,74,0.3);" onclick="generateTemplate(5)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -1995,6 +2126,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t6_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0f172a,#3b82f6);box-shadow:0 4px 14px rgba(59,130,246,0.35);" onclick="generateTemplate(6)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2062,6 +2197,10 @@
             <input type="text" id="t7_brand" placeholder="kniaWorld" value="kniaWorld" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t7_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#dc2626,#f43f5e);box-shadow:0 4px 14px rgba(220,38,38,0.3);" onclick="generateTemplate(7)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2138,6 +2277,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t8_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0891b2,#06b6d4);box-shadow:0 4px 14px rgba(8,145,178,0.3);" onclick="generateTemplate(8)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2238,6 +2381,10 @@
             <input type="text" id="t9_extra" placeholder="Contoh: soal harus bergambar emoji, gunakan kalimat pendek…" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t9_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#f59e0b,#fbbf24);box-shadow:0 4px 14px rgba(245,158,11,0.3);" onclick="generateTemplate(9)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2301,6 +2448,10 @@
             <input type="text" id="t10_extra" placeholder="Contoh: pertahankan desain aslinya, jangan ubah warna tema…" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t10_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#ec4899);box-shadow:0 4px 14px rgba(124,58,237,0.3);" onclick="generateTemplate(10)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2363,6 +2514,10 @@
             <input type="text" id="t11_warna" placeholder="Contoh: biru navy dan emas, pink pastel dan putih (kosongkan jika tidak perlu)" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t11_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#16a34a,#84cc16);box-shadow:0 4px 14px rgba(22,163,74,0.3);" onclick="generateTemplate(11)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2440,6 +2595,10 @@
             </select>
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t12_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0f172a,#7c3aed);box-shadow:0 4px 14px rgba(124,58,237,0.35);" onclick="generateTemplate(12)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2525,6 +2684,10 @@
             <input type="text" id="t13_brand" placeholder="kniaWorld" value="kniaWorld" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t13_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#06b6d4);box-shadow:0 4px 14px rgba(124,58,237,0.35);" onclick="generateTemplate(13)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2586,6 +2749,10 @@
             <input type="text" id="t14_harga" placeholder="Contoh: Rp 25.000 – Rp 50.000" value="Rp 25.000 – Rp 75.000" />
           </div>
         </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t14_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#f59e0b,#ef4444);box-shadow:0 4px 14px rgba(245,158,11,0.4);" onclick="generateTemplate(14)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
@@ -2745,6 +2912,10 @@
         </div>
 
         <!-- GENERATE BUTTON (label changes by mode) -->
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t15_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
+          </div>
         <div class="tpl-actions">
           <button class="btn-tpl-gen" id="t15_genBtn" style="background:linear-gradient(135deg,#10b981,#06b6d4);box-shadow:0 4px 14px rgba(16,185,129,0.35);" onclick="generateTemplate(15)">
             <i class="fa-solid fa-mobile-screen"></i> <span id="t15_genLabel">Generate Prompt APK</span>
@@ -4214,7 +4385,6 @@ Highlight huruf target: huruf yang dipelajari diberi warna/underline berbeda` : 
 
 📱 KETENTUAN TEKNIS WAJIB:
 - Mobile-first, tombol min 52px, font soal min 18px
-- Tidak perlu audio — pronunciation_clue via teks sudah membantu
 - Kode rapi, KONTEN_DATA di atas dengan komentar
 
 🎨 DESAIN: Bersih internasional — biru navy + putih + gold aksen; emoji kontekstual besar; font modern (Sora atau Nunito); mobile-first
@@ -5092,8 +5262,14 @@ Berikan dalam 3 code block berlabel:
     ['🌟 Membaca pilihan kamu...', '🔧 Merakit struktur prompt...', '📡 Generating...', '🎉 Selesai!'],
   ];
   function generateTemplate(tplId) {
-    const prompt = buildTemplatePrompt(tplId);
+    let prompt = buildTemplatePrompt(tplId);
     if (!prompt) return;
+    // Append Instruksi Tambahan if filled
+    const _tamEl = document.getElementById('t' + tplId + '_tambahan');
+    const _tambahan = _tamEl ? _tamEl.value.trim() : '';
+    if (_tambahan) {
+      prompt += '\n\n\uD83D\uDCCC INSTRUKSI TAMBAHAN DARI PEMBUAT GAME:\n' + _tambahan;
+    }
     // Find generate button for this template
     const genBtn = document.querySelector(`[onclick="generateTemplate(${tplId})"]`);
     const phrases = _tplPhrases[Math.floor(Math.random() * _tplPhrases.length)];
@@ -5364,6 +5540,48 @@ Berikan dalam 3 code block berlabel:
     const overlay = document.getElementById('accessPopup');
     overlay.style.display = 'flex';
     setTimeout(() => document.getElementById('popupCodeInput').focus(), 350);
+  }
+
+  // ── DEPLOY GUIDE ACCORDION ──
+  function toggleDeployGuide() {
+    const guide = document.getElementById('deployGuide');
+    const chevron = document.getElementById('deployChevron');
+    const btn = document.getElementById('btnDeployToggle');
+    const isOpen = guide.style.display !== 'none';
+    if (isOpen) {
+      guide.style.display = 'none';
+      chevron.style.transform = '';
+      btn.innerHTML = '<i class="fa-solid fa-chevron-down" id="deployChevron" style="transition:transform 0.3s;font-size:10px;"></i> Lihat Cara Deploy';
+    } else {
+      guide.style.display = 'block';
+      chevron.style.transform = 'rotate(180deg)';
+      btn.innerHTML = '<i class="fa-solid fa-chevron-up" id="deployChevron" style="transition:transform 0.3s;font-size:10px;"></i> Tutup Panduan Deploy';
+      setTimeout(() => guide.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    }
+  }
+
+  function switchDeployTab(platform) {
+    const platforms = ['netlify', 'vercel', 'cloudflare'];
+    const colors = {
+      netlify: 'linear-gradient(135deg,#7c3aed,#ec4899)',
+      vercel: 'linear-gradient(135deg,#1d4ed8,#3b82f6)',
+      cloudflare: 'linear-gradient(135deg,#ea580c,#fb923c)'
+    };
+    platforms.forEach(p => {
+      const tab = document.getElementById('tab-' + p);
+      const content = document.getElementById('content-' + p);
+      if (p === platform) {
+        tab.style.background = colors[p];
+        tab.style.color = 'white';
+        tab.style.borderColor = 'transparent';
+        content.style.display = 'block';
+      } else {
+        tab.style.background = 'white';
+        tab.style.color = '#94a3b8';
+        tab.style.borderColor = '#e2e8f0';
+        content.style.display = 'none';
+      }
+    });
   }
 
   // ── INIT ──

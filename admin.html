@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+<!-- Firebase SDK (compat build, supaya tidak perlu ubah banyak kode lama) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <style>
 :root {
   --bg: #0a0f1e;
@@ -573,8 +576,13 @@ tbody td {
       <p>Panel manajemen akses pengguna</p>
 
       <div class="input-wrap">
+        <i class="fa-solid fa-envelope"></i>
+        <input type="email" id="loginEmail" class="input-field" placeholder="Email admin" autocomplete="username"/>
+      </div>
+
+      <div class="input-wrap">
         <i class="fa-solid fa-lock"></i>
-        <input type="password" id="loginPw" class="input-field" placeholder="Password admin" onkeydown="if(event.key==='Enter')doLogin()"/>
+        <input type="password" id="loginPw" class="input-field" placeholder="Password admin" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
       </div>
 
       <button class="btn-login" onclick="doLogin()">
@@ -843,19 +851,44 @@ tbody td {
 //  CONFIG — sesuaikan dengan project Firebase kamu
 // ══════════════════════════════════════════════════════
 const FIREBASE_DB_URL = 'https://kniagame-c6567-default-rtdb.asia-southeast1.firebasedatabase.app';
-// Admin password — ganti sesuai kebutuhan
-// Enkripsi sederhana: btoa(password) reversed
-const ADMIN_HASH = btoa('kniaADM!N2026').split('').reverse().join('');
+
+// ══════════════════════════════════════════════════════
+//  FIREBASE CONFIG — isi dari Firebase Console:
+//  Project Settings (ikon gerigi) → General → "Your apps" → SDK setup and configuration
+//  Nilai-nilai ini BUKAN rahasia (aman terlihat publik), yang menjaga keamanan
+//  sebenarnya adalah Realtime Database Rules + siapa yang punya akun login di bawah.
+// ══════════════════════════════════════════════════════
+const firebaseConfig = {
+  apiKey:            "GANTI_DENGAN_API_KEY",
+  authDomain:        "kniagame-c6567.firebaseapp.com",
+  databaseURL:       FIREBASE_DB_URL,
+  projectId:         "kniagame-c6567",
+  storageBucket:     "kniagame-c6567.appspot.com",
+  messagingSenderId: "GANTI_DENGAN_SENDER_ID",
+  appId:             "GANTI_DENGAN_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+const fbAuth = firebase.auth();
+
+// Token login admin saat ini (diisi otomatis setelah login berhasil)
+let _idToken = null;
 
 // WhatsApp number admin (untuk kirim kode ke pembeli)
 const WA_NUMBER = '6281911284050'; // Ganti dengan nomor WA kamu
 
 // ══════════════════════════════════════════════════════
 //  FIREBASE HELPERS
+//  Setiap request menyertakan token login admin (?auth=...) supaya
+//  Database Rules bisa memverifikasi "auth != null" di server Firebase,
+//  bukan cuma di JS yang bisa dilihat/dilewati siapa saja.
 // ══════════════════════════════════════════════════════
+function _authQuery() {
+  return _idToken ? `?auth=${_idToken}` : '';
+}
+
 async function fbGet(path) {
   try {
-    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json`);
+    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json${_authQuery()}`);
     if (!r.ok) return null;
     return await r.json();
   } catch { return null; }
@@ -863,7 +896,7 @@ async function fbGet(path) {
 
 async function fbSet(path, data) {
   try {
-    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json`, {
+    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json${_authQuery()}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -874,7 +907,7 @@ async function fbSet(path, data) {
 
 async function fbUpdate(path, data) {
   try {
-    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json`, {
+    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json${_authQuery()}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -885,7 +918,7 @@ async function fbUpdate(path, data) {
 
 async function fbDelete(path) {
   try {
-    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json`, { method: 'DELETE' });
+    const r = await fetch(`${FIREBASE_DB_URL}/${path}.json${_authQuery()}`, { method: 'DELETE' });
     return r.ok;
   } catch { return false; }
 }
@@ -926,30 +959,57 @@ function buildCode(id4) {
 }
 
 // ══════════════════════════════════════════════════════
-//  AUTH
+//  AUTH — pakai Firebase Authentication (bukan cek password di JS)
 // ══════════════════════════════════════════════════════
 let _adminLoggedIn = false;
 
-function doLogin() {
-  const pw  = document.getElementById('loginPw').value;
-  const hash = btoa(pw).split('').reverse().join('');
-  if (hash === ADMIN_HASH) {
+function _showLoginError(msg) {
+  const errEl = document.getElementById('loginErr');
+  errEl.querySelector('span').textContent = msg;
+  errEl.style.display = 'flex';
+  document.getElementById('loginPw').value = '';
+  setTimeout(() => errEl.style.display = 'none', 3000);
+}
+
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw    = document.getElementById('loginPw').value;
+  if (!email || !pw) {
+    _showLoginError('Isi email dan password dulu.');
+    return;
+  }
+  const btn = document.querySelector('.btn-login');
+  btn.disabled = true;
+  try {
+    const cred = await fbAuth.signInWithEmailAndPassword(email, pw);
+    _idToken = await cred.user.getIdToken();
     _adminLoggedIn = true;
     showScreen('screenAdmin');
     initAdmin();
-  } else {
-    const errEl = document.getElementById('loginErr');
-    errEl.style.display = 'flex';
-    document.getElementById('loginPw').value = '';
-    setTimeout(() => errEl.style.display = 'none', 2500);
+  } catch (e) {
+    _showLoginError('Email atau password salah.');
+  } finally {
+    btn.disabled = false;
   }
 }
 
-function doLogout() {
+async function doLogout() {
+  await fbAuth.signOut();
+  _idToken = null;
   _adminLoggedIn = false;
   document.getElementById('loginPw').value = '';
+  document.getElementById('loginEmail').value = '';
   showScreen('screenLogin');
 }
+
+// Refresh token tiap ~50 menit selama admin masih login (ID token Firebase
+// kedaluwarsa tiap 1 jam), supaya sesi tidak tiba-tiba gagal menulis data.
+setInterval(async () => {
+  const user = fbAuth.currentUser;
+  if (user && _adminLoggedIn) {
+    _idToken = await user.getIdToken(true);
+  }
+}, 50 * 60 * 1000);
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -1410,19 +1470,29 @@ function showFirebaseInfo() {
   }
 }
 
-// Rules (Realtime Database):
+// Rules (Realtime Database) — WAJIB dicek/disalin ke Firebase Console:
+// Authentication → Sign-in method → aktifkan "Email/Password"
+// Authentication → Users → buat 1 akun untuk kamu sendiri (email+password admin)
 {
   "rules": {
     "users": {
-      ".read": false,
-      ".write": false
+      ".read": "auth != null",
+      ".write": "auth != null"
     },
     "codes": {
       ".read": true,
-      ".write": false
+      ".write": "auth != null"
     }
   }
-}`;
+}
+
+// Catatan:
+// - "codes".read tetap true karena index.html (verifikasi kode pembeli)
+//   perlu baca node ini TANPA login.
+// - "codes".write dan semua akses "users" sekarang WAJIB login admin
+//   (auth != null) — bukan sekadar password yang dicek di JavaScript.
+// - Rules ini harus ditempel manual di Firebase Console, tool ini
+//   cuma menampilkan contohnya saja, tidak mengubah rules secara otomatis.`;
   document.getElementById('fbSchemaDisplay').textContent = schema;
   openModal('modalFirebase');
 }

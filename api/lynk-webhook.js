@@ -95,11 +95,11 @@ module.exports = async (req, res) => {
   // Tetap sertakan beberapa nama alternatif flat sebagai cadangan kalau
   // ternyata strukturnya beda dari dugaan.
   const refId = String(pick(body, [
-    'data.message_data.ref_id', 'refId', 'ref_id'
+    'data.message_data.refId', 'data.message_data.ref_id', 'refId', 'ref_id'
   ]) ?? '');
 
   const grandTotal = String(pick(body, [
-    'data.message_data.totals.grand_total', 'grandTotal', 'amount', 'grand_total'
+    'data.message_data.totals.grandTotal', 'data.message_data.totals.grand_total', 'grandTotal', 'amount', 'grand_total'
   ]) ?? '');
 
   const messageId = String(pick(body, [
@@ -116,6 +116,14 @@ module.exports = async (req, res) => {
   if (!receivedSignature || receivedSignature !== expectedSignature) {
     console.error('[lynk-webhook] Signature TIDAK COCOK — request ditolak.');
     res.status(401).json({ ok: false, message: 'Invalid signature' });
+    return;
+  }
+
+  // ── Cuma proses transaksi yang statusnya sukses ──
+  const messageAction = pick(body, ['data.message_action', 'message_action']);
+  if (messageAction && messageAction !== 'SUCCESS') {
+    console.log('[lynk-webhook] message_action bukan SUCCESS ("' + messageAction + '") — diabaikan.');
+    res.status(200).json({ ok: true, message: 'Bukan transaksi sukses, dilewati.' });
     return;
   }
 

@@ -4,11 +4,18 @@
 // (Settings → Integrations → Webhook). Setelah pembeli checkout sukses,
 // Lynk.id mengirim POST ke sini.
 //
+// PENTING: Lynk.id cuma punya SATU slot Webhook URL per akun — jadi
+// endpoint ini akan menerima notifikasi untuk SEMUA produk yang dijual
+// di akun Lynk kamu, bukan cuma produk kniaWorld. Makanya di bawah ada
+// pengecekan nama produk (lihat EXPECTED_PRODUCT_TITLE) — transaksi
+// produk lain akan diabaikan (tidak dibuatkan akses kniaWorld).
+//
 // Yang dilakukan endpoint ini:
-// 1. Verifikasi X-Lynk-Signature pakai merchant key (supaya tidak ada
-//    orang lain yang bisa pura-pura jadi Lynk.id dan bikin akses palsu).
-// 2. Ambil email + no. WA pembeli dari payload.
-// 3. Simpan ke Firebase (node "buyers") pakai Database Secret — bukan
+// 1. Verifikasi X-Lynk-Signature pakai merchant key.
+// 2. Cek nama produk yang dibeli — lanjut HANYA kalau cocok dengan
+//    produk kniaWorld Prompt Generator.
+// 3. Ambil email + no. WA pembeli dari payload.
+// 4. Simpan ke Firebase (node "buyers") pakai Database Secret — bukan
 //    dari browser, jadi secret ini TIDAK PERNAH terlihat publik.
 //
 // ══════════════════════════════════════════════════════
@@ -26,6 +33,11 @@ const FIREBASE_DB_URL = process.env.FIREBASE_DB_URL;
 const DB_SECRET = process.env.FIREBASE_DB_SECRET;
 const MERCHANT_KEY = process.env.LYNK_MERCHANT_KEY;
 
+// Nama produk persis seperti di judul produk Lynk.id kamu.
+// Kalau item yang dibeli beda dari ini, webhook diabaikan (bukan error —
+// artinya itu transaksi produk lain di akun Lynk yang sama).
+const EXPECTED_PRODUCT_TITLE = 'Tools Prompt Generator Build Game Edukasi pake AI (Vibe coding) by Kniaconnect';
+
 function safeEmailKey(email) {
   // Firebase key tidak boleh mengandung . # $ [ ]
   return email.trim().toLowerCase().replace(/[.#$[\]]/g, '_');
@@ -35,14 +47,20 @@ function onlyDigits(str) {
   return (str || '').toString().replace(/\D/g, '');
 }
 
-// Cari field pertama yang ada isinya dari beberapa kemungkinan nama field.
-// Dipakai karena nama field persis di payload Lynk.id belum kita konfirmasi
-// 100% — lihat catatan TESTING di bawah.
-function pick(obj, keys) {
-  for (const k of keys) {
-    if (obj && obj[k] !== undefined && obj[k] !== null && obj[k] !== '') return obj[k];
+// Cari field pertama yang ada isinya dari beberapa kemungkinan nama field
+// (mendukung path bertingkat lewat titik, misal 'data.message_data.ref_id').
+function pick(obj, paths) {
+  for (const path of paths) {
+    const val = path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), obj);
+    if (val !== undefined && val !== null && val !== '') return val;
   }
   return undefined;
+}
+
+// Cocokkan judul produk secara longgar (huruf besar/kecil, spasi ekstra)
+// supaya tidak gagal cuma gara-gara perbedaan kapitalisasi kecil.
+function normalizeTitle(t) {
+  return (t || '').toString().trim().toLowerCase().replace(/\s+/g, ' ');
 }
 
 module.exports = async (req, res) => {
@@ -72,12 +90,21 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // ── CATATAN TESTING ──────────────────────────────────────────────────
-
   // ── Field untuk hitung ulang signature ──
-  const refId      = String(pick(body, ['refId', 'ref_id']) ?? '');
-  const grandTotal = String(pick(body, ['grandTotal', 'amount', 'grand_total']) ?? '');
-  const messageId  = String(pick(body, ['message_id', 'messageId']) ?? '');
+  // Struktur utama Lynk.id: { data: { message_data: { ref_id, customer:{}, items:[], totals:{}, ... } } }
+  // Tetap sertakan beberapa nama alternatif flat sebagai cadangan kalau
+  // ternyata strukturnya beda dari dugaan.
+  const refId = String(pick(body, [
+    'data.message_data.ref_id', 'refId', 'ref_id'
+  ]) ?? '');
+
+  const grandTotal = String(pick(body, [
+    'data.message_data.totals.grand_total', 'grandTotal', 'amount', 'grand_total'
+  ]) ?? '');
+
+  const messageId = String(pick(body, [
+    'data.message_id', 'data.message_data.message_id', 'message_id', 'messageId'
+  ]) ?? '');
 
   const receivedSignature = req.headers['x-lynk-signature'] || req.headers['X-Lynk-Signature'];
   const signatureString = grandTotal + refId + messageId + MERCHANT_KEY;
@@ -92,14 +119,38 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // ── Data pembeli — coba beberapa kemungkinan nama field ──
-  const email   = pick(body, ['email', 'buyerEmail', 'customer_email', 'customerEmail']);
-  const phone   = pick(body, ['phone', 'buyerPhone', 'whatsapp', 'no_wa', 'phone_number', 'phoneNumber']);
-  const name    = pick(body, ['name', 'buyerName', 'customer_name', 'customerName']) || '';
-  const product = pick(body, ['productName', 'product_name', 'product']) || '';
+  // ── Cek produk apa yang dibeli ──
+  // "items" biasanya array (bisa lebih dari 1 barang dalam 1 transaksi),
+  // jadi kita cek apakah salah satu itemnya adalah produk kniaWorld.
+  const items = pick(body, ['data.message_data.items', 'items']) || [];
+  const itemTitles = Array.isArray(items) ? items.map(it => pick(it, ['title', 'name', 'productName'])) : [];
+  // Fallback kalau ternyata bukan array items, coba field produk tunggal.
+  const singleProduct = pick(body, ['data.message_data.product', 'productName', 'product_name', 'product']);
+  if (singleProduct) itemTitles.push(singleProduct);
+
+  const isThisProduct = itemTitles.some(t => normalizeTitle(t) === normalizeTitle(EXPECTED_PRODUCT_TITLE));
+
+  console.log('[lynk-webhook] Produk di transaksi:', itemTitles, '| cocok kniaWorld?', isThisProduct);
+
+  if (!isThisProduct) {
+    console.log('[lynk-webhook] Transaksi produk LAIN (bukan kniaWorld) — diabaikan, tidak dibuatkan akses.');
+    res.status(200).json({ ok: true, message: 'Produk lain, dilewati.' });
+    return;
+  }
+
+  // ── Data pembeli ──
+  const email = pick(body, [
+    'data.message_data.customer.email', 'email', 'buyerEmail', 'customer_email', 'customerEmail'
+  ]);
+  const phone = pick(body, [
+    'data.message_data.customer.phone', 'phone', 'buyerPhone', 'whatsapp', 'no_wa', 'phone_number', 'phoneNumber'
+  ]);
+  const name = pick(body, [
+    'data.message_data.customer.name', 'name', 'buyerName', 'customer_name', 'customerName'
+  ]) || '';
 
   if (!email || !phone) {
-    console.error('[lynk-webhook] Email/no.WA tidak ditemukan di payload — cek log payload di atas, lalu sesuaikan nama field di pick().');
+    console.error('[lynk-webhook] Email/no.WA tidak ditemukan di payload — cek log payload di atas, lalu sesuaikan path di pick().');
     // Tetap balas 200 supaya Lynk.id tidak retry berkali-kali; errornya sudah tercatat di log.
     res.status(200).json({ ok: false, message: 'Missing buyer email/phone in payload — cek Vercel logs' });
     return;
@@ -113,7 +164,7 @@ module.exports = async (req, res) => {
     email: normalizedEmail,
     last4,
     name,
-    product,
+    product: EXPECTED_PRODUCT_TITLE,
     refId,
     grandTotal,
     createdAt: new Date().toISOString()
@@ -138,6 +189,6 @@ module.exports = async (req, res) => {
     return;
   }
 
-  console.log('[lynk-webhook] Sukses simpan buyer:', normalizedEmail);
+  console.log('[lynk-webhook] Sukses simpan buyer kniaWorld:', normalizedEmail);
   res.status(200).json({ ok: true });
 };

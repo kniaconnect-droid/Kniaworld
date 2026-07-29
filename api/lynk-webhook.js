@@ -59,14 +59,20 @@ module.exports = async (req, res) => {
 
   const body = req.body || {};
 
-  // ── CATATAN TESTING ──────────────────────────────────────────────────
-  // Baris console.log di bawah ini SENGAJA dibiarkan untuk tahap awal.
-  // Setelah ada transaksi asli (atau Lynk.id punya fitur "Test Webhook"),
-  // buka Vercel → Project → Logs, lalu cek payload aslinya untuk pastikan
-  // nama field email/no.WA sudah tertangkap benar oleh fungsi pick() di
-  // bawah. Kalau belum ketemu, tambahkan nama field yang benar ke array
-  // di pick(body, [...]) masing-masing.
   console.log('[lynk-webhook] payload masuk:', JSON.stringify(body));
+
+  // ── Tombol "Test" di dashboard Lynk.id cuma ping konektivitas —
+  // payloadnya generik ({"event":"test_event",...}) dan TIDAK dikirim
+  // dengan signature asli. Balas 200 langsung di sini supaya tombol Test
+  // menunjukkan sukses, tanpa melonggarkan validasi signature untuk
+  // transaksi sungguhan di bawah.
+  if (body.event === 'test_event') {
+    console.log('[lynk-webhook] Ini ping "Test" dari dashboard Lynk.id, bukan transaksi asli — dibalas OK.');
+    res.status(200).json({ ok: true, message: 'Test ping received' });
+    return;
+  }
+
+  // ── CATATAN TESTING ──────────────────────────────────────────────────
 
   // ── Field untuk hitung ulang signature ──
   const refId      = String(pick(body, ['refId', 'ref_id']) ?? '');

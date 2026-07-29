@@ -1219,6 +1219,48 @@
     transition: background 0.15s;
   }
   .popup-wa:hover { background: #dcfce7; }
+
+  /* ═══ POPUP ACCESS TABS ═══ */
+  .popup-tabs {
+    display: flex;
+    gap: 6px;
+    background: var(--surface2);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 18px;
+  }
+  .popup-tab {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 9px 8px;
+    border-radius: 11px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .popup-tab.active {
+    background: white;
+    color: var(--violet-deep);
+    box-shadow: 0 2px 8px rgba(124,58,237,0.15);
+  }
+  .popup-panel { display: none; }
+  .popup-panel.active { display: block; }
+  .popup-input-row.stacked {
+    flex-direction: column;
+  }
+  .popup-input-row.stacked input {
+    text-transform: none;
+    letter-spacing: 0.3px;
+  }
+  .popup-input-row.stacked input#popupLast4Input {
+    text-transform: none;
+    letter-spacing: 4px;
+    text-align: center;
+  }
 </style>
 </head>
 <body>
@@ -1229,30 +1271,64 @@
     <div class="popup-icon">
       <i class="fa-solid fa-key"></i>
     </div>
-    <h2>Masukkan Kode Akses</h2>
-    <p>Masukkan kode akses untuk membuka kniaWorld Generator. Kode hanya perlu dimasukkan <strong>sekali</strong> di perangkat ini.</p>
-    <div class="popup-input-wrap">
-      <div class="popup-input-row">
-        <input type="text" id="popupCodeInput" placeholder="KNIA-XXXX-YYYY" maxlength="14"
-          oninput="popupFormatCode(this)"
-          onkeydown="if(event.key==='Enter') popupVerify()" />
-        <button class="btn-popup-unlock" id="popupUnlockBtn" onclick="popupVerify()">
+    <h2>Buka kniaWorld Generator</h2>
+    <p>Baru saja beli? Masuk pakai email — atau pakai kode akses kalau sudah punya.</p>
+
+    <div class="popup-tabs">
+      <button class="popup-tab active" id="tabBtnEmail" onclick="popupSwitchTab('email')">Baru Saja Beli</button>
+      <button class="popup-tab" id="tabBtnCode" onclick="popupSwitchTab('code')">Punya Kode Akses</button>
+    </div>
+
+    <!-- PANEL: EMAIL PEMBELI + 4 DIGIT WA -->
+    <div class="popup-panel active" id="panelEmail">
+      <div class="popup-input-wrap">
+        <div class="popup-input-row stacked">
+          <input type="email" id="popupEmailInput" placeholder="Email saat checkout di Lynk.id"
+            onkeydown="if(event.key==='Enter') document.getElementById('popupLast4Input').focus()" style="margin-bottom:8px;" />
+          <input type="text" id="popupLast4Input" placeholder="4 digit terakhir no. WA" maxlength="4" inputmode="numeric"
+            onkeydown="if(event.key==='Enter') popupVerifyEmail()" />
+        </div>
+        <button class="btn-popup-unlock" id="popupEmailUnlockBtn" onclick="popupVerifyEmail()" style="width:100%;justify-content:center;margin-top:10px;">
           <i class="fa-solid fa-unlock"></i> Masuk
         </button>
-      </div>
-      <div class="popup-checking" id="popupChecking">
-        <i class="fa-solid fa-spinner fa-spin"></i> Memverifikasi kode...
-      </div>
-      <div class="popup-error" id="popupError">
-        <i class="fa-solid fa-circle-xmark"></i> Kode tidak valid atau tidak ditemukan.
-      </div>
-      <div class="popup-success" id="popupSuccess">
-        <i class="fa-solid fa-circle-check"></i> Kode valid! Selamat datang di kniaWorld Pro 🎉
+        <div class="popup-checking" id="popupEmailChecking">
+          <i class="fa-solid fa-spinner fa-spin"></i> Memverifikasi pembelian...
+        </div>
+        <div class="popup-error" id="popupEmailError">
+          <i class="fa-solid fa-circle-xmark"></i> <span id="popupEmailErrorMsg">Email atau nomor WA tidak cocok.</span>
+        </div>
+        <div class="popup-success" id="popupEmailSuccess">
+          <i class="fa-solid fa-circle-check"></i> Verifikasi berhasil! Selamat datang di kniaWorld Pro 🎉
+        </div>
       </div>
     </div>
+
+    <!-- PANEL: KODE AKSES -->
+    <div class="popup-panel" id="panelCode">
+      <div class="popup-input-wrap">
+        <div class="popup-input-row">
+          <input type="text" id="popupCodeInput" placeholder="KNIA-XXXX-YYYY" maxlength="14"
+            oninput="popupFormatCode(this)"
+            onkeydown="if(event.key==='Enter') popupVerify()" />
+          <button class="btn-popup-unlock" id="popupUnlockBtn" onclick="popupVerify()">
+            <i class="fa-solid fa-unlock"></i> Masuk
+          </button>
+        </div>
+        <div class="popup-checking" id="popupChecking">
+          <i class="fa-solid fa-spinner fa-spin"></i> Memverifikasi kode...
+        </div>
+        <div class="popup-error" id="popupError">
+          <i class="fa-solid fa-circle-xmark"></i> Kode tidak valid atau tidak ditemukan.
+        </div>
+        <div class="popup-success" id="popupSuccess">
+          <i class="fa-solid fa-circle-check"></i> Kode valid! Selamat datang di kniaWorld Pro 🎉
+        </div>
+      </div>
+    </div>
+
     <a class="popup-wa" href="https://wa.me/6281911284050?text=Halo%20ka%2C%20aku%20mau%20beli%20kode%20akses%20kniaWorld%20Generator" target="_blank">
       <i class="fi fi-brands-whatsapp" style="font-size:16px;"></i>
-      Belum punya kode? Chat WhatsApp
+      Belum beli / ada kendala? Chat WhatsApp
     </a>
   </div>
 </div>
@@ -3830,6 +3906,82 @@ ${menuInstructions}
     const overlay = document.getElementById('accessPopup');
     overlay.classList.add('hide');
     setTimeout(() => { overlay.style.display = 'none'; }, 280);
+  }
+
+  // ══════════════════════════════════════
+  //  ACCESS VIA EMAIL PEMBELI + 4 DIGIT WA
+  //  (diisi otomatis oleh webhook Lynk.id setelah transaksi sukses —
+  //  lihat /api/lynk-webhook.js dan /api/verify-buyer.js)
+  // ══════════════════════════════════════
+  function popupSwitchTab(tab) {
+    document.getElementById('tabBtnEmail').classList.toggle('active', tab === 'email');
+    document.getElementById('tabBtnCode').classList.toggle('active', tab === 'code');
+    document.getElementById('panelEmail').classList.toggle('active', tab === 'email');
+    document.getElementById('panelCode').classList.toggle('active', tab === 'code');
+  }
+
+  async function popupVerifyEmail() {
+    const email = document.getElementById('popupEmailInput').value.trim().toLowerCase();
+    const last4 = document.getElementById('popupLast4Input').value.trim();
+    const errEl    = document.getElementById('popupEmailError');
+    const errMsgEl = document.getElementById('popupEmailErrorMsg');
+    const okEl     = document.getElementById('popupEmailSuccess');
+    const chkEl    = document.getElementById('popupEmailChecking');
+    const btn      = document.getElementById('popupEmailUnlockBtn');
+
+    errEl.classList.remove('show');
+    okEl.classList.remove('show');
+
+    if (!email || !email.includes('@')) {
+      errMsgEl.textContent = 'Masukkan email yang valid.';
+      errEl.classList.add('show');
+      return;
+    }
+    if (!/^\d{4}$/.test(last4)) {
+      errMsgEl.textContent = 'Isi 4 digit terakhir nomor WA kamu.';
+      errEl.classList.add('show');
+      return;
+    }
+
+    chkEl.classList.add('show');
+    btn.disabled = true;
+
+    await _authReady; // pastikan sudah login anonim & punya _uid
+    if (!_uid) {
+      chkEl.classList.remove('show');
+      btn.disabled = false;
+      errMsgEl.textContent = 'Gagal memuat sesi, coba refresh halaman.';
+      errEl.classList.add('show');
+      return;
+    }
+
+    try {
+      const r = await fetch('/api/verify-buyer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, last4, uid: _uid })
+      });
+      const data = await r.json();
+
+      let contentOk = false;
+      if (data.ok) contentOk = await loadProtectedContent();
+
+      chkEl.classList.remove('show');
+      btn.disabled = false;
+
+      if (data.ok && contentOk) {
+        okEl.classList.add('show');
+        setTimeout(() => { closePopup(); }, 1500);
+      } else {
+        errMsgEl.textContent = data.message || 'Email atau nomor WA tidak cocok.';
+        errEl.classList.add('show');
+      }
+    } catch (e) {
+      chkEl.classList.remove('show');
+      btn.disabled = false;
+      errMsgEl.textContent = 'Gagal menghubungi server, coba lagi.';
+      errEl.classList.add('show');
+    }
   }
 
   async function checkAccess() {

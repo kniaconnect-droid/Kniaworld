@@ -2433,20 +2433,43 @@
         </div>
       </div>
 
-      <!-- TEMPLATE 9: REVISI — GANTI SOAL -->
-      <div class="template-card">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div>
+      <!-- ══════════════════════════════════════ -->
+      <!-- UNIFIED TOOLS SELECTOR -->
+      <!-- ══════════════════════════════════════ -->
+      <div class="template-card" style="margin-bottom:16px;">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#7c3aed,#10b981);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);">✏️</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);">🧰</div>
           <div class="tpl-meta">
-            <h3>Revisi: Ganti / Tambah Soal</h3>
-            <div class="tpl-sub">Update konten game yang sudah jadi tanpa rebuild dari nol</div>
+            <h3>Pilih Kebutuhan Kamu</h3>
+            <div class="tpl-sub">1 tools buat semua kebutuhan revisi & upgrade game</div>
           </div>
         </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fffbeb;color:#92400e;">✏️ Edit Soal</span>
-          <span class="tpl-tag" style="background:#fef3c7;color:#78350f;">🔄 Update</span>
-          <span class="tpl-tag" style="background:#fde68a;color:#78350f;">📝 Konten</span>
+        <div class="tpl-fields">
+          <div class="tpl-field">
+            <label>Jenis Kebutuhan</label>
+            <select id="toolMenu" onchange="switchToolMenu()">
+              <option value="revisi_soal" selected>✏️ Revisi: Ganti / Tambah Soal</option>
+              <option value="revisi_fitur">🚀 Revisi: Upgrade Fitur & Level</option>
+              <option value="revisi_bug">🔧 Revisi: Perbaiki Bug & Tampilan</option>
+              <option value="bundling">📦 Membuat Game Bundling</option>
+              <option value="worksheet">📄 Ubah Worksheet jadi Game</option>
+              <option value="gambar">🖼️ Tambah/Ganti Gambar Sendiri</option>
+              <option value="suara">🔊 Tambah Suara/Voice</option>
+              <option value="audit">🔍 Audit Game Siap Jual</option>
+              <option value="jadi_pwa">🌐 Ubah Game jadi PWA App</option>
+              <option value="jadi_android">🤖 Ubah Game jadi Android App</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLOCK: REVISI_SOAL -->
+      <div class="template-card" id="block_revisi_soal" style="display:block;">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">✏️ Revisi: Ganti / Tambah Soal</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini kalau game kamu <strong>sudah pernah dibuat sebelumnya</strong> dan sekarang cuma mau ganti isi soal, nambah soal baru, ubah tingkat kesulitan, atau terjemahkan ke bahasa lain — tanpa bikin ulang dari nol.<br><br>📎 <strong>Yang perlu disiapkan:</strong> lampirkan file kode HTML game yang sudah kamu generate sebelumnya (drag &amp; drop langsung ke chat Claude/Gemini bareng prompt ini). Kalau soal barunya dari worksheet atau buku, tulis ringkasannya di kolom "Materi / Topik Soal Baru" di bawah.</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2497,22 +2520,15 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 10: REVISI — TAMBAH FITUR/LEVEL -->
-      <div class="template-card">
+      <!-- BLOCK: REVISI_FITUR -->
+      <div class="template-card" id="block_revisi_fitur" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#7c3aed,#ec4899);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fdf4ff,#fae8ff);">🚀</div>
-          <div class="tpl-meta">
-            <h3>Revisi: Upgrade Fitur & Level</h3>
-            <div class="tpl-sub">Tambahkan level baru, fitur, animasi, atau sistem reward ke game yang ada</div>
-          </div>
-        </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fdf4ff;color:#6b21a8;">🚀 Upgrade</span>
-          <span class="tpl-tag" style="background:#fae8ff;color:#7e22ce;">⭐ Level Baru</span>
-          <span class="tpl-tag" style="background:#f3e8ff;color:#7c3aed;">🎁 Fitur Baru</span>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🚀 Revisi: Upgrade Fitur & Level</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk nambahin fitur baru ke game yang sudah jadi — misalnya level baru, leaderboard, sistem nyawa, timer, sertifikat, atau audio.<br><br>📎 <strong>Yang perlu disiapkan:</strong> lampirkan file kode HTML game yang sudah digenerate sebelumnya. Jelaskan sedetail mungkin fitur yang kamu mau di kolom "Detail / Spesifikasi Fitur Baru" supaya hasilnya sesuai ekspektasi.</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2564,22 +2580,15 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 11: REVISI — PERBAIKI BUG/TAMPILAN -->
-      <div class="template-card">
+      <!-- BLOCK: REVISI_BUG -->
+      <div class="template-card" id="block_revisi_bug" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#16a34a,#84cc16);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);">🔧</div>
-          <div class="tpl-meta">
-            <h3>Revisi: Perbaiki Bug & Tampilan</h3>
-            <div class="tpl-sub">Fix error, perbaiki responsif, atau ubah desain visual game</div>
-          </div>
-        </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#f0fdf4;color:#14532d;">🔧 Fix Bug</span>
-          <span class="tpl-tag" style="background:#dcfce7;color:#15803d;">📱 Responsif</span>
-          <span class="tpl-tag" style="background:#bbf7d0;color:#166534;">🎨 Redesign</span>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🔧 Revisi: Perbaiki Bug & Tampilan</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini kalau ada bug (tombol nggak jalan, skor salah hitung, game macet) atau kamu mau ubah tampilan/warna/font dari game yang sudah ada.<br><br>📎 <strong>Yang perlu disiapkan:</strong> lampirkan file kode HTML game yang bermasalah. Kalau ada, sertakan juga screenshot masalahnya (opsional, tapi sangat membantu AI paham konteksnya).</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2630,22 +2639,15 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 12: BUNDLING -->
-      <div class="template-card">
+      <!-- BLOCK: BUNDLING -->
+      <div class="template-card" id="block_bundling" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#7c3aed,#f59e0b);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fef9c3,#fde68a);">📦</div>
-          <div class="tpl-meta">
-            <h3>Game Bundling (3 Materi, 1 File)</h3>
-            <div class="tpl-sub">1 HTML · 3 Paket Materi Berbeda · Menu Pilih Materi</div>
-          </div>
-        </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fef9c3;color:#713f12;">📦 Bundle</span>
-          <span class="tpl-tag" style="background:#fde68a;color:#78350f;">3️⃣ 3 Materi</span>
-          <span class="tpl-tag" style="background:#fef3c7;color:#92400e;">💰 Nilai Lebih</span>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📦 Membuat Game Bundling</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk bikin 1 file game baru yang isinya 3 paket materi berbeda dalam 1 menu pilihan — cocok dijual sebagai paket bernilai lebih tinggi.<br><br>📎 <strong>Yang perlu disiapkan:</strong> ini untuk BUAT BARU, jadi kamu nggak perlu lampirkan kode lama. Cukup isi 3 materi di kolom di bawah. Kalau salah satu materi berasal dari worksheet yang sudah ada, lampirkan juga file worksheet-nya supaya kontennya presisi.</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2711,22 +2713,15 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 13: WORKSHEET TO GAME -->
-      <div class="template-card">
+      <!-- BLOCK: WORKSHEET -->
+      <div class="template-card" id="block_worksheet" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#7c3aed,#06b6d4,#10b981);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);">📄</div>
-          <div class="tpl-meta">
-            <h3>Worksheet → Game</h3>
-            <div class="tpl-sub">Ubah lembar soal / materi menjadi game interaktif siap jual</div>
-          </div>
-        </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#f5f3ff;color:#5b21b6;">📄 Worksheet</span>
-          <span class="tpl-tag" style="background:#ede9fe;color:#6d28d9;">🎮 Jadi Game</span>
-          <span class="tpl-tag" style="background:#ddd6fe;color:#7c3aed;">💰 Siap Jual</span>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📄 Ubah Worksheet jadi Game</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk mengubah worksheet, lembar soal, atau materi ajar yang sudah kamu punya menjadi game interaktif siap jual.<br><br>📎 <strong>WAJIB</strong> lampirkan file worksheet-nya (PDF, Word, atau foto/scan) di chat Claude/Gemini bareng prompt ini, supaya AI membaca isi soalnya persis seperti aslinya. Kalau filenya nggak ada, minimal ringkas isi soalnya selengkap mungkin di kolom "Ringkasan Isi Worksheet / Materi".</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2800,22 +2795,128 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 14: AUDIT GAME SIAP JUAL -->
-      <div class="template-card">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444,#7c3aed);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);">🔍</div>
-          <div class="tpl-meta">
-            <h3>Audit Game Siap Jual</h3>
-            <div class="tpl-sub">Cek kelayakan jual game  — skor /100 + rekomendasi detail</div>
+      <!-- BLOCK: GAMBAR -->
+      <div class="template-card" id="block_gambar" style="display:none;">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#ec4899,#f472b6);"></div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🖼️ Tambah / Ganti Gambar Sendiri</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini kalau kamu mau ganti ilustrasi/emoji generik di game jadi gambar atau ilustrasi buatan sendiri — maskot custom, ikon custom, background, dan sejenisnya.<br><br>📎 <strong>WAJIB</strong> lampirkan 2 hal ke chat Claude/Gemini: (1) file kode HTML game yang sudah digenerate, dan (2) contoh gambar yang mau dipakai (boleh beberapa sekaligus). Kasih nama file yang jelas — misalnya <em>maskot.png</em>, <em>ikon-benar.png</em>, <em>background.jpg</em> — supaya AI tahu gambar mana untuk elemen yang mana.</div>
+        </div>
+        <div class="tpl-fields">
+          <div class="tpl-field">
+            <label>Bagian yang Mau Diganti Gambarnya</label>
+            <input type="text" id="tgambar_bagian" placeholder="Contoh: maskot utama, ikon jawaban benar, ikon jawaban salah, background halaman awal…" />
+          </div>
+          <div class="tpl-field">
+            <label>Nama File Gambar yang Dilampirkan</label>
+            <input type="text" id="tgambar_file" placeholder="Contoh: maskot.png, ikon-benar.png, ikon-salah.png, bg.jpg" />
+          </div>
+          <div class="tpl-field">
+            <label>Catatan Gaya / Ukuran (opsional)</label>
+            <input type="text" id="tgambar_gaya" placeholder="Contoh: gambar dibuat bulat dengan border, ukuran maskot dibuat lebih besar…" />
           </div>
         </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fffbeb;color:#92400e;">🔍 Audit</span>
-          <span class="tpl-tag" style="background:#fef3c7;color:#78350f;">💯 Skor Kelayakan</span>
-          <span class="tpl-tag" style="background:#fde68a;color:#78350f;">💰 Siap Jual</span>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="tgambar_tambahan" placeholder="Contoh: pertahankan animasi yang sudah ada, jangan ubah warna tema…" />
+          </div>
+        <div class="tpl-actions">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#ec4899,#f472b6);box-shadow:0 4px 14px rgba(236,72,153,0.3);" onclick="generateTemplate('gambar')">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+          </button>
+          <button class="btn-tpl-copy" id="tgambar_copyBtn" onclick="copyTemplateResult('gambar')" style="display:none;">
+            <i class="fa-solid fa-copy"></i> Copy Prompt
+          </button>
+        </div>
+        <div class="tpl-result-wrap" id="tgambar_result">
+          <div class="tpl-result-box">
+            <div class="tpl-result-label"><i class="fa-solid fa-code"></i> Prompt Siap</div>
+            <div class="tpl-result-text" id="tgambar_text"></div>
+            <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button class="btn-copy-full" onclick="copyTemplateResult('gambar')" id="tplgambarCopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
+                <button onclick="openInClaudeTemplate('gambar')" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button onclick="openInGeminiTemplate('gambar')" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
+                <button class="btn-close-result" onclick="closeResult('gambar')">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BLOCK: SUARA -->
+      <div class="template-card" id="block_suara" style="display:none;">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#06b6d4,#0ea5e9);"></div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🔊 Tambah Suara / Voice</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk menambahkan efek suara, voice/pengucapan soal &amp; jawaban, atau musik latar ke game kamu.<br><br>📎 <strong>Yang perlu disiapkan:</strong> lampirkan file kode HTML game yang sudah digenerate. Kalau kamu punya file audio sendiri (mp3/wav) yang mau dipakai, lampirkan juga dan sebutkan di kolom "Nama File Audio" mau dipakai untuk bagian yang mana. Kalau tidak ada file audio, AI akan membuatkan suara otomatis pakai Web Audio API / text-to-speech browser — gratis, tanpa file tambahan.</div>
+        </div>
+        <div class="tpl-fields">
+          <div class="tpl-field">
+            <label>Jenis Suara yang Ditambahkan</label>
+            <select id="tsuara_jenis">
+              <option value="efek suara saat jawaban benar dan salah" selected>🔔 Efek Suara Benar/Salah</option>
+              <option value="voice over membacakan soal dan pilihan jawaban menggunakan text-to-speech">🗣️ Voice Over Baca Soal</option>
+              <option value="musik latar selama bermain">🎵 Musik Latar</option>
+              <option value="kombinasi efek suara, voice over, dan musik latar">🎼 Semua (Efek + Voice + Musik)</option>
+            </select>
+          </div>
+          <div class="tpl-field">
+            <label>Sumber Suara</label>
+            <select id="tsuara_sumber">
+              <option value="gunakan Web Audio API untuk generate efek suara otomatis (tanpa file tambahan)" selected>⚙️ Generate Otomatis (Web Audio API)</option>
+              <option value="gunakan Web Speech API browser untuk text-to-speech otomatis (tanpa file tambahan)">🗣️ Text-to-Speech Otomatis (Browser)</option>
+              <option value="gunakan file audio yang saya lampirkan sendiri">📎 Pakai File Audio Saya Sendiri</option>
+            </select>
+          </div>
+          <div class="tpl-field">
+            <label>Nama File Audio yang Dilampirkan (jika ada)</label>
+            <input type="text" id="tsuara_file" placeholder="Contoh: efek-benar.mp3, efek-salah.mp3, musik-latar.mp3" />
+          </div>
+        </div>
+          <div class="tpl-field">
+            <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="tsuara_tambahan" placeholder="Contoh: volume musik dibuat pelan, tambahkan tombol mute di pojok kanan atas…" />
+          </div>
+        <div class="tpl-actions">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#06b6d4,#0ea5e9);box-shadow:0 4px 14px rgba(6,182,212,0.3);" onclick="generateTemplate('suara')">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+          </button>
+          <button class="btn-tpl-copy" id="tsuara_copyBtn" onclick="copyTemplateResult('suara')" style="display:none;">
+            <i class="fa-solid fa-copy"></i> Copy Prompt
+          </button>
+        </div>
+        <div class="tpl-result-wrap" id="tsuara_result">
+          <div class="tpl-result-box">
+            <div class="tpl-result-label"><i class="fa-solid fa-code"></i> Prompt Siap</div>
+            <div class="tpl-result-text" id="tsuara_text"></div>
+            <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button class="btn-copy-full" onclick="copyTemplateResult('suara')" id="tplsuaraCopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
+                <button onclick="openInClaudeTemplate('suara')" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button onclick="openInGeminiTemplate('suara')" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
+                <button class="btn-close-result" onclick="closeResult('suara')">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- BLOCK: AUDIT -->
+      <div class="template-card" id="block_audit" style="display:none;">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444,#7c3aed);"></div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🔍 Audit Game Siap Jual</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk mengecek kelayakan jual game kamu — hasilnya berupa skor /100 plus rekomendasi detail apa yang perlu diperbaiki sebelum dijual.<br><br>📎 <strong>WAJIB</strong> lampirkan file kode HTML game yang mau diaudit, supaya AI bisa mengevaluasi kode dan isinya langsung.</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2865,42 +2966,16 @@
             </div>
           </div>
         </div>
+
       </div>
 
-      <!-- TEMPLATE 15: MOBILE GAME (APK + PWA DUAL MODE) -->
-      <div class="template-card">
+      <!-- BLOCK: JADI -->
+      <div class="template-card" id="block_jadi" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#10b981,#06b6d4,#3b82f6);"></div>
-        <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);">📱</div>
-          <div class="tpl-meta">
-            <h3>Mobile Game Generator</h3>
-            <div class="tpl-sub">APK Android · PWA Installable · Deploy ke Netlify · Siap Jual</div>
-          </div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📱 Ubah Game jadi PWA / Android App</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini kalau game kamu sudah <strong>final</strong> (nggak direvisi lagi) dan mau dijadikan aplikasi yang bisa diinstall — PWA (install dari browser) atau APK Android (lewat WebIntoApp/Gonative).<br><br>📎 <strong>WAJIB</strong> lampirkan file kode HTML game versi final ke chat Claude/Gemini bareng prompt ini, supaya hasil generate-nya langsung siap deploy/wrap.</div>
         </div>
-        <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#ecfdf5;color:#065f46;">📱 Mobile First</span>
-          <span class="tpl-tag" style="background:#dbeafe;color:#1e40af;">🌐 PWA Ready</span>
-          <span class="tpl-tag" style="background:#d1fae5;color:#047857;">🤖 APK Ready</span>
-          <span class="tpl-tag" style="background:#a7f3d0;color:#065f46;">⚡ Offline</span>
-        </div>
-
-        <!-- MODE TOGGLE -->
-        <div style="margin-bottom:14px;">
-          <div style="font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">Pilih Mode Output</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;" id="t15_modeToggle">
-            <button id="t15_modeAPK" onclick="switchT15Mode('apk')" style="padding:12px 8px;border-radius:14px;border:2px solid #10b981;background:linear-gradient(135deg,#ecfdf5,#d1fae5);font-family:'Sora',sans-serif;font-size:12px;font-weight:800;color:#065f46;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s;">
-              <span style="font-size:20px;">🤖</span>
-              <span>APK Android</span>
-              <span style="font-size:10px;font-weight:600;color:#047857;opacity:0.8;">via WebIntoApp</span>
-            </button>
-            <button id="t15_modePWA" onclick="switchT15Mode('pwa')" style="padding:12px 8px;border-radius:14px;border:2px solid #e2e8f0;background:#f8fafc;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;color:#64748b;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.2s;">
-              <span style="font-size:20px;">🌐</span>
-              <span>PWA App</span>
-              <span style="font-size:10px;font-weight:600;opacity:0.8;">Deploy ke Netlify</span>
-            </button>
-          </div>
-        </div>
-
         <!-- INFO BOX — APK (default shown) -->
         <div id="t15_infoAPK" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:12px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(59,130,246,0.2);font-size:12px;font-weight:600;color:#1e40af;display:flex;gap:10px;align-items:flex-start;">
           <i class="fa-solid fa-circle-info" style="color:#3b82f6;margin-top:1px;flex-shrink:0;"></i>
@@ -3057,6 +3132,7 @@
 
           </div>
         </div>
+
       </div>
 
       <button class="btn-ghost" onclick="goTo('pageGuide')">
@@ -3430,36 +3506,59 @@ ${menuInstructions}
   function switchT15Mode(mode) {
     t15Mode = mode;
     const isAPK = mode === 'apk';
+    // Mode toggle buttons no longer in DOM (selection now via main "toolMenu" dropdown) — guarded.
     const apkBtn = document.getElementById('t15_modeAPK');
     const pwaBtn = document.getElementById('t15_modePWA');
-    if (isAPK) {
-      apkBtn.style.border = '2px solid #10b981';
-      apkBtn.style.background = 'linear-gradient(135deg,#ecfdf5,#d1fae5)';
-      apkBtn.style.color = '#065f46';
-      pwaBtn.style.border = '2px solid #e2e8f0';
-      pwaBtn.style.background = '#f8fafc';
-      pwaBtn.style.color = '#64748b';
-    } else {
-      pwaBtn.style.border = '2px solid #8b5cf6';
-      pwaBtn.style.background = 'linear-gradient(135deg,#faf5ff,#ede9fe)';
-      pwaBtn.style.color = '#5b21b6';
-      apkBtn.style.border = '2px solid #e2e8f0';
-      apkBtn.style.background = '#f8fafc';
-      apkBtn.style.color = '#64748b';
+    if (apkBtn && pwaBtn) {
+      if (isAPK) {
+        apkBtn.style.border = '2px solid #10b981';
+        apkBtn.style.background = 'linear-gradient(135deg,#ecfdf5,#d1fae5)';
+        apkBtn.style.color = '#065f46';
+        pwaBtn.style.border = '2px solid #e2e8f0';
+        pwaBtn.style.background = '#f8fafc';
+        pwaBtn.style.color = '#64748b';
+      } else {
+        pwaBtn.style.border = '2px solid #8b5cf6';
+        pwaBtn.style.background = 'linear-gradient(135deg,#faf5ff,#ede9fe)';
+        pwaBtn.style.color = '#5b21b6';
+        apkBtn.style.border = '2px solid #e2e8f0';
+        apkBtn.style.background = '#f8fafc';
+        apkBtn.style.color = '#64748b';
+      }
     }
-    document.getElementById('t15_infoAPK').style.display = isAPK ? 'flex' : 'none';
-    document.getElementById('t15_infoPWA').style.display = isAPK ? 'flex' : 'none';
-    document.getElementById('t15_infoPWA').style.display = isAPK ? 'none' : 'flex';
+    const infoAPK = document.getElementById('t15_infoAPK');
+    const infoPWA = document.getElementById('t15_infoPWA');
+    if (infoAPK) infoAPK.style.display = isAPK ? 'flex' : 'none';
+    if (infoPWA) infoPWA.style.display = isAPK ? 'none' : 'flex';
     const pwaFields = document.getElementById('t15_pwaFields');
     if (pwaFields) pwaFields.style.display = isAPK ? 'none' : 'contents';
-    document.getElementById('t15_genLabel').textContent = isAPK ? 'Generate Prompt APK' : 'Generate Prompt PWA';
+    const genLabel = document.getElementById('t15_genLabel');
+    if (genLabel) genLabel.textContent = isAPK ? 'Generate Prompt APK' : 'Generate Prompt PWA';
     const genBtn = document.getElementById('t15_genBtn');
-    genBtn.style.background = isAPK ? 'linear-gradient(135deg,#10b981,#06b6d4)' : 'linear-gradient(135deg,#8b5cf6,#6d28d9)';
-    genBtn.style.boxShadow = isAPK ? '0 4px 14px rgba(16,185,129,0.35)' : '0 4px 14px rgba(139,92,246,0.35)';
+    if (genBtn) {
+      genBtn.style.background = isAPK ? 'linear-gradient(135deg,#10b981,#06b6d4)' : 'linear-gradient(135deg,#8b5cf6,#6d28d9)';
+      genBtn.style.boxShadow = isAPK ? '0 4px 14px rgba(16,185,129,0.35)' : '0 4px 14px rgba(139,92,246,0.35)';
+    }
     const res = document.getElementById('t15_result');
-    if (res) res.style.display = 'none';
+    if (res) { res.style.display = 'none'; res.classList.remove('open'); }
     const copyBtn = document.getElementById('t15_copyBtn');
     if (copyBtn) copyBtn.style.display = 'none';
+  }
+
+  // ── UNIFIED TOOLS MENU SWITCHER ──
+  const _TOOL_BLOCK_KEYS = ['revisi_soal','revisi_fitur','revisi_bug','bundling','worksheet','gambar','suara','audit','jadi'];
+  function switchToolMenu() {
+    const sel = document.getElementById('toolMenu');
+    const val = sel.value;
+    const showKey = (val === 'jadi_pwa' || val === 'jadi_android') ? 'jadi' : val;
+    _TOOL_BLOCK_KEYS.forEach(key => {
+      const el = document.getElementById('block_' + key);
+      if (el) el.style.display = (key === showKey) ? 'block' : 'none';
+    });
+    if (val === 'jadi_pwa') switchT15Mode('pwa');
+    if (val === 'jadi_android') switchT15Mode('apk');
+    const shown = document.getElementById('block_' + showKey);
+    if (shown) shown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
   function buildTemplatePrompt(tplId) {
@@ -3620,6 +3719,52 @@ ${menuInstructions}
       }
     }
 
+    // ── TAMBAH/GANTI GAMBAR SENDIRI (client-side, no Firebase template needed) ──
+    if (tplId === 'gambar') {
+      const bagian = fv('tgambar_bagian', 'elemen visual yang generik di game (emoji/ikon default)');
+      const file   = fv('tgambar_file', 'nama-file-gambar.png');
+      const gaya   = fv('tgambar_gaya', '');
+      const gayaLine = gaya ? `\n- Catatan gaya/ukuran: ${gaya}` : '';
+      return `Kamu adalah frontend developer berpengalaman mengedit game edukasi HTML yang sudah jadi.
+
+📋 TUGAS: Ganti/tambahkan gambar custom ke game yang sudah ada (lihat file kode HTML yang saya lampirkan).
+
+🖼️ DETAIL PENGGANTIAN GAMBAR:
+- Bagian yang diganti: ${bagian}
+- File gambar yang saya lampirkan: ${file}${gayaLine}
+
+⚙️ KETENTUAN TEKNIS:
+- Gunakan file gambar yang saya lampirkan (embed sebagai base64 di dalam HTML, atau referensi sesuai instruksi saya)
+- Jaga rasio & ukuran gambar tetap proporsional dan responsive di semua ukuran layar
+- Jangan ubah struktur/logic game lain di luar bagian visual yang diminta
+- Pastikan gambar tetap terlihat jelas dan tidak pecah/blur di layar HP
+
+🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`;
+    }
+
+    // ── TAMBAH SUARA/VOICE (client-side, no Firebase template needed) ──
+    if (tplId === 'suara') {
+      const jenisSuara = fv('tsuara_jenis', 'efek suara saat jawaban benar dan salah');
+      const sumber     = fv('tsuara_sumber', 'gunakan Web Audio API untuk generate efek suara otomatis (tanpa file tambahan)');
+      const fileAudio  = fv('tsuara_file', '');
+      const fileLine   = fileAudio ? `\n- File audio yang saya lampirkan: ${fileAudio}` : '';
+      return `Kamu adalah frontend developer berpengalaman menambahkan audio ke game edukasi HTML yang sudah jadi.
+
+📋 TUGAS: Tambahkan elemen suara ke game yang sudah ada (lihat file kode HTML yang saya lampirkan).
+
+🔊 DETAIL AUDIO:
+- Jenis suara: ${jenisSuara}
+- Sumber suara: ${sumber}${fileLine}
+
+⚙️ KETENTUAN TEKNIS:
+- Tambahkan tombol mute/unmute yang mudah dijangkau di pojok layar
+- Suara tidak boleh mengganggu — durasi efek pendek (di bawah 1 detik), volume wajar
+- Kalau pakai text-to-speech, gunakan Bahasa Indonesia (lang: 'id-ID') dan pastikan ada fallback kalau browser tidak support
+- Jangan ubah struktur/logic game lain di luar penambahan audio ini
+
+🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`;
+    }
+
   } // end buildTemplatePrompt
 
   // ── TEMPLATE ACTIONS — dengan fake loading animation ──
@@ -3638,8 +3783,9 @@ ${menuInstructions}
     if (_tambahan) {
       prompt += '\n\n\uD83D\uDCCC INSTRUKSI TAMBAHAN DARI PEMBUAT GAME:\n' + _tambahan;
     }
-    // Find generate button for this template
-    const genBtn = document.querySelector(`[onclick="generateTemplate(${tplId})"]`);
+    // Find generate button for this template (numeric tplIds are unquoted in onclick, string tplIds are quoted)
+    const genBtn = document.querySelector(`[onclick="generateTemplate(${tplId})"]`)
+      || document.querySelector(`[onclick="generateTemplate('${tplId}')"]`);
     const phrases = _tplPhrases[Math.floor(Math.random() * _tplPhrases.length)];
     const delay = 1400 + Math.random() * 900; // 1.4s–2.3s total loading
     if (genBtn) {

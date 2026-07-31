@@ -2729,42 +2729,8 @@
             <input type="text" id="t13_isi" placeholder="Contoh: soal perkalian 1-10 (20 soal pilihan ganda), materi hewan vertebrata, kosakata buah bahasa Inggris…" />
           </div>
           <div class="tpl-field">
-            <label>Target Usia</label>
-            <select id="t13_usia">
-              <option value="4-6 tahun (PAUD/TK)">4–6 tahun (PAUD/TK)</option>
-              <option value="6-8 tahun (SD awal)">6–8 tahun (SD awal)</option>
-              <option value="8-10 tahun (SD)" selected>8–10 tahun (SD)</option>
-              <option value="10-13 tahun (SD atas/SMP)">10–13 tahun (SD atas/SMP)</option>
-            </select>
-          </div>
-          <div class="tpl-field">
             <label>Tujuan Pembelajaran</label>
             <input type="text" id="t13_tujuan" placeholder="Contoh: anak bisa menghafal perkalian 1-10 dengan cepat dan akurat" />
-          </div>
-          <div class="tpl-field">
-            <label>Jenis Aktivitas Game</label>
-            <select id="t13_jenis">
-              <option value="kuis pilihan ganda interaktif" selected>Kuis Pilihan Ganda</option>
-              <option value="drag and drop klasifikasi">Drag & Drop</option>
-              <option value="memory card matching">Memory Card</option>
-              <option value="speed challenge jawab cepat">Speed Challenge</option>
-              <option value="isi titik-titik interaktif">Isi Titik-Titik</option>
-            </select>
-          </div>
-          <div class="tpl-field">
-            <label>Gaya Visual</label>
-            <select id="t13_style">
-              <option value="Cute Emoji Playful" selected>🎨 Cute Emoji Playful</option>
-              <option value="Premium Kids App">💎 Premium Kids App</option>
-              <option value="Minimal Clean Edu">✏️ Minimal Clean Edu</option>
-              <option value="Cartoon Classroom">🏫 Cartoon Classroom</option>
-              <option value="Gamified Dashboard">🕹️ Gamified Dashboard</option>
-              <option value="Islamic Kids Friendly">🌙 Islamic Kids Friendly</option>
-            </select>
-          </div>
-          <div class="tpl-field">
-            <label>Nama Brand</label>
-            <input type="text" id="t13_brand" placeholder="kniaWorld" value="kniaWorld" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2991,43 +2957,11 @@
         <!-- SHARED FIELDS -->
         <div class="tpl-fields">
           <div class="tpl-field">
-            <label>Jenis Game</label>
-            <select id="t15_jenis">
-              <option value="kuis pilihan ganda interaktif" selected>🎯 Kuis Pilihan Ganda</option>
-              <option value="memory card flip matching game">🃏 Memory Card Flip</option>
-              <option value="drag and drop sorting game">🖱️ Drag &amp; Drop</option>
-              <option value="speed challenge jawab cepat dengan timer">⚡ Speed Challenge</option>
-              <option value="cerita interaktif pilihan ganda bercabang">📖 Cerita Interaktif</option>
-              <option value="puzzle gambar drag dan susun">🧩 Puzzle Gambar</option>
-              <option value="word search teka-teki kata">🔤 Word Search</option>
-              <option value="math runner soal matematika bergulir">➕ Math Runner</option>
-            </select>
-          </div>
-          <div class="tpl-field">
             <label>Mata Pelajaran / Topik</label>
             <input type="text" id="t15_topik" placeholder="Contoh: Perkalian 1-10, Kosakata Bahasa Inggris, Nama Ibukota…" />
           </div>
           <div class="tpl-field">
-            <label>Target Usia</label>
-            <select id="t15_usia">
-              <option value="4-6 tahun (PAUD/TK) — tombol besar, visual dominan, tanpa teks panjang">4–6 tahun (PAUD/TK)</option>
-              <option value="6-8 tahun (SD awal) — font besar, instruksi singkat" selected>6–8 tahun (SD awal)</option>
-              <option value="8-11 tahun (SD) — balance visual dan teks">8–11 tahun (SD)</option>
-              <option value="11-14 tahun (SMP) — lebih kompleks, bisa ada leaderboard">11–14 tahun (SMP)</option>
-            </select>
-          </div>
-          <div class="tpl-field">
-            <label>Gaya Visual</label>
-            <select id="t15_style">
-              <option value="Cute Cartoon — warna cerah, karakter lucu, emoji besar" selected>🎨 Cute Cartoon</option>
-              <option value="Premium Edu App — clean, modern, iOS-like aesthetic">💎 Premium Edu App</option>
-              <option value="Islamic Kids Friendly — warna hijau-emas, ornamen islami">🌙 Islamic Kids</option>
-              <option value="Pixel Retro Game — 8-bit style, piksel art, warna terbatas">👾 Pixel Retro</option>
-              <option value="Minimalist Dark Mode — dark background, aksen neon">🌑 Dark Mode</option>
-            </select>
-          </div>
-          <div class="tpl-field">
-            <label>Fitur Utama</label>
+            <label>Fitur Utama yang Sudah Ada</label>
             <select id="t15_fitur">
               <option value="tombol besar touch-friendly, animasi tap, haptic feedback visual" selected>👆 Touch Optimized</option>
               <option value="mode offline penuh — tidak butuh internet sama sekali">📵 Full Offline</option>
@@ -3037,10 +2971,6 @@
             </select>
           </div>
           <div class="tpl-field">
-            <label>Nama Brand</label>
-            <input type="text" id="t15_brand" placeholder="kniaWorld" value="kniaWorld" />
-          </div>
-          <div class="tpl-field">
             <label>Nama App</label>
             <input type="text" id="t15_appname" placeholder="Contoh: KuisMatematika, BelajarInggris, GameIPA…" />
           </div>
@@ -3048,27 +2978,12 @@
           <!-- PWA-ONLY FIELDS (hidden by default) -->
           <div id="t15_pwaFields" style="display:none;contents;">
             <div class="tpl-field">
-              <label>Warna Tema App <span style="font-size:10px;font-weight:600;color:#8b5cf6;">(PWA theme-color)</span></label>
-              <select id="t15_themecolor">
-                <option value="#10b981">🟢 Hijau Emerald</option>
-                <option value="#3b82f6">🔵 Biru</option>
-                <option value="#8b5cf6">🟣 Ungu</option>
-                <option value="#f59e0b">🟡 Amber</option>
-                <option value="#ef4444">🔴 Merah</option>
-                <option value="#0f172a">⚫ Dark Navy</option>
-              </select>
-            </div>
-            <div class="tpl-field">
               <label>Display Mode PWA</label>
               <select id="t15_display">
                 <option value="standalone" selected>📱 Standalone (seperti app native, tanpa browser bar)</option>
                 <option value="fullscreen">🖥️ Fullscreen (layar penuh, cocok untuk game)</option>
                 <option value="minimal-ui">🌐 Minimal UI (ada sedikit browser bar)</option>
               </select>
-            </div>
-            <div class="tpl-field">
-              <label>Nama Folder Zip</label>
-              <input type="text" id="t15_foldername" placeholder="Contoh: game-matematika, kuis-inggris…" />
             </div>
           </div>
 
@@ -3687,13 +3602,9 @@ ${menuInstructions}
     }
 
     if (tplId === 15) {
-      const jenis    = document.getElementById('t15_jenis').value;
-      const topik    = document.getElementById('t15_topik').value || 'Sesuaikan dengan jenis game';
-      const usia     = document.getElementById('t15_usia').value;
-      const style    = document.getElementById('t15_style').value;
-      const fitur    = document.getElementById('t15_fitur').value;
-      const brand    = document.getElementById('t15_brand').value || 'kniaWorld';
-      const appname  = document.getElementById('t15_appname').value || 'EduGame';
+      const topik   = fv('t15_topik', 'Sesuaikan dengan game yang dilampirkan');
+      const fitur   = fv('t15_fitur', 'tombol besar touch-friendly, animasi tap');
+      const appname = fv('t15_appname', 'EduGame');
 
       // Show correct next step panel
       const nextAPK = document.getElementById('t15_nextAPK');
@@ -3703,19 +3614,48 @@ ${menuInstructions}
         nextPWA.style.display = t15Mode === 'pwa' ? 'block' : 'none';
       }
 
-      // ── APK MODE ──
+      // ── APK MODE (client-side builder — game/kode sudah dilampirkan user) ──
       if (t15Mode === 'apk') {
-        return renderTpl('t15_apk', {appname: appname, brand: brand, jenis: jenis, topik: topik, usia: usia, style: style, fitur: fitur});
+        return `Kamu adalah frontend developer berpengalaman menyiapkan game edukasi HTML supaya siap di-wrap menjadi aplikasi Android.
+
+📋 TUGAS: Sesuaikan game yang sudah saya buat (lihat file kode HTML yang saya lampirkan) supaya optimal saat di-wrap jadi APK Android lewat WebIntoApp/Gonative — JANGAN ubah desain, soal, atau fitur yang sudah ada.
+
+📱 KONTEKS APLIKASI:
+- Nama App: ${appname}
+- Topik/Materi: ${topik}
+- Fitur utama yang sudah ada: ${fitur}
+
+⚙️ PENYESUAIAN TEKNIS YANG DIPERLUKAN:
+- Pastikan viewport meta tag benar untuk tampilan mobile penuh (tanpa zoom, tanpa scroll horizontal)
+- Nonaktifkan efek "pull to refresh" dan bounce scroll ala browser
+- Pastikan semua tombol & interaksi tetap berfungsi normal di WebView Android (hindari fitur yang butuh browser chrome seperti address bar)
+- Tambahkan meta tag untuk mencegah zoom pinch yang tidak sengaja
+- Pastikan game tetap berjalan offline penuh (tidak ada request ke server luar)
+
+🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`;
       }
 
-      // ── PWA MODE ──
+      // ── PWA MODE (client-side builder — game/kode sudah dilampirkan user) ──
       if (t15Mode === 'pwa') {
-        const themecolor = document.getElementById('t15_themecolor') ? document.getElementById('t15_themecolor').value : '#10b981';
-        const display    = document.getElementById('t15_display') ? document.getElementById('t15_display').value : 'standalone';
-        const folder     = document.getElementById('t15_foldername') && document.getElementById('t15_foldername').value
-                           ? document.getElementById('t15_foldername').value
-                           : appname.toLowerCase().replace(/\s+/g,'-');
-        return renderTpl('t15_pwa', {appname: appname, brand: brand, jenis: jenis, topik: topik, usia: usia, style: style, fitur: fitur, themecolor: themecolor, display: display, folder: folder});
+        const display = fv('t15_display', 'standalone');
+        const folder  = appname.toLowerCase().replace(/\s+/g, '-') || 'game-pwa';
+        return `Kamu adalah frontend developer berpengalaman mengubah game edukasi HTML menjadi PWA (Progressive Web App) yang bisa diinstall dari browser.
+
+📋 TUGAS: Ubah game yang sudah saya buat (lihat file kode HTML yang saya lampirkan) menjadi PWA installable — JANGAN ubah desain, soal, atau fitur yang sudah ada.
+
+📱 KONTEKS APLIKASI:
+- Nama App: ${appname}
+- Topik/Materi: ${topik}
+- Fitur utama yang sudah ada: ${fitur}
+- Display mode PWA: ${display}
+- Nama folder saat di-zip nanti: ${folder}
+
+⚙️ FILE YANG PERLU DIBUAT (3 file terpisah):
+1. index.html — game asli saya + tag <link rel="manifest"> dan pendaftaran service worker
+2. manifest.json — nama app "${appname}", display: "${display}", theme_color & background_color yang sesuai tema game, icon 192x192 & 512x512 (pakai ikon SVG berbasis emoji kalau saya tidak lampirkan file ikon)
+3. sw.js — service worker sederhana untuk cache-first offline support
+
+🌐 Jangan ubah struktur/logic/desain game selain penambahan dukungan PWA di atas. Setelah selesai, tunjukkan isi ketiga file tersebut secara terpisah dan jelas.`;
       }
     }
 

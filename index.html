@@ -2452,7 +2452,7 @@
               <option value="revisi_soal" selected>✏️ Revisi: Ganti / Tambah Soal</option>
               <option value="revisi_fitur">🚀 Revisi: Upgrade Fitur & Level</option>
               <option value="revisi_bug">🔧 Revisi: Perbaiki Bug & Tampilan</option>
-              <option value="bundling">📦 Membuat Game Bundling</option>
+              <option value="bundling">📦 Membuat Game Bundling 5 in 1</option>
               <option value="worksheet">📄 Ubah Worksheet jadi Game</option>
               <option value="gambar">🖼️ Tambah/Ganti Gambar Sendiri</option>
               <option value="suara">🔊 Tambah Suara/Voice</option>
@@ -2646,8 +2646,8 @@
       <div class="template-card" id="block_bundling" style="display:none;">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#7c3aed,#f59e0b);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
-          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📦 Membuat Game Bundling</div>
-          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk bikin 1 file game baru yang isinya 3 paket materi berbeda dalam 1 menu pilihan — cocok dijual sebagai paket bernilai lebih tinggi.<br><br>📎 <strong>Yang perlu disiapkan:</strong> ini untuk BUAT BARU, jadi kamu nggak perlu lampirkan kode lama. Cukup isi 3 materi di kolom di bawah. Kalau salah satu materi berasal dari worksheet yang sudah ada, lampirkan juga file worksheet-nya supaya kontennya presisi.</div>
+          <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📦 Membuat Game Bundling 5 in 1</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk bikin 1 file game baru yang isinya 5 paket materi berbeda dalam 1 menu pilihan — cocok dijual sebagai paket bernilai lebih tinggi.<br><br>📎 <strong>Yang perlu disiapkan:</strong> ini untuk BUAT BARU, jadi kamu nggak perlu lampirkan kode lama. Cukup isi 5 materi di kolom di bawah. Kalau salah satu materi berasal dari worksheet yang sudah ada, lampirkan juga file worksheet-nya supaya kontennya presisi.</div>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -2671,6 +2671,14 @@
           <div class="tpl-field">
             <label>Materi Paket 3 🟢</label>
             <input type="text" id="t12_m3" placeholder="Contoh: IPA — Sistem Tata Surya" />
+          </div>
+          <div class="tpl-field">
+            <label>Materi Paket 4 🟠</label>
+            <input type="text" id="t12_m4" placeholder="Contoh: Bahasa Inggris — Kosakata Dasar" />
+          </div>
+          <div class="tpl-field">
+            <label>Materi Paket 5 🌸</label>
+            <input type="text" id="t12_m5" placeholder="Contoh: PPKn — Simbol Negara" />
           </div>
           <div class="tpl-field">
             <label>Nama Brand</label>
@@ -3577,9 +3585,11 @@ ${menuInstructions}
       const m1      = fv('t12_m1',    'Materi 1');
       const m2      = fv('t12_m2',    'Materi 2');
       const m3      = fv('t12_m3',    'Materi 3');
+      const m4      = fv('t12_m4',    'Materi 4');
+      const m5      = fv('t12_m5',    'Materi 5');
       const brand12 = fv('t12_brand', 'kniaWorld');
       const usia12  = fv('t12_usia',  '7-10 tahun');
-      return renderTpl('t12', {game12, m1, m2, m3, brand12, usia12});
+      return renderTpl('t12', {game12, m1, m2, m3, m4, m5, brand12, usia12});
     }
 
     // ── TEMPLATE 13: WORKSHEET TO GAME ──

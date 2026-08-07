@@ -3389,7 +3389,7 @@ ${adaptiveAgeNote}
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
 - Background: warna tema yang kaya + ornamen/pola dekoratif (gelombang, bintang, atau bentuk geometris kecil)
-- Maskot/karakter: emoji besar (min 80px) yang relevan dengan materi, diberi animasi bounce atau float terus-menerus
+- Maskot/karakter: ilustrasi SVG/CSS shape besar (min 80px) yang relevan dengan materi — bukan emoji, diberi animasi bounce atau float terus-menerus
 - Nama brand "${brand}" ditampilkan besar dan mencolok (font tebal, bisa ada outline atau shadow)
 - Tagline pendek yang mengundang: contoh "Belajar Seru Setiap Hari! ✨" atau sesuaikan dengan materi
 - Tombol CTA besar dan menarik: "🚀 Mulai Main!" — dengan animasi pulse atau glow
@@ -3417,9 +3417,9 @@ ${spec.flow}
 
     let menuInstructions = '';
     if (multiGame && !multiSubject) {
-      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. Card "${gt}"`).join('\n')}\n- Setiap card: ikon/emoji relevan + nama game + deskripsi singkat + tombol "Pilih"\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
+      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. Card "${gt}"`).join('\n')}\n- Setiap card: ikon Font Awesome relevan + nama game + deskripsi singkat + tombol "Pilih"\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     } else if (!multiGame && multiSubject) {
-      menuInstructions = `\n🗂️ MENU PILIH MATERI (WAJIB ADA):\n${subjects.map((s,i)=>`  ${i+1}. Card "${s}"`).join('\n')}\n- Setiap card: ikon/emoji relevan + nama materi + contoh soal singkat + tombol "Pilih"\n- Setiap materi punya set soal SENDIRI yang berbeda\n- Tombol "← Pilih Materi Lain" di dalam game`;
+      menuInstructions = `\n🗂️ MENU PILIH MATERI (WAJIB ADA):\n${subjects.map((s,i)=>`  ${i+1}. Card "${s}"`).join('\n')}\n- Setiap card: ikon Font Awesome relevan + nama materi + contoh soal singkat + tombol "Pilih"\n- Setiap materi punya set soal SENDIRI yang berbeda\n- Tombol "← Pilih Materi Lain" di dalam game`;
     } else {
       menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown)\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     }
@@ -3451,7 +3451,7 @@ ${adaptiveAgeNote}
 ${menuInstructions}
 
 🏠 HALAMAN WELCOMING (LAYAR PERTAMA):
-- Maskot emoji besar animasi, brand "${brand}" mencolok, tagline mengundang
+- Maskot ilustrasi SVG/CSS shape besar beranimasi (bukan emoji), brand "${brand}" mencolok, tagline mengundang
 - Tombol "🚀 Ayo Mulai!" pulse animation, transisi smooth ke menu
 
 🎨 DESAIN: ${color} — konsisten di semua halaman, cerah dan playful
@@ -3697,7 +3697,7 @@ ${menuInstructions}
 
       // ── APK MODE (client-side builder — game/kode sudah dilampirkan user) ──
       if (t15Mode === 'apk') {
-        return `Kamu adalah frontend developer berpengalaman menyiapkan game edukasi HTML supaya siap di-wrap menjadi aplikasi Android.
+        return finalizePrompt(`Kamu adalah frontend developer berpengalaman menyiapkan game edukasi HTML supaya siap di-wrap menjadi aplikasi Android.
 
 📋 TUGAS: Sesuaikan game yang sudah saya buat (lihat file kode HTML yang saya lampirkan) supaya optimal saat di-wrap jadi APK Android lewat WebIntoApp/Gonative — JANGAN ubah desain, soal, atau fitur yang sudah ada.
 
@@ -3713,14 +3713,14 @@ ${menuInstructions}
 - Tambahkan meta tag untuk mencegah zoom pinch yang tidak sengaja
 - Pastikan game tetap berjalan offline penuh (tidak ada request ke server luar)
 
-🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`;
+🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`);
       }
 
       // ── PWA MODE (client-side builder — game/kode sudah dilampirkan user) ──
       if (t15Mode === 'pwa') {
         const display = fv('t15_display', 'standalone');
         const folder  = appname.toLowerCase().replace(/\s+/g, '-') || 'game-pwa';
-        return `Kamu adalah frontend developer berpengalaman mengubah game edukasi HTML menjadi PWA (Progressive Web App) yang bisa diinstall dari browser.
+        return finalizePrompt(`Kamu adalah frontend developer berpengalaman mengubah game edukasi HTML menjadi PWA (Progressive Web App) yang bisa diinstall dari browser.
 
 📋 TUGAS: Ubah game yang sudah saya buat (lihat file kode HTML yang saya lampirkan) menjadi PWA installable — JANGAN ubah desain, soal, atau fitur yang sudah ada.
 
@@ -3733,20 +3733,20 @@ ${menuInstructions}
 
 ⚙️ FILE YANG PERLU DIBUAT (3 file terpisah):
 1. index.html — game asli saya + tag <link rel="manifest"> dan pendaftaran service worker
-2. manifest.json — nama app "${appname}", display: "${display}", theme_color & background_color yang sesuai tema game, icon 192x192 & 512x512 (pakai ikon SVG berbasis emoji kalau saya tidak lampirkan file ikon)
+2. manifest.json — nama app "${appname}", display: "${display}", theme_color & background_color yang sesuai tema game, icon 192x192 & 512x512 (buat sebagai ikon SVG/CSS shape sederhana yang relevan dengan tema game — bukan emoji — kalau saya tidak lampirkan file ikon)
 3. sw.js — service worker sederhana untuk cache-first offline support
 
-🌐 Jangan ubah struktur/logic/desain game selain penambahan dukungan PWA di atas. Setelah selesai, tunjukkan isi ketiga file tersebut secara terpisah dan jelas.`;
+🌐 Jangan ubah struktur/logic/desain game selain penambahan dukungan PWA di atas. Setelah selesai, tunjukkan isi ketiga file tersebut secara terpisah dan jelas.`);
       }
     }
 
     // ── TAMBAH/GANTI GAMBAR SENDIRI (client-side, no Firebase template needed) ──
     if (tplId === 'gambar') {
-      const bagian = fv('tgambar_bagian', 'elemen visual yang generik di game (emoji/ikon default)');
+      const bagian = fv('tgambar_bagian', 'elemen visual yang generik di game (ikon default)');
       const file   = fv('tgambar_file', 'nama-file-gambar.png');
       const gaya   = fv('tgambar_gaya', '');
       const gayaLine = gaya ? `\n- Catatan gaya/ukuran: ${gaya}` : '';
-      return `Kamu adalah frontend developer berpengalaman mengedit game edukasi HTML yang sudah jadi.
+      return finalizePrompt(`Kamu adalah frontend developer berpengalaman mengedit game edukasi HTML yang sudah jadi.
 
 📋 TUGAS: Ganti/tambahkan gambar custom ke game yang sudah ada (lihat file kode HTML yang saya lampirkan).
 
@@ -3760,7 +3760,7 @@ ${menuInstructions}
 - Jangan ubah struktur/logic game lain di luar bagian visual yang diminta
 - Pastikan gambar tetap terlihat jelas dan tidak pecah/blur di layar HP
 
-🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`;
+🌐 Setelah selesai, tunjukkan bagian kode yang diubah saja supaya mudah saya cek.`);
     }
 
     // ── TAMBAH SUARA/VOICE (client-side, no Firebase template needed) ──

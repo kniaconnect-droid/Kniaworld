@@ -1802,7 +1802,7 @@
     <div class="template-hero">
       <div class="pro-crown"><i class="fa-solid fa-crown"></i></div>
       <h2>Template Pro Eksklusif ✨</h2>
-      <p>12 template siap pakai — UI/UX unik, game coding, matematika Singapore, English, revisi, dan bundling. Isi form → generate → paste ke Claude atau Gemini!</p>
+      <p>12 template siap pakai — mekanik game unik, game coding, matematika Singapore, English, revisi, dan bundling. Isi form → generate → paste ke Claude atau Gemini!</p>
     </div>
 
     <div class="pro-nav">
@@ -1810,7 +1810,7 @@
         <i class="fa-solid fa-wand-magic-sparkles"></i> Generator
       </button>
       <button class="pro-nav-btn" onclick="switchProTab('tabTemplates')" id="navTpl">
-        <i class="fa-solid fa-gamepad"></i> UI/UX
+        <i class="fa-solid fa-gamepad"></i> Mekanik Game
       </button>
       <button class="pro-nav-btn" onclick="switchProTab('tabSubject')" id="navSubj">
         <i class="fa-solid fa-book-open"></i> Mapel
@@ -1868,11 +1868,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t1_usia">
+            <select id="t1_usia" onchange="toggleCustomAge(this,'t1_usia_custom')">
               <option value="4-6 tahun (TK/PAUD)">4–6 tahun (TK/PAUD)</option>
               <option value="7-9 tahun (SD awal)" selected>7–9 tahun (SD awal)</option>
               <option value="9-12 tahun (SD atas)">9–12 tahun (SD atas)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t1_usia_custom" placeholder="Contoh: 6–9 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -1932,11 +1935,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t2_usia">
+            <select id="t2_usia" onchange="toggleCustomAge(this,'t2_usia_custom')">
               <option value="5-7 tahun (TK/SD awal)">5–7 tahun (TK/SD awal)</option>
               <option value="8-10 tahun (SD)" selected>8–10 tahun (SD)</option>
               <option value="10-12 tahun (SD atas)">10–12 tahun (SD atas)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t2_usia_custom" placeholder="Contoh: 8–10 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -1995,11 +2001,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t3_usia">
+            <select id="t3_usia" onchange="toggleCustomAge(this,'t3_usia_custom')">
               <option value="4-6 tahun (PAUD/TK)" selected>4–6 tahun (PAUD/TK)</option>
               <option value="6-9 tahun (SD awal)">6–9 tahun (SD awal)</option>
               <option value="9-12 tahun (SD atas)">9–12 tahun (SD atas)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t3_usia_custom" placeholder="Contoh: 4–6 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2058,11 +2067,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t4_usia">
+            <select id="t4_usia" onchange="toggleCustomAge(this,'t4_usia_custom')">
               <option value="6-8 tahun (SD awal)">6–8 tahun (SD awal)</option>
               <option value="8-11 tahun (SD)" selected>8–11 tahun (SD)</option>
               <option value="10-13 tahun (SD/SMP)">10–13 tahun (SD/SMP)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t4_usia_custom" placeholder="Contoh: 8–11 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2121,11 +2133,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t5_usia">
+            <select id="t5_usia" onchange="toggleCustomAge(this,'t5_usia_custom')">
               <option value="3-5 tahun (PAUD)" selected>3–5 tahun (PAUD)</option>
               <option value="5-8 tahun (TK/SD awal)">5–8 tahun (TK/SD awal)</option>
               <option value="7-10 tahun (SD)">7–10 tahun (SD)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t5_usia_custom" placeholder="Contoh: 3–5 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2208,11 +2223,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t6_usia">
+            <select id="t6_usia" onchange="toggleCustomAge(this,'t6_usia_custom')">
               <option value="7-9 tahun (SD awal)">7–9 tahun (SD awal)</option>
               <option value="9-12 tahun (SD atas)" selected>9–12 tahun (SD atas)</option>
               <option value="12-15 tahun (SMP)">12–15 tahun (SMP)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t6_usia_custom" placeholder="Contoh: 9–12 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2274,12 +2292,14 @@
           </div>
           <div class="tpl-field">
             <label>Tingkat / Grade</label>
-            <select id="t7_grade">
+            <select id="t7_grade" onchange="toggleCustomAge(this,'t7_grade_custom')">
               <option value="Primary 1 (Grade 1, usia 6-7 tahun)">Primary 1 (usia 6–7)</option>
               <option value="Primary 2 (Grade 2, usia 7-8 tahun)" selected>Primary 2 (usia 7–8)</option>
               <option value="Primary 3 (Grade 3, usia 8-9 tahun)">Primary 3 (usia 8–9)</option>
               <option value="Primary 4 (Grade 4, usia 9-10 tahun)">Primary 4 (usia 9–10)</option>
+              <option value="custom">✏️ Tulis grade/usia sendiri…</option>
             </select>
+            <input type="text" id="t7_grade_custom" placeholder="Contoh: Primary 5, usia 10-11 tahun" style="display:none;margin-top:8px;" />
           </div>
           <div class="tpl-field">
             <label>Nama Brand</label>
@@ -2358,12 +2378,15 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t8_usia">
+            <select id="t8_usia" onchange="toggleCustomAge(this,'t8_usia_custom')">
               <option value="5-7 tahun (TK/SD awal)">5–7 tahun (TK/SD awal)</option>
               <option value="7-10 tahun (SD)" selected>7–10 tahun (SD)</option>
               <option value="10-13 tahun (SD atas/SMP)">10–13 tahun (SD atas/SMP)</option>
               <option value="13-17 tahun (SMP/SMA)">13–17 tahun (SMP/SMA)</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t8_usia_custom" placeholder="Contoh: 7–10 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2687,11 +2710,14 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia</label>
-            <select id="t12_usia">
+            <select id="t12_usia" onchange="toggleCustomAge(this,'t12_usia_custom')">
               <option value="5-7 tahun (TK/SD awal)">5–7 tahun</option>
               <option value="7-10 tahun (SD)" selected>7–10 tahun (SD)</option>
               <option value="10-13 tahun (SD atas/SMP)">10–13 tahun</option>
+            
+              <option value="custom">✏️ Tulis usia sendiri…</option>
             </select>
+            <input type="text" id="t12_usia_custom" placeholder="Contoh: 7–10 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2740,6 +2766,16 @@
           <div class="tpl-field">
             <label>Tujuan Pembelajaran</label>
             <input type="text" id="t13_tujuan" placeholder="Contoh: anak bisa menghafal perkalian 1-10 dengan cepat dan akurat" />
+          </div>
+          <div class="tpl-field">
+            <label>Target Usia</label>
+            <select id="t13_usia" onchange="toggleCustomAge(this,'t13_usia_custom')">
+              <option value="4-6 tahun (PAUD/TK)">4–6 tahun (PAUD/TK)</option>
+              <option value="7-10 tahun (SD)" selected>7–10 tahun (SD)</option>
+              <option value="10-13 tahun (SD atas/SMP)">10–13 tahun (SD atas/SMP)</option>
+              <option value="custom">✏️ Tulis usia sendiri…</option>
+            </select>
+            <input type="text" id="t13_usia_custom" placeholder="Contoh: 5 tahun 8 bulan, 10-13 tahun" style="display:none;margin-top:8px;" />
           </div>
         </div>
           <div class="tpl-field">
@@ -2900,13 +2936,15 @@
           </div>
           <div class="tpl-field">
             <label>Target Usia / Pengguna</label>
-            <select id="t14_target">
+            <select id="t14_target" onchange="toggleCustomAge(this,'t14_target_custom')">
               <option value="4-6 tahun (PAUD/TK)">4–6 tahun (PAUD/TK)</option>
               <option value="6-8 tahun (SD awal)">6–8 tahun (SD awal)</option>
               <option value="8-10 tahun (SD)" selected>8–10 tahun (SD)</option>
               <option value="10-13 tahun (SD atas/SMP)">10–13 tahun (SD atas/SMP)</option>
               <option value="orang tua / guru sebagai pembeli">Orang Tua / Guru</option>
+              <option value="custom">✏️ Tulis sendiri…</option>
             </select>
+            <input type="text" id="t14_target_custom" placeholder="Contoh: 5 tahun 8 bulan, 10-13 tahun" style="display:none;margin-top:8px;" />
           </div>
           <div class="tpl-field">
             <label>Rencana Harga Jual</label>
@@ -3485,6 +3523,26 @@ ${menuInstructions}
     if (shown) shown.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // ── Toggle "tulis usia sendiri" custom text field when a Target Usia <select> = 'custom' ──
+  function toggleCustomAge(selectEl, customInputId) {
+    const customInput = document.getElementById(customInputId);
+    if (!customInput) return;
+    if (selectEl.value === 'custom') {
+      customInput.style.display = 'block';
+      customInput.focus();
+    } else {
+      customInput.style.display = 'none';
+    }
+  }
+
+  // ── NO-EMOJI GUARD: ditambahkan ke SETIAP prompt (generator utama & template pro)
+  //    supaya AI tidak memakai emoji sebagai elemen visual utama (ikon, maskot, badge, dll) ──
+  function finalizePrompt(text) {
+    if (!text) return text;
+    const noEmojiBlock = `\n\n🚫 KETENTUAN IKON & VISUAL (WAJIB — BACA TERAKHIR, PALING PENTING):\n- JANGAN gunakan karakter emoji (😀🍎⭐🎉 dsb) sebagai ikon, maskot, badge, atau elemen visual utama di UI\n- Semua ikon WAJIB pakai Font Awesome (sudah ada CDN-nya) atau ikon SVG custom inline yang relevan dengan materi — bukan emoji\n- Maskot/karakter: buat sebagai ilustrasi SVG/CSS shape sederhana (bentuk geometris + warna tema), bukan emoji besar\n- Badge, reward, dan feedback benar/salah: pakai kombinasi ikon Font Awesome + warna + animasi — bukan emoji\n- Emoji hanya boleh dipakai di dalam teks kalimat (opsional, secukupnya), TIDAK boleh jadi pengganti ikon/gambar`;
+    return text + noEmojiBlock;
+  }
+
   function buildTemplatePrompt(tplId) {
     // ── SAFE FIELD READER (prevents null crash for templates without _usia etc.) ──
     function fv(id, fallback) {
@@ -3492,39 +3550,51 @@ ${menuInstructions}
       return el ? (el.value.trim() || fallback || '') : (fallback || '');
     }
 
+    // ── USIA READER: pakai isian custom kalau user pilih "Tulis usia sendiri" ──
+    function usiaVal(selectId, customId, fallback) {
+      const sel = document.getElementById(selectId);
+      if (!sel) return fallback || '';
+      if (sel.value === 'custom') {
+        const custom = document.getElementById(customId);
+        const v = custom ? custom.value.trim() : '';
+        return v || fallback || '';
+      }
+      return sel.value || fallback || '';
+    }
+
     if (tplId === 1) {
       const materi = fv(`t1_materi`, 'materi edukasi');
       const brand  = fv(`t1_brand`, 'kniaWorld');
-      const usia   = fv(`t1_usia`, '6-9 tahun');
-    return renderTpl('t1', {materi, brand, usia});
+      const usia   = usiaVal('t1_usia','t1_usia_custom', '6-9 tahun');
+    return finalizePrompt(renderTpl('t1', {materi, brand, usia}));
     } // end tplId===1
 
     if (tplId === 2) {
       const materi = fv(`t2_materi`, 'materi edukasi');
       const brand  = fv(`t2_brand`, 'kniaWorld');
-      const usia   = fv(`t2_usia`, '8-10 tahun');
-    return renderTpl('t2', {materi, brand, usia});
+      const usia   = usiaVal('t2_usia','t2_usia_custom', '8-10 tahun');
+    return finalizePrompt(renderTpl('t2', {materi, brand, usia}));
     } // end tplId===2
 
     if (tplId === 3) {
       const materi = fv(`t3_materi`, 'materi edukasi');
       const brand  = fv(`t3_brand`, 'kniaWorld');
-      const usia   = fv(`t3_usia`, '4-6 tahun');
-    return renderTpl('t3', {materi, brand, usia});
+      const usia   = usiaVal('t3_usia','t3_usia_custom', '4-6 tahun');
+    return finalizePrompt(renderTpl('t3', {materi, brand, usia}));
     } // end tplId===3
 
     if (tplId === 4) {
       const materi = fv(`t4_materi`, 'materi edukasi');
       const brand  = fv(`t4_brand`, 'kniaWorld');
-      const usia   = fv(`t4_usia`, '8-11 tahun');
-    return renderTpl('t4', {materi, brand, usia});
+      const usia   = usiaVal('t4_usia','t4_usia_custom', '8-11 tahun');
+    return finalizePrompt(renderTpl('t4', {materi, brand, usia}));
     } // end tplId===4
 
     if (tplId === 5) {
       const materi = fv(`t5_materi`, 'materi edukasi');
       const brand  = fv(`t5_brand`, 'kniaWorld');
-      const usia   = fv(`t5_usia`, '3-5 tahun');
-    return renderTpl('t5', {materi, brand, usia});
+      const usia   = usiaVal('t5_usia','t5_usia_custom', '3-5 tahun');
+    return finalizePrompt(renderTpl('t5', {materi, brand, usia}));
     } // end tplId===5
 
     // ── TEMPLATE 6: CODING ADVENTURE ──
@@ -3532,16 +3602,16 @@ ${menuInstructions}
       const topik  = fv('t6_topik', 'Dasar-Dasar Coding');
       const level6 = fv('t6_level', '5 level');
       const brand6 = fv('t6_brand', 'kniaWorld');
-      const usia6  = fv('t6_usia',  '9-12 tahun');
-      return renderTpl('t6', {topik, level6, brand6, usia6});
+      const usia6  = usiaVal('t6_usia','t6_usia_custom', '9-12 tahun');
+      return finalizePrompt(renderTpl('t6', {topik, level6, brand6, usia6}));
     }
 
     // ── TEMPLATE 7: SINGAPORE MATH ──
     if (tplId === 7) {
       const topik7  = fv('t7_topik', 'Number Bonds');
-      const grade7  = fv('t7_grade', 'Primary 2 (Grade 2, usia 7-8 tahun)');
+      const grade7  = usiaVal('t7_grade','t7_grade_custom', 'Primary 2 (Grade 2, usia 7-8 tahun)');
       const brand7  = fv('t7_brand', 'kniaWorld');
-      return renderTpl('t7', {topik7, grade7, brand7});
+      return finalizePrompt(renderTpl('t7', {topik7, grade7, brand7}));
     }
 
     // ── TEMPLATE 8: ENGLISH QUEST ──
@@ -3549,8 +3619,8 @@ ${menuInstructions}
       const topik8 = fv('t8_topik', 'Vocabulary Building');
       const level8 = fv('t8_level', 'Beginner (A1)');
       const brand8 = fv('t8_brand', 'kniaWorld');
-      const usia8  = fv('t8_usia',  '6-10 tahun');
-      return renderTpl('t8', {topik8, level8, brand8, usia8});
+      const usia8  = usiaVal('t8_usia','t8_usia_custom', '6-10 tahun');
+      return finalizePrompt(renderTpl('t8', {topik8, level8, brand8, usia8}));
     }
 
     // ── TEMPLATE 9: REVISI GANTI SOAL ──
@@ -3559,7 +3629,7 @@ ${menuInstructions}
       const materi9 = fv('t9_materi', 'materi baru');
       const extra9  = fv('t9_extra',  '');
       const extraLine = extra9 ? `\n- Instruksi khusus tambahan: ${extra9}` : '';
-      return renderTpl('t9', {jenis9, materi9, extra9, extraLine});
+      return finalizePrompt(renderTpl('t9', {jenis9, materi9, extra9, extraLine}));
     }
 
     // ── TEMPLATE 10: REVISI UPGRADE FITUR ──
@@ -3569,7 +3639,7 @@ ${menuInstructions}
       const extra10   = fv('t10_extra',  '');
       const detailLine   = detail10 ? `\n- Detail spesifikasi: ${detail10}` : '';
       const extraLine10  = extra10  ? `\n- Instruksi tambahan: ${extra10}`  : '';
-      return renderTpl('t10', {jenis10, detail10, extra10, detailLine, extraLine10});
+      return finalizePrompt(renderTpl('t10', {jenis10, detail10, extra10, detailLine, extraLine10}));
     }
 
     // ── TEMPLATE 11: REVISI FIX BUG ──
@@ -3577,7 +3647,7 @@ ${menuInstructions}
       const jenis11   = fv('t11_jenis', 'perbaiki tampilan di mobile');
       const masalah11 = fv('t11_masalah', '');
       const warna11   = fv('t11_warna', '');
-      return renderTpl('t11', {jenis11: jenis11, masalah11: masalah11, warna11: warna11});
+      return finalizePrompt(renderTpl('t11', {jenis11: jenis11, masalah11: masalah11, warna11: warna11}));
     }
 
     // ── TEMPLATE 12: BUNDLING ──
@@ -3589,27 +3659,27 @@ ${menuInstructions}
       const m4      = fv('t12_m4',    'Materi 4');
       const m5      = fv('t12_m5',    'Materi 5');
       const brand12 = fv('t12_brand', 'kniaWorld');
-      const usia12  = fv('t12_usia',  '7-10 tahun');
-      return renderTpl('t12', {game12, m1, m2, m3, m4, m5, brand12, usia12});
+      const usia12  = usiaVal('t12_usia','t12_usia_custom', '7-10 tahun');
+      return finalizePrompt(renderTpl('t12', {game12, m1, m2, m3, m4, m5, brand12, usia12}));
     }
 
     // ── TEMPLATE 13: WORKSHEET TO GAME ──
     if (tplId === 13) {
       const isi13    = fv('t13_isi', 'materi dari worksheet');
-      const usia13   = fv('t13_usia', '7-10 tahun');
+      const usia13   = usiaVal('t13_usia','t13_usia_custom', '7-10 tahun');
       const tujuan13 = fv('t13_tujuan', 'memahami materi dengan cara yang menyenangkan');
       const jenis13  = fv('t13_jenis', 'kuis pilihan ganda');
-      const style13  = fv('t13_style', 'Cute Emoji Playful');
+      const style13  = fv('t13_style', 'Playful & Bersih (ikon Font Awesome / SVG, tanpa emoji)');
       const brand13  = fv('t13_brand', 'kniaWorld');
-      return renderTpl('t13', {isi13, usia13, tujuan13, jenis13, style13, brand13});
+      return finalizePrompt(renderTpl('t13', {isi13, usia13, tujuan13, jenis13, style13, brand13}));
     }
 
     // ── TEMPLATE 14: AUDIT GAME SIAP JUAL ──
     if (tplId === 14) {
       const nama14   = fv('t14_nama', 'Game Edukasi');
-      const target14 = fv('t14_target', '7-10 tahun');
+      const target14 = usiaVal('t14_target','t14_target_custom', '7-10 tahun');
       const harga14  = fv('t14_harga', 'Rp 25.000 – Rp 75.000');
-      return renderTpl('t14', {nama14, target14, harga14});
+      return finalizePrompt(renderTpl('t14', {nama14, target14, harga14}));
     }
 
     if (tplId === 15) {
@@ -3821,7 +3891,7 @@ ${menuInstructions}
     ['🔮 Memproses input kamu...', '🛠️ Merakit instruksi AI...', '📡 Mengirim ke generator...', '💫 Done!'],
   ];
   function generatePrompt() {
-    const prompt = buildPrompt();
+    const prompt = finalizePrompt(buildPrompt());
     // Pick random phrase set
     const phrases = _loadingPhrases[Math.floor(Math.random() * _loadingPhrases.length)];
     // Show loading overlay on button

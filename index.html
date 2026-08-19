@@ -3571,13 +3571,11 @@ Game ini dimainkan oleh anak usia ${finalAge}. Buat konten yang berbeda per rent
       return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
-🎨 KETENTUAN IKON & VISUAL (WAJIB — JANGAN GENERIK):
-- DILARANG menggunakan ikon generik sebagai elemen utama UI: bintang ⭐ polos, centang ✅ biasa, silang ❌ biasa untuk semua feedback — harus kontekstual dengan materi game
-- Setiap ikon HARUS relevan dengan konten. Contoh: math → 🔢➕🧮, hewan → 🐘🦒🦜, coding → 💻⌨️{}, bahasa → 🗣️📖✍️
-- Feedback benar: animasi + teks + ikon spesifik materi — bukan sekadar ✅ statis
-- Feedback salah: gentle visual + petunjuk + ikon kontekstual — bukan sekadar ❌ merah polos
-- Background pattern: sesuai tema (angka mengambang untuk math, huruf untuk language, kode untuk coding)
-- Badge & reward: custom per materi — bukan bintang emas generik untuk semua jenis game
+🎨 KETENTUAN VISUAL:
+- MASKOT UTAMA: buat sebagai gambar ilustrasi karakter (embed base64 PNG/SVG langsung inline di kode — bukan link eksternal), relevan dengan materi "${finalSubject}" dan brand "${brand}". Tampilkan di halaman welcoming (min 120px), beri animasi bounce/float ringan.
+- Gaya visual game: pilih 2D atau 3D (CSS 3D transform / perspective boleh dipakai) — sesuaikan yang paling cocok dan mudah dieksekusi untuk jenis game "${finalGameType}" dan usia target.
+- Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
+- Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
 
 Buatkan game edukasi interaktif untuk anak.
 
@@ -3597,7 +3595,7 @@ ${adaptiveAgeNote}
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
 - Background: warna tema yang kaya + ornamen/pola dekoratif (gelombang, bintang, atau bentuk geometris kecil)
-- Maskot/karakter: ilustrasi SVG/CSS shape besar (min 80px) yang relevan dengan materi — bukan emoji, diberi animasi bounce atau float terus-menerus
+- Maskot/karakter: gambar ilustrasi (base64 inline, sesuai ketentuan visual di atas), tampil besar (min 80px), diberi animasi bounce atau float terus-menerus
 - Nama brand "${brand}" ditampilkan besar dan mencolok (font tebal, bisa ada outline atau shadow)
 - Tagline pendek yang mengundang: contoh "Belajar Seru Setiap Hari! ✨" atau sesuaikan dengan materi
 - Tombol CTA besar dan menarik: "🚀 Mulai Main!" — dengan animasi pulse atau glow
@@ -3635,13 +3633,11 @@ ${spec.flow}
     return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
-🎨 KETENTUAN IKON & VISUAL (WAJIB — JANGAN GENERIK):
-- DILARANG menggunakan ikon generik sebagai elemen utama UI: bintang ⭐ polos, centang ✅ biasa, silang ❌ biasa untuk semua feedback — harus kontekstual dengan materi game
-- Setiap ikon HARUS relevan dengan konten. Contoh: math → 🔢➕🧮, hewan → 🐘🦒🦜, coding → 💻⌨️{}, bahasa → 🗣️📖✍️
-- Feedback benar: animasi + teks + ikon spesifik materi — bukan sekadar ✅ statis
-- Feedback salah: gentle visual + petunjuk + ikon kontekstual — bukan sekadar ❌ merah polos
-- Background pattern: sesuai tema (angka mengambang untuk math, huruf untuk language, kode untuk coding)
-- Badge & reward: custom per materi — bukan bintang emas generik untuk semua jenis game
+🎨 KETENTUAN VISUAL:
+- MASKOT UTAMA: buat sebagai gambar ilustrasi karakter (embed base64 PNG/SVG langsung inline di kode — bukan link eksternal), relevan dengan materi "${finalSubject}" dan brand "${brand}". Tampilkan di halaman welcoming (min 120px), beri animasi bounce/float ringan.
+- Gaya visual game: pilih 2D atau 3D (CSS 3D transform / perspective boleh dipakai) — sesuaikan yang paling cocok dan mudah dieksekusi untuk jenis game "${finalGameType}" dan usia target.
+- Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
+- Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
 
 Buatkan game edukasi interaktif untuk anak.
 
@@ -3659,7 +3655,7 @@ ${adaptiveAgeNote}
 ${menuInstructions}
 
 🏠 HALAMAN WELCOMING (LAYAR PERTAMA):
-- Maskot ilustrasi SVG/CSS shape besar beranimasi (bukan emoji), brand "${brand}" mencolok, tagline mengundang
+- Maskot gambar ilustrasi (base64 inline, sesuai ketentuan visual di atas), tampil besar beranimasi, brand "${brand}" mencolok, tagline mengundang
 - Tombol "🚀 Ayo Mulai!" pulse animation, transisi smooth ke menu
 
 🎨 DESAIN: ${color} — konsisten di semua halaman, cerah dan playful
@@ -3743,12 +3739,10 @@ ${menuInstructions}
     }
   }
 
-  // ── NO-EMOJI GUARD: ditambahkan ke SETIAP prompt (generator utama & template pro)
-  //    supaya AI tidak memakai emoji sebagai elemen visual utama (ikon, maskot, badge, dll) ──
+  // ── finalizePrompt: dulu menambahkan guard ikon/visual di akhir prompt.
+  //    Sekarang dikosongkan supaya AI bebas menentukan gaya ikon/visual sendiri. ──
   function finalizePrompt(text) {
-    if (!text) return text;
-    const noEmojiBlock = `\n\n🚫 KETENTUAN IKON & VISUAL (WAJIB — BACA TERAKHIR, PALING PENTING):\n- JANGAN gunakan karakter emoji (😀🍎⭐🎉 dsb) sebagai ikon, maskot, badge, atau elemen visual utama di UI\n- Semua ikon WAJIB pakai Font Awesome (sudah ada CDN-nya) atau ikon SVG custom inline yang relevan dengan materi — bukan emoji\n- Maskot/karakter: buat sebagai ilustrasi SVG/CSS shape sederhana (bentuk geometris + warna tema), bukan emoji besar\n- Badge, reward, dan feedback benar/salah: pakai kombinasi ikon Font Awesome + warna + animasi — bukan emoji\n- Emoji hanya boleh dipakai di dalam teks kalimat (opsional, secukupnya), TIDAK boleh jadi pengganti ikon/gambar`;
-    return text + noEmojiBlock;
+    return text;
   }
 
   function buildTemplatePrompt(tplId) {

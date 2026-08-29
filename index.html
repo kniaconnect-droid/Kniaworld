@@ -2876,7 +2876,7 @@
         <div class="tpl-fields">
           <div class="tpl-field">
             <label>Jenis Game</label>
-            <select id="t12_game">
+            <select id="t12_game" onchange="updateBundleFieldHints()">
               <option value="kuis pilihan ganda" selected>Kuis Pilihan Ganda</option>
               <option value="card flip memory game">Card Flip Memory</option>
               <option value="drag and drop puzzle">Drag & Drop Puzzle</option>
@@ -3509,6 +3509,43 @@
     });
   });
 
+  // Placeholder contoh materi menyesuaikan mekanik game yang dipilih di Game Bundling,
+  // supaya user tahu jenis konten yang cocok untuk tiap mekanik.
+  const BUNDLE_PLACEHOLDER_BY_MECHANIC = {
+    'kuis pilihan ganda': [
+      'Matematika — Perkalian 1-10', 'Bahasa Indonesia — Sinonim & Antonim',
+      'IPA — Sistem Tata Surya', 'Bahasa Inggris — Kosakata Dasar', 'PPKn — Simbol Negara'
+    ],
+    'card flip memory game': [
+      'Pasangan Angka & Lambang Bilangan', 'Pasangan Ibu Kota & Negara',
+      'Pasangan Hewan & Habitatnya', 'Pasangan Kata & Sinonim',
+      'Pasangan Rumus & Nama Bangun Datar'
+    ],
+    'drag and drop puzzle': [
+      'Puzzle Angka 1-10', 'Puzzle Huruf Alfabet',
+      'Puzzle Bentuk Bangun Datar', 'Puzzle Bendera Negara ASEAN',
+      'Puzzle Anggota Tubuh'
+    ],
+    'speed challenge (jawab cepat)': [
+      'Perkalian Cepat 1-10', 'Tebak Ibu Kota Provinsi',
+      'Tebak Sinonim Kilat', 'Tebak Kosakata Bahasa Inggris',
+      'Tebak Lambang Sila Pancasila'
+    ],
+    'mencocokkan gambar dengan kata': [
+      'Nama Buah & Gambarnya', 'Nama Hewan & Gambarnya',
+      'Nama Profesi & Gambarnya', 'Nama Alat Musik & Gambarnya',
+      'Nama Kendaraan & Gambarnya'
+    ]
+  };
+  function updateBundleFieldHints() {
+    const mechanic = document.getElementById('t12_game').value;
+    const examples = BUNDLE_PLACEHOLDER_BY_MECHANIC[mechanic] || BUNDLE_PLACEHOLDER_BY_MECHANIC['kuis pilihan ganda'];
+    for (let i = 1; i <= 5; i++) {
+      const input = document.getElementById('t12_m' + i);
+      if (input) input.placeholder = 'Contoh: ' + examples[i - 1];
+    }
+  }
+
   function toggleCustom(id) {
     const el = document.getElementById(id);
     el.classList.toggle('open');
@@ -3558,8 +3595,12 @@
     const multiAge     = ages.length > 1;
     const needsMenu    = multiGame || multiSubject;
 
+    const ageToneNote = `\n⚠️ SESUAIKAN NADA & GAYA DENGAN TARGET USIA (${finalAge}):\n- Jika target usia menunjukkan dewasa/remaja akhir/profesional (mis. "Dewasa", "18+", "17+", atau angka ≥ 17): gunakan nada bahasa matang, praktis, tidak kekanak-kanakan — HINDARI sebutan "anak", analogi mainan anak, sapaan "adik-adik", warna pastel/karakter maskot ala anak TK. Sebut pengguna sebagai "kamu"/"pemain"/"peserta".\n- Jika target usia menunjukkan anak-anak (di bawah 12 tahun, "TK", "PAUD", "SD"): gunakan nada ramah-anak, sederhana dan playful seperti biasa.\n- Jika target usia menunjukkan remaja (13-16 tahun, SMP/SMA): nada lebih santai tapi tetap tidak kekanak-kanakan.`;
+
+    const varietyNote = `\n🎲 VARIASI KONTEN (WAJIB):\n- Hindari redaksi soal/konten yang generik dan template-y (pola kalimat yang sama persis di setiap nomor).\n- Variasikan gaya kalimat, konteks/skenario, dan urutan opsi jawaban antar soal — bahkan untuk materi yang sama dengan generate sebelumnya, buat pendekatan/contoh yang berbeda.\n- ID sesi acak (hanya untuk mendorong variasi internal, jangan ditampilkan ke user): ${Math.floor(Math.random()*1000000)}`;
+
     const adaptiveAgeNote = multiAge ? `\n⚠️ KONTEN ADAPTIF USIA:
-Game ini dimainkan oleh anak usia ${finalAge}. Buat konten yang berbeda per rentang usia:
+Game ini dimainkan oleh pemain usia ${finalAge}. Buat konten yang berbeda per rentang usia:
 - Usia lebih muda: lebih sederhana, lebih banyak visual, instruksi singkat
 - Usia lebih tua: lebih kompleks, variasi soal lebih banyak
 - Tampilkan pilihan usia di halaman intro sebelum game dimulai (tombol pilih usia, bukan menu terpisah)` : '';
@@ -3568,7 +3609,7 @@ Game ini dimainkan oleh anak usia ${finalAge}. Buat konten yang berbeda per rent
     const spec = GAME_SPECS[primaryGameKey] || DEFAULT_SPEC;
 
     if (!needsMenu) {
-      return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
+      return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
 🎨 KETENTUAN VISUAL:
@@ -3577,7 +3618,7 @@ Game ini dimainkan oleh anak usia ${finalAge}. Buat konten yang berbeda per rent
 - Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
 - Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
 
-Buatkan game edukasi interaktif untuk anak.
+Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
 📋 SPESIFIKASI GAME:
 - Jenis game: ${finalGameType}
@@ -3585,18 +3626,18 @@ Buatkan game edukasi interaktif untuk anak.
 - Target usia: ${finalAge}
 - Tingkat kesulitan: ${difficulty}${featureText}
 - Brand: "${brand}", warna tema: ${color}${designExtra}
-${adaptiveAgeNote}
+${adaptiveAgeNote}${ageToneNote}${varietyNote}
 
 🎯 MANFAAT & TRANSFORMASI:
-- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi anak, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
+- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi pemain, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
 - Selipkan pesan manfaat/transformasi ini secara natural di tagline halaman welcoming dan di pesan penyemangat pada halaman skor akhir.
 - Rancang pengalaman mekanik game (interaksi, animasi, feedback) supaya terasa nyata dan sesuai konteks materi/jenis game "${finalGameType}" — bukan generik asal jadi. Contoh: kalau temanya berkaitan dengan aktivitas dunia nyata, buat interaksinya semirip mungkin dengan aktivitas aslinya.
 
 📐 KETENTUAN TEKNIS:
 - Responsive & mobile-first
 - Semua soal/konten harus relevan dengan materi "${finalSubject}" (bukan soal generik)
-- Font besar, mudah dibaca anak — minimal 18px untuk teks soal
-- Semua tombol & area tap: minimal ukuran 48x48px, ramah jari kecil
+- Font besar, mudah dibaca sesuai target usia — minimal 18px untuk teks soal
+- Semua tombol & area tap: minimal ukuran 48x48px, nyaman disentuh
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
 - Background: warna tema yang kaya + ornamen/pola dekoratif (gelombang, bintang, atau bentuk geometris kecil)
@@ -3615,7 +3656,7 @@ ${spec.flow}
 
 🎨 DESAIN:
 - Warna tema: ${color} — konsisten di semua halaman
-- Gaya visual: cerah, playful, menarik untuk anak-anak
+- Gaya visual: sesuaikan dengan target usia (cerah & playful untuk anak, lebih clean/matang untuk usia dewasa)
 - Animasi: transisi halaman smooth, feedback animasi saat benar/salah
 
 🌐 BAHASA: Indonesia untuk instruksi, konten soal sesuai materi
@@ -3635,7 +3676,7 @@ ${spec.flow}
       menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown)\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     }
 
-    return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi anak-anak interaktif . Kamu memahami prinsip desain UI untuk anak, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
+    return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
 🎨 KETENTUAN VISUAL:
@@ -3644,7 +3685,7 @@ ${spec.flow}
 - Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
 - Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
 
-Buatkan game edukasi interaktif untuk anak.
+Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
 📋 SPESIFIKASI GAME:
 - Jenis game tersedia: ${finalGameType}
@@ -3652,10 +3693,10 @@ Buatkan game edukasi interaktif untuk anak.
 - Target usia: ${finalAge}
 - Tingkat kesulitan: ${difficulty}${featureText}
 - Brand: "${brand}", warna tema: ${color}${designExtra}
-${adaptiveAgeNote}
+${adaptiveAgeNote}${ageToneNote}${varietyNote}
 
 🎯 MANFAAT & TRANSFORMASI:
-- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi anak, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
+- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi pemain, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
 - Selipkan pesan manfaat/transformasi ini secara natural di tagline halaman welcoming dan di pesan penyemangat pada halaman skor akhir.
 - Rancang pengalaman mekanik game (interaksi, animasi, feedback) supaya terasa nyata dan sesuai konteks materi/jenis game "${finalGameType}" — bukan generik asal jadi. Contoh: kalau temanya berkaitan dengan aktivitas dunia nyata, buat interaksinya semirip mungkin dengan aktivitas aslinya.
 

@@ -306,6 +306,16 @@ ${menuInstructions}
     return finalizePrompt(renderTpl('t17', {materi, brand, usia, warna}));
     } // end tplId===17
 
+    if (tplId === 18) {
+      const topik   = fv(`t18_topik`, 'objek edukatif sesuai tema');
+      const keping  = fv(`t18_keping`, '6');
+      const brand   = fv(`t18_brand`, 'kniaWorld');
+      const usia    = usiaVal('t18_usia','t18_usia_custom', '6-8 tahun');
+      const warna   = fv(`t18_warna`, 'cerah dan playful, sesuai tema materi');
+      const tambahan = fv(`t18_tambahan`, '');
+    return finalizePrompt(renderTpl('t18', {topik, keping, brand, usia, warna, tambahan}));
+    } // end tplId===18
+
     // ── TEMPLATE 6: CODING ADVENTURE ──
     if (tplId === 6) {
       const topik  = fv('t6_topik', 'Dasar-Dasar Coding');

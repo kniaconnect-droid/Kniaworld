@@ -79,6 +79,21 @@
   }
 
   // ══════════════════════════════════════
+  //  BONUS: AI ASISTEN PROMOSI POPUP
+  // ══════════════════════════════════════
+  function openBonusPopup() {
+    const overlay = document.getElementById('bonusPopup');
+    overlay.classList.remove('hide');
+    overlay.style.display = 'flex';
+  }
+
+  function closeBonusPopup() {
+    const overlay = document.getElementById('bonusPopup');
+    overlay.classList.add('hide');
+    setTimeout(() => { overlay.style.display = 'none'; }, 280);
+  }
+
+  // ══════════════════════════════════════
   //  ACCESS VIA EMAIL PEMBELI + 4 DIGIT WA
   //  (diisi otomatis oleh webhook Lynk.id setelah transaksi sukses —
   //  lihat /api/lynk-webhook.js dan /api/verify-buyer.js)

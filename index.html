@@ -1148,6 +1148,89 @@
         </div>
       </div>
 
+      <!-- TEMPLATE 18: PUZZLE KEPING (JIGSAW) -->
+      <div class="template-card">
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#ea580c,#facc15);"></div>
+        <div class="tpl-header">
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#fff7ed,#fef3c7);">🧩</div>
+          <div class="tpl-meta">
+            <h3>Puzzle Keping</h3>
+            <div class="tpl-sub">Jigsaw · Drag & Drop · Bintang per Ronde</div>
+          </div>
+        </div>
+        <div class="tpl-tags">
+          <span class="tpl-tag" style="background:#fff7ed;color:#9a3412;">🧩 Jigsaw</span>
+          <span class="tpl-tag" style="background:#fef3c7;color:#92400e;">👆 Drag & Drop</span>
+          <span class="tpl-tag" style="background:#fde68a;color:#92400e;">⭐ Bintang</span>
+        </div>
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#fff7ed,#fef3c7);border:1px solid rgba(234,88,12,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+          <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:4px;">Cara Main</div>
+          <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Anak menyeret keping-keping puzzle dari rak ke papan sampai membentuk gambar utuh sesuai topik. Setiap ronde punya gambar berbeda, dan kecepatan + ketelitian menyusun menentukan jumlah bintang yang didapat.</div>
+        </div>
+        <div class="tpl-fields">
+          <div class="tpl-field">
+            <label>Topik Puzzle</label>
+            <input type="text" id="t18_topik" placeholder="Contoh: hewan ternak, bentuk geometri, huruf abjad, buah-buahan…" />
+          </div>
+          <div class="tpl-field">
+            <label>Jumlah Keping</label>
+            <select id="t18_keping">
+              <option value="4">4 keping (2x2 — paling mudah)</option>
+              <option value="6" selected>6 keping (2x3)</option>
+              <option value="9">9 keping (3x3)</option>
+              <option value="12">12 keping (3x4)</option>
+              <option value="16">16 keping (4x4 — lebih menantang)</option>
+            </select>
+          </div>
+          <div class="tpl-field">
+            <label>Nama Brand</label>
+            <input type="text" id="t18_brand" placeholder="kniaWorld" value="kniaWorld" />
+          </div>
+          <div class="tpl-field">
+            <label>Warna / Tema <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+            <input type="text" id="t18_warna" placeholder="Contoh: ungu dan pink pastel, biru laut dan putih (kosongkan untuk warna cerah & playful default)" />
+          </div>
+          <div class="tpl-field">
+            <label>Target Usia</label>
+            <select id="t18_usia" onchange="toggleCustomAge(this,'t18_usia_custom')">
+              <option value="3-5 tahun (PAUD/TK)">3–5 tahun (PAUD/TK)</option>
+              <option value="6-8 tahun (SD awal)" selected>6–8 tahun (SD awal)</option>
+              <option value="8-11 tahun (SD)">8–11 tahun (SD)</option>
+              <option value="custom">✏️ Tulis usia sendiri…</option>
+            </select>
+            <input type="text" id="t18_usia_custom" placeholder="Contoh: 6–8 tahun, 5 tahun 8 bulan" style="display:none;margin-top:8px;" />
+          </div>
+        </div>
+        <div class="tpl-field">
+          <label>Instruksi Tambahan <span style="font-size:10px;font-weight:500;color:var(--muted);text-transform:none;letter-spacing:0;">(Opsional)</span></label>
+          <input type="text" id="t18_tambahan" placeholder="Contoh: tambahkan narasi suara tiap ronde, minimal 10 ronde, tambah tombol lihat contoh…" />
+        </div>
+        <div class="tpl-actions">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#ea580c,#facc15);box-shadow:0 4px 14px rgba(234,88,12,0.3);" onclick="generateTemplate(18)">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+          </button>
+          <button class="btn-tpl-copy" id="t18_copyBtn" onclick="copyTemplateResult(18)" style="display:none;">
+            <i class="fa-solid fa-copy"></i> Copy Prompt
+          </button>
+        </div>
+        <div class="tpl-result-wrap" id="t18_result">
+          <div class="tpl-result-box">
+            <div class="tpl-result-label"><i class="fa-solid fa-code"></i> Prompt Siap</div>
+            <div class="tpl-result-text" id="t18_text"></div>
+            <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button class="btn-copy-full" onclick="copyTemplateResult(18)" id="tpl18CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
+                <button onclick="openInClaudeTemplate(18)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+                <button onclick="openInGeminiTemplate(18)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
+                <button class="btn-close-result" onclick="closeResult(18)">Tutup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button class="btn-ghost" onclick="goTo('pageGuide')">
         <i class="fa-solid fa-arrow-left"></i> Kembali ke Halaman Awal
       </button>

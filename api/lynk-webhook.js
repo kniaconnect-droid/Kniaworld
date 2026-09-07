@@ -13,8 +13,9 @@
 //      Realtime Database project kniaworld (node "buyers"), seperti biasa.
 //   2. Item = produk ecourse VibeCoding with Claude → buat akun Firebase
 //      Auth + Firestore di project ecourseclaude (login pakai email
-//      checkout + 4 digit terakhir no. HP, password = "EC-" + 4digit,
-//      sama persis dengan buildBuyerPassword() di index.html ecourseclaude).
+//      checkout + 4 digit terakhir no. HP, password = "kn" + 4digit,
+//      SAMA PERSIS dengan skema di index.html, admin.html, dan scalev.js
+//      project ecourseclaude — lihat catatan di buildBuyerPassword()).
 //   3. Item = produk lain (bukan keduanya) → diabaikan, tidak diproses.
 //
 // Dulu (sebelum ini) ada rencana pakai gateway terpisah di Cloudflare Pages
@@ -91,9 +92,15 @@ function matchesItems(items, uuidList, keywordList) {
   return keywordList.some((kw) => titles.some((t) => t.includes(normalizeTitle(kw))));
 }
 
+// ── Password dari 4 digit terakhir nomor HP ──
+// HARUS SAMA PERSIS dengan phoneToPassword() di index.html, admin.html,
+// dan scalev.js project ecourseclaude — prefix "kn" (2 huruf), BUKAN
+// "EC-". (Revisi: sebelumnya file ini pakai prefix "EC-" yang beda
+// sendiri dari ketiga file lain, sehingga akun yang dibuat lewat Lynk
+// tidak bisa login di index.html asli. Sudah disamakan di sini.)
+const PHONE_PASSWORD_PREFIX = 'kn';
 function buildBuyerPassword(last4) {
-  // HARUS SAMA PERSIS dengan buildBuyerPassword() di index.html ecourseclaude.
-  return 'EC-' + last4;
+  return PHONE_PASSWORD_PREFIX + last4;
 }
 
 function generateRandomPassword(length = 14) {
@@ -118,7 +125,7 @@ async function sendEcoursePasswordResetEmail(email) {
 // project ecourseclaude (project Firebase yang beda dari kniaworld).
 async function provisionEcourseBuyer({ email, name, phoneRaw, refId, messageId }) {
   const phoneDigits = onlyDigits(phoneRaw);
-  const last4 = phoneDigits.length >= 4 ? phoneDigits.slice(-4) : null;
+  const last4 = phoneDigits.length >= 4 ? phoneDigits.slice(-4).padStart(4, '0') : null;
   const password = last4 ? buildBuyerPassword(last4) : generateRandomPassword();
 
   const signUpRes = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${ECOURSE_API_KEY}`, {
@@ -160,6 +167,7 @@ async function provisionEcourseBuyer({ email, name, phoneRaw, refId, messageId }
           streak: { integerValue: 0 },
           lastActiveDate: { stringValue: '' },
           totalStudyMinutes: { integerValue: 0 },
+          source: { stringValue: 'lynk' },
           lynkRefId: { stringValue: String(refId) },
           lynkMessageId: { stringValue: String(messageId) },
         },

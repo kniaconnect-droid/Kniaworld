@@ -79,6 +79,21 @@
   }
 
   // ══════════════════════════════════════
+  //  BONUS: MENU 3 BONUS POPUP
+  // ══════════════════════════════════════
+  function openBonusMenuPopup() {
+    const overlay = document.getElementById('bonusMenuPopup');
+    overlay.classList.remove('hide');
+    overlay.style.display = 'flex';
+  }
+
+  function closeBonusMenuPopup() {
+    const overlay = document.getElementById('bonusMenuPopup');
+    overlay.classList.add('hide');
+    setTimeout(() => { overlay.style.display = 'none'; }, 280);
+  }
+
+  // ══════════════════════════════════════
   //  BONUS: AI ASISTEN PROMOSI POPUP
   // ══════════════════════════════════════
   function openBonusPopup() {

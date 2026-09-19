@@ -84,6 +84,75 @@
   </div>
 </div>
 
+<!-- BONUS: MENU 3 BONUS POPUP -->
+<div class="popup-overlay" id="bonusMenuPopup" style="display:none;" onclick="if(event.target===this) closeBonusMenuPopup()">
+  <div class="popup-card popup-card-wide">
+    <button onclick="closeBonusMenuPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(15,23,42,0.06);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#ec4899);box-shadow:0 8px 24px rgba(236,72,153,0.35);">
+      <i class="fa-solid fa-gift"></i>
+    </div>
+    <h2>3 Bonus Spesial Buat Kamu! 🎁</h2>
+    <p>Semua bonus ini sudah termasuk dalam pembelianmu. Pilih salah satu di bawah untuk mulai pakai:</p>
+
+    <div class="bonus-list">
+
+      <div class="bonus-item">
+        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#10a37f,#1a7f5e);">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div class="bonus-item-body">
+          <div class="bonus-item-title">1. AI Asisten Bikin Konten Promosi</div>
+          <div class="bonus-item-desc">Bikin caption, script reels, sampai ide konten jualan game edukasi kamu — otomatis!</div>
+          <button class="bonus-item-btn" onclick="closeBonusMenuPopup(); openBonusPopup();">
+            Buka Bonus <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <div class="bonus-item-note bonus-item-note-info">
+            <i class="fa-solid fa-circle-info"></i>
+            Khusus untuk penggunaan pribadi — tidak boleh diperjualbelikan.
+          </div>
+        </div>
+      </div>
+
+      <div class="bonus-item">
+        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#3b82f6,#6366f1);">
+          <i class="fa-solid fa-file-lines"></i>
+        </div>
+        <div class="bonus-item-body">
+          <div class="bonus-item-title">2. Worksheet Hak Jual Kembali</div>
+          <div class="bonus-item-desc">2.000 lembar worksheet siap pakai, lengkap dengan hak jual kembali.</div>
+          <a class="bonus-item-btn" href="https://drive.google.com/drive/folders/1q9LG5Vrp8xA7AV9pDLHtXZs4SjTiisBd" target="_blank" rel="noopener">
+            Buka Folder <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <div class="bonus-item-note">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Segera download ya — link folder ini sewaktu-waktu bisa dinonaktifkan.
+          </div>
+        </div>
+      </div>
+
+      <div class="bonus-item">
+        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899);">
+          <i class="fa-solid fa-language"></i>
+        </div>
+        <div class="bonus-item-body">
+          <div class="bonus-item-title">3. Worksheet Bahasa Inggris + Template Canva</div>
+          <div class="bonus-item-desc">Worksheet Bahasa Inggris siap pakai, lengkap dengan template Canva yang bisa langsung diedit.</div>
+          <a class="bonus-item-btn" href="https://www.canva.com/design/DAGkhvSkHKA/N0e_6FCQPgxFvPr-MOf2EA/view?utm_content=DAGkhvSkHKA&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink&mode=preview" target="_blank" rel="noopener">
+            Buka Template <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <button onclick="closeBonusMenuPopup()" style="width:100%;padding:11px 16px;background:transparent;color:var(--muted);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;margin-top:4px;">
+      Tutup
+    </button>
+  </div>
+</div>
+
 <!-- BONUS: AI ASISTEN PROMOSI POPUP -->
 <div class="popup-overlay" id="bonusPopup" style="display:none;" onclick="if(event.target===this) closeBonusPopup()">
   <div class="popup-card">
@@ -109,8 +178,13 @@
       <i class="fa-solid fa-wand-magic-sparkles"></i> Buka AI Asisten Promosi
     </a>
 
-    <button onclick="closeBonusPopup()" style="width:100%;padding:11px 16px;background:transparent;color:var(--muted);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;">
-      Nanti Aja
+    <div class="bonus-item-note bonus-item-note-info" style="margin-bottom:10px;">
+      <i class="fa-solid fa-circle-info"></i>
+      Khusus untuk penggunaan pribadi — tidak boleh diperjualbelikan.
+    </div>
+
+    <button onclick="closeBonusPopup(); openBonusMenuPopup();" style="width:100%;padding:11px 16px;background:transparent;color:var(--muted);border:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:12.5px;font-weight:700;cursor:pointer;">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Daftar Bonus
     </button>
   </div>
 </div>
@@ -161,9 +235,9 @@
       <span>⚡ Generate Prompt Custom & Advance</span>
     </button>
 
-    <button onclick="openBonusPopup()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,#f59e0b,#ec4899);color:white;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 6px 20px rgba(236,72,153,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(236,72,153,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(236,72,153,0.35)'">
+    <button onclick="openBonusMenuPopup()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,#f59e0b,#ec4899);color:white;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 6px 20px rgba(236,72,153,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(236,72,153,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(236,72,153,0.35)'">
       <i class="fi fi-sr-gift" style="font-size:17px;"></i>
-      <span>🎁 Akses Bonus: AI Asisten Bikin Konten Promosi</span>
+      <span>🎁 Akses Bonus (3 Bonus Spesial!)</span>
     </button>
 
     <div class="steps-card">
@@ -206,8 +280,8 @@
         <a href="https://youtu.be/yILxIkPHYZg" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 16px;background:linear-gradient(135deg,#ff0000,#c4001a);color:white;border-radius:14px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(255,0,0,0.25);transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
           <i class="fi fi-brands-youtube" style="font-size:19px;"></i> Tonton Video Tutorial Lengkap
         </a>
-        <a href="https://wa.me/6281911284050?text=Halo%20ka%2C%20aku%20mau%20bertanya%20tentang..." target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 16px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;border-radius:14px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.3);transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
-          <i class="fi fi-brands-whatsapp" style="font-size:19px;"></i> Diskusi via WhatsApp
+        <a href="https://chat.whatsapp.com/Borl8eHahlrBj5PiFCvT7x?s=cl&p=a&mlu=4&ilr=4" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px 16px;background:linear-gradient(135deg,#25D366,#128C7E);color:white;border-radius:14px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,0.3);transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform=''">
+          <i class="fi fi-brands-whatsapp" style="font-size:19px;"></i> Group WhatsApp
         </a>
       </div>
     </div>

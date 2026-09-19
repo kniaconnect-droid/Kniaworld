@@ -498,6 +498,36 @@
 
   .divider { height: 1px; background: var(--border); margin: 10px 0 16px; }
 
+  /* ═══ SELECTION COUNTER (Jenis Game / Materi) ═══ */
+  .sel-counter {
+    margin-left: auto;
+    font-size: 10.5px;
+    font-weight: 700;
+    font-family: 'Sora', sans-serif;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #f1f5f9;
+    color: var(--muted);
+    letter-spacing: 0;
+    transition: background .15s, color .15s;
+  }
+  .sel-counter.ok    { background: #dcfce7; color: #15803d; }
+  .sel-counter.warn  { background: #ffedd5; color: #c2410c; }
+  .sel-counter.risky { background: #fee2e2; color: #b91c1c; }
+
+  /* ═══ SUBJECT CATEGORY LABEL ═══ */
+  .subject-cat-label {
+    font-size: 11px;
+    font-weight: 800;
+    font-family: 'Sora', sans-serif;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    margin: 12px 0 6px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+
   /* ═══ TIP BOX ═══ */
   .tip-box {
     background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);

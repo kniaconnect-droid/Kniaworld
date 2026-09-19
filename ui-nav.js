@@ -39,7 +39,7 @@
   }
 
   // ── CHIPS ──
-  const multiSelectIds = ['featureChips', 'subjectChips', 'gameTypeChips', 'ageChips'];
+  const multiSelectIds = ['featureChips', 'subjectChips', 'subjectChipsMath', 'subjectChipsLang', 'subjectChipsScience', 'subjectChipsWorld', 'subjectChipsLife', 'gameTypeChips', 'ageChips'];
   document.querySelectorAll('.chip-group').forEach(group => {
     const isMulti = multiSelectIds.includes(group.id);
     group.querySelectorAll('.chip').forEach(chip => {
@@ -48,9 +48,33 @@
         else { group.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); }
         chip.classList.add('pop');
         chip.addEventListener('animationend', () => chip.classList.remove('pop'), { once: true });
+        updateSelectionCounters();
       });
     });
   });
+
+  // Menghitung berapa Jenis Game / Materi yang lagi aktif dipilih, lalu tampilkan
+  // badge kecil di judul card supaya user sadar: makin banyak dipilih = makin
+  // kompleks & makin lama proses generate-nya.
+  const SUBJECT_GROUP_IDS = ['subjectChips','subjectChipsMath','subjectChipsLang','subjectChipsScience','subjectChipsWorld','subjectChipsLife'];
+  function _countActive(groupIds) {
+    return groupIds.reduce((n, id) => {
+      const g = document.getElementById(id);
+      return n + (g ? g.querySelectorAll('.chip.active').length : 0);
+    }, 0);
+  }
+  function _setCounterBadge(el, n, label) {
+    if (!el) return;
+    el.classList.remove('ok','warn','risky');
+    if (n <= 1) { el.textContent = n === 1 ? '1 dipilih' : ''; el.classList.add('ok'); }
+    else if (n <= 3) { el.textContent = `${n} ${label} · lumayan kompleks`; el.classList.add('warn'); }
+    else { el.textContent = `${n} ${label} · rumit & lama`; el.classList.add('risky'); }
+  }
+  function updateSelectionCounters() {
+    _setCounterBadge(document.getElementById('gameTypeCounter'), _countActive(['gameTypeChips']), 'jenis');
+    _setCounterBadge(document.getElementById('subjectCounter'), _countActive(SUBJECT_GROUP_IDS), 'materi');
+  }
+  updateSelectionCounters();
 
   // Placeholder contoh materi menyesuaikan mekanik game yang dipilih di Game Bundling,
   // supaya user tahu jenis konten yang cocok untuk tiap mekanik.
@@ -107,5 +131,15 @@
     const inp  = document.getElementById(customInputId);
     if (wrap && wrap.classList.contains('open') && inp && inp.value.trim()) return inp.value.trim();
     const chips = getChipVals(chipGroupId);
+    return chips.length ? chips.join(', ') : '';
+  }
+
+  // Sama seperti getVal, tapi menggabungkan chip aktif dari BEBERAPA chip-group
+  // sekaligus — dipakai untuk Materi/Tema yang sekarang dikelompokkan per kategori.
+  function getValMulti(chipGroupIds, customWrapId, customInputId) {
+    const wrap = document.getElementById(customWrapId);
+    const inp  = document.getElementById(customInputId);
+    if (wrap && wrap.classList.contains('open') && inp && inp.value.trim()) return inp.value.trim();
+    const chips = chipGroupIds.reduce((acc, id) => acc.concat(getChipVals(id)), []);
     return chips.length ? chips.join(', ') : '';
   }

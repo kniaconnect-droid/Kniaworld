@@ -9,7 +9,7 @@
   // ── BUILD MAIN PROMPT ──
   function buildPrompt() {
     const gameTypes = getVal('gameTypeChips','cGameType','cGameTypeInput').split(',').map(s=>s.trim()).filter(Boolean);
-    const subjects  = getVal('subjectChips','cSubject','cSubjectInput').split(',').map(s=>s.trim()).filter(Boolean);
+    const subjects  = getValMulti(['subjectChips','subjectChipsMath','subjectChipsLang','subjectChipsScience','subjectChipsWorld','subjectChipsLife'],'cSubject','cSubjectInput').split(',').map(s=>s.trim()).filter(Boolean);
     const ages      = getVal('ageChips','cAge','cAgeInput').split(',').map(s=>s.trim()).filter(Boolean);
     const difficulty  = getVal('diffChips','cDiff','cDiffInput') || 'mudah dan menyenangkan';
     const features    = getVal('featureChips','cFeature','cFeatureInput');
@@ -17,6 +17,10 @@
     const color       = (getVal('colorChips','cColor','cColorInput') || 'hijau toska dan putih');
     const designNotes = document.getElementById('designNotes').value.trim();
     const extra       = document.getElementById('extraInstructions').value.trim();
+    const learningTopicEl = document.getElementById('learningTopic');
+    const learningGoalEl  = document.getElementById('learningGoal');
+    const learningTopic = learningTopicEl ? learningTopicEl.value.trim() : '';
+    const learningGoal  = learningGoalEl ? learningGoalEl.value.trim() : '';
 
     const finalGameType = gameTypes.length ? gameTypes.join(', ') : 'kuis pilihan ganda';
     const finalSubject  = subjects.length ? subjects.join(', ') : 'materi edukasi umum';
@@ -24,6 +28,14 @@
     const featureText   = features ? `\n- Fitur tambahan: ${features}` : '';
     const designExtra   = designNotes ? `\n- Catatan desain: ${designNotes}` : '';
     const extraSection  = extra ? `\n\n📝 INSTRUKSI KHUSUS TAMBAHAN:\n${extra}` : '';
+    const topicLine     = learningTopic ? `\n- Topik spesifik: ${learningTopic}` : '';
+
+    // 🎯 Tujuan Pembelajaran — kalau diisi user, ini jadi acuan WAJIB dan menggantikan
+    // instruksi generik "tentukan sendiri manfaat/goal transformasi"; kalau kosong,
+    // AI tetap diminta merumuskan sendiri (perilaku lama tetap jalan).
+    const learningGoalBlock = learningGoal
+      ? `🎯 TUJUAN PEMBELAJARAN (WAJIB DICAPAI):\n- Capaian belajar yang ditargetkan: "${learningGoal}"${topicLine}\n- Seluruh soal/konten, urutan kesulitan, dan mekanik game HARUS dirancang secara sengaja untuk mengantarkan pemain mencapai capaian ini — bukan sekadar materi umum yang mirip-mirip.\n- Selipkan tujuan ini secara natural (bukan verbatim/kaku) di tagline halaman welcoming dan pesan penyemangat di halaman skor akhir, supaya orang tua/guru juga paham manfaatnya.`
+      : `🎯 MANFAAT & TRANSFORMASI:\n- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}"${topicLine ? ` (${learningTopic})` : ''} bagi pemain, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).\n- Selipkan pesan manfaat/transformasi ini secara natural di tagline halaman welcoming dan di pesan penyemangat pada halaman skor akhir.`;
 
     const multiGame    = gameTypes.length > 1;
     const multiSubject = subjects.length > 1;
@@ -63,9 +75,7 @@ Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 - Brand: "${brand}", warna tema: ${color}${designExtra}
 ${adaptiveAgeNote}${ageToneNote}${varietyNote}
 
-🎯 MANFAAT & TRANSFORMASI:
-- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi pemain, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
-- Selipkan pesan manfaat/transformasi ini secara natural di tagline halaman welcoming dan di pesan penyemangat pada halaman skor akhir.
+${learningGoalBlock}
 - Rancang pengalaman mekanik game (interaksi, animasi, feedback) supaya terasa nyata dan sesuai konteks materi/jenis game "${finalGameType}" — bukan generik asal jadi. Contoh: kalau temanya berkaitan dengan aktivitas dunia nyata, buat interaksinya semirip mungkin dengan aktivitas aslinya.
 
 📐 KETENTUAN TEKNIS:
@@ -130,9 +140,7 @@ Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 - Brand: "${brand}", warna tema: ${color}${designExtra}
 ${adaptiveAgeNote}${ageToneNote}${varietyNote}
 
-🎯 MANFAAT & TRANSFORMASI:
-- Sebelum menyusun soal/konten, tentukan manfaat konkret mempelajari "${finalSubject}" bagi pemain, serta goal transformasi yang ingin dicapai setelah menyelesaikan game ini (misal dari belum paham → paham, dari ragu → percaya diri, dari lambat → cepat — sesuaikan dengan materinya sendiri, jangan generik).
-- Selipkan pesan manfaat/transformasi ini secara natural di tagline halaman welcoming dan di pesan penyemangat pada halaman skor akhir.
+${learningGoalBlock}
 - Rancang pengalaman mekanik game (interaksi, animasi, feedback) supaya terasa nyata dan sesuai konteks materi/jenis game "${finalGameType}" — bukan generik asal jadi. Contoh: kalau temanya berkaitan dengan aktivitas dunia nyata, buat interaksinya semirip mungkin dengan aktivitas aslinya.
 
 📐 KETENTUAN TEKNIS:

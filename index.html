@@ -435,11 +435,17 @@
       <p>Pilih chip atau ketik sendiri. <strong>Materi & Jenis Game</strong> bisa dipilih lebih dari satu — otomatis dibuatkan menu pilihan. Mau request khusus seperti jumlah soal? Tulis di <strong>Instruksi Khusus</strong>!</p>
     </div>
 
+    <div class="tip-box" style="background:linear-gradient(135deg,#eff6ff 0%,#e0f2fe 100%);border-left-color:#3b82f6;">
+      <i class="fa-solid fa-circle-info" style="color:#3b82f6;"></i>
+      <p style="color:#1e40af;">Disarankan <strong style="color:#1d4ed8;">pilih 1 Jenis Game & 1 Materi</strong> dulu buat hasil paling optimal. Makin banyak yang dipilih → game makin kompleks (banyak menu bertingkat, banyak set soal berbeda) → AI butuh proses & waktu generate lebih lama, dan hasilnya lebih berisiko error/setengah jadi.</p>
+    </div>
+
     <!-- Game Type -->
     <div class="card">
       <div class="card-title">
         <div class="card-icon violet"><i class="fa-solid fa-dice"></i></div>
         Jenis Game
+        <span class="sel-counter" id="gameTypeCounter"></span>
       </div>
       <div class="section-label">Pilih satu atau lebih tipe game</div>
       <div class="chip-group" id="gameTypeChips">
@@ -450,6 +456,14 @@
         <div class="chip multi-chip" data-val="tebak gambar atau emoji"><i class="fa-solid fa-image"></i> Tebak Gambar</div>
         <div class="chip multi-chip" data-val="cerita interaktif pilih alur"><i class="fa-solid fa-book-open"></i> Cerita Interaktif</div>
         <div class="chip multi-chip" data-val="drag and drop"><i class="fa-solid fa-hand-pointer"></i> Drag & Drop</div>
+        <div class="chip multi-chip" data-val="memori kartu mencari pasangan"><i class="fa-solid fa-clone"></i> Memori Kartu</div>
+        <div class="chip multi-chip" data-val="petualangan RPG bertahap"><i class="fa-solid fa-hat-wizard"></i> Petualangan RPG</div>
+        <div class="chip multi-chip" data-val="roda putar tantangan"><i class="fa-solid fa-compact-disc"></i> Roda Putar</div>
+        <div class="chip multi-chip" data-val="puzzle gambar potongan"><i class="fa-solid fa-puzzle-piece"></i> Puzzle Gambar</div>
+        <div class="chip multi-chip" data-val="balapan cepat menjawab"><i class="fa-solid fa-flag-checkered"></i> Balapan Cepat</div>
+        <div class="chip multi-chip" data-val="papan permainan berjalan"><i class="fa-solid fa-chess-board"></i> Papan Permainan</div>
+        <div class="chip multi-chip" data-val="mencari objek tersembunyi"><i class="fa-solid fa-magnifying-glass"></i> Cari Objek</div>
+        <div class="chip multi-chip" data-val="ritme dan musik"><i class="fa-solid fa-music"></i> Ritme & Musik</div>
       </div>
       <span class="custom-toggle" onclick="toggleCustom('cGameType')">
         <i class="fa-solid fa-pencil"></i> Ketik sendiri
@@ -464,28 +478,78 @@
       <div class="card-title">
         <div class="card-icon cyan"><i class="fa-solid fa-book"></i></div>
         Materi / Tema
+        <span class="sel-counter" id="subjectCounter"></span>
       </div>
       <div class="section-label">Pilih satu atau lebih materi</div>
+
+      <div class="subject-cat-label">🕌 Islami</div>
       <div class="chip-group" id="subjectChips">
         <div class="chip multi-chip" data-val="huruf hijaiyah dan Iqro"><i class="fa-solid fa-moon"></i> Hijaiyah</div>
         <div class="chip multi-chip" data-val="asmaul husna"><i class="fa-solid fa-star"></i> Asmaul Husna</div>
         <div class="chip multi-chip" data-val="doa harian anak muslim"><i class="fa-solid fa-hands-praying"></i> Doa Harian</div>
-        <div class="chip multi-chip" data-val="pengenalan huruf abjad A-Z"><i class="fa-solid fa-a"></i> Abjad A–Z</div>
+        <div class="chip multi-chip" data-val="kisah nabi dan rasul untuk anak"><i class="fa-solid fa-book-quran"></i> Kisah Nabi</div>
+      </div>
+
+      <div class="subject-cat-label">🔢 Matematika &amp; Logika</div>
+      <div class="chip-group" id="subjectChipsMath">
         <div class="chip multi-chip" data-val="berhitung angka 1-20"><i class="fa-solid fa-hashtag"></i> Berhitung</div>
+        <div class="chip multi-chip" data-val="perkalian dan pembagian dasar"><i class="fa-solid fa-xmark"></i> Perkalian</div>
+        <div class="chip multi-chip" data-val="pengenalan bentuk geometri"><i class="fa-solid fa-shapes"></i> Geometri</div>
+        <div class="chip multi-chip" data-val="coding dan logika dasar untuk anak"><i class="fa-solid fa-code"></i> Coding Dasar</div>
+      </div>
+
+      <div class="subject-cat-label">🔤 Bahasa &amp; Literasi</div>
+      <div class="chip-group" id="subjectChipsLang">
+        <div class="chip multi-chip" data-val="pengenalan huruf abjad A-Z"><i class="fa-solid fa-a"></i> Abjad A–Z</div>
+        <div class="chip multi-chip" data-val="bahasa Inggris dasar"><i class="fa-solid fa-language"></i> English</div>
+        <div class="chip multi-chip" data-val="fonik dan cara membaca (phonics)"><i class="fa-solid fa-volume-high"></i> Fonik/Phonics</div>
+        <div class="chip multi-chip" data-val="menyusun kata dan ejaan bahasa Indonesia"><i class="fa-solid fa-spell-check"></i> Ejaan Kata</div>
+      </div>
+
+      <div class="subject-cat-label">🔬 Sains &amp; Alam</div>
+      <div class="chip-group" id="subjectChipsScience">
+        <div class="chip multi-chip" data-val="sains dasar untuk anak"><i class="fa-solid fa-flask"></i> Sains Dasar</div>
         <div class="chip multi-chip" data-val="nama hewan dalam bahasa Indonesia dan Inggris"><i class="fa-solid fa-paw"></i> Nama Hewan</div>
+        <div class="chip multi-chip" data-val="nama buah dan sayuran"><i class="fa-solid fa-apple-whole"></i> Buah & Sayur</div>
+        <div class="chip multi-chip" data-val="siklus alam dan lingkungan hidup"><i class="fa-solid fa-leaf"></i> Alam & Lingkungan</div>
+      </div>
+
+      <div class="subject-cat-label">🌍 Diri &amp; Dunia</div>
+      <div class="chip-group" id="subjectChipsWorld">
         <div class="chip multi-chip" data-val="pengenalan warna dan bentuk"><i class="fa-solid fa-palette"></i> Warna & Bentuk</div>
         <div class="chip multi-chip" data-val="anggota tubuh manusia"><i class="fa-solid fa-person"></i> Anggota Tubuh</div>
-        <div class="chip multi-chip" data-val="sains dasar untuk anak"><i class="fa-solid fa-flask"></i> Sains Dasar</div>
-        <div class="chip multi-chip" data-val="bahasa Inggris dasar"><i class="fa-solid fa-language"></i> English</div>
         <div class="chip multi-chip" data-val="pengenalan profesi dan pekerjaan"><i class="fa-solid fa-briefcase"></i> Profesi</div>
-        <div class="chip multi-chip" data-val="nama buah dan sayuran"><i class="fa-solid fa-apple-whole"></i> Buah & Sayur</div>
+        <div class="chip multi-chip" data-val="geografi dan negara-negara dunia"><i class="fa-solid fa-earth-asia"></i> Geografi</div>
+        <div class="chip multi-chip" data-val="sejarah dan tokoh Indonesia"><i class="fa-solid fa-landmark"></i> Sejarah</div>
       </div>
+
+      <div class="subject-cat-label">🌱 Life Skills</div>
+      <div class="chip-group" id="subjectChipsLife">
+        <div class="chip multi-chip" data-val="kebiasaan hidup sehat dan kebersihan diri"><i class="fa-solid fa-heart-pulse"></i> Hidup Sehat</div>
+        <div class="chip multi-chip" data-val="pengenalan uang dan menabung"><i class="fa-solid fa-coins"></i> Uang & Menabung</div>
+        <div class="chip multi-chip" data-val="keterampilan sosial dan mengenal emosi"><i class="fa-solid fa-face-smile-beam"></i> Sosial-Emosi</div>
+      </div>
+
       <span class="custom-toggle" onclick="toggleCustom('cSubject')">
         <i class="fa-solid fa-pencil"></i> Ketik sendiri
       </span>
       <div class="custom-input-wrap" id="cSubject">
         <input type="text" id="cSubjectInput" placeholder="Contoh: rukun Islam, nama planet, sejarah Indonesia…" />
       </div>
+    </div>
+
+    <!-- Learning Goal -->
+    <div class="card">
+      <div class="card-title">
+        <div class="card-icon cyan"><i class="fa-solid fa-bullseye"></i></div>
+        Tujuan Pembelajaran
+      </div>
+      <div class="section-label">Topik spesifik (opsional)</div>
+      <input type="text" id="learningTopic" placeholder="Contoh: perkalian 6-9, doa sebelum makan, huruf hijaiyah Alif-Ba-Ta…" />
+
+      <div class="section-label">Capaian belajar yang diharapkan (opsional)</div>
+      <textarea id="learningGoal" placeholder="Contoh: anak bisa mengalikan angka 1 digit dengan lancar tanpa menghitung jari; anak hafal dan paham arti 5 asmaul husna pertama…" style="margin-bottom:0;"></textarea>
+      <div class="hint-text" style="font-size:11px;color:var(--muted);font-weight:600;margin-top:6px;">Kosongkan kalau mau AI yang menentukan sendiri tujuan & manfaat belajarnya.</div>
     </div>
 
     <!-- Age & Difficulty -->

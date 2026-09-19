@@ -43,7 +43,7 @@ const ECOURSE_API_KEY = process.env.ECOURSE_FIREBASE_API_KEY;
 const ECOURSE_PROJECT_ID = process.env.ECOURSE_FIREBASE_PROJECT_ID;
 
 // Nama produk persis seperti di judul produk Lynk.id kamu.
-const EXPECTED_PRODUCT_TITLE = 'Tools Prompt Generator Build Game Edukasi pake AI BONUS WORKSHEET HAK JUAL KEMBALI by Kniaconnect';
+const EXPECTED_PRODUCT_TITLE = 'Tools Prompt Generator Build Game Edukasi pake AI (Vibe coding) by Kniaconnect';
 
 // uuid produk ecourse (terkonfirmasi stabil dari payload transaksi asli —
 // sama seperti uuid kniaWorld di bawah, uuid tetap sama walau ada

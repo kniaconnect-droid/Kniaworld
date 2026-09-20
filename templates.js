@@ -17,6 +17,8 @@
     const color       = (getVal('colorChips','cColor','cColorInput') || 'hijau toska dan putih');
     const designNotes = document.getElementById('designNotes').value.trim();
     const extra       = document.getElementById('extraInstructions').value.trim();
+    const visualStyle = getVal('visualStyleChips','cVisualStyle','cVisualStyleInput');
+    const mood        = getVal('moodChips','cMood','cMoodInput');
     const learningTopicEl = document.getElementById('learningTopic');
     const learningGoalEl  = document.getElementById('learningGoal');
     const learningTopic = learningTopicEl ? learningTopicEl.value.trim() : '';
@@ -29,6 +31,18 @@
     const designExtra   = designNotes ? `\n- Catatan desain: ${designNotes}` : '';
     const extraSection  = extra ? `\n\n📝 INSTRUKSI KHUSUS TAMBAHAN:\n${extra}` : '';
     const topicLine     = learningTopic ? `\n- Topik spesifik: ${learningTopic}` : '';
+    const visualStyleLine = visualStyle ? `, gaya visual "${visualStyle}"` : '';
+    const moodLine         = mood ? `, mood/nuansa: ${mood}` : '';
+
+    // 🎨 ARAH VISUAL — dibikin kayak "art direction brief" (arah + batasan), bukan
+    // checklist prosedural. AI tetap bebas nentuin detail ilustrasi/maskot/gaya
+    // selama nyambung sama tema dan hindarin tampilan generik ala-AI.
+    const visualDirectionBlock = `🎨 ARAH VISUAL (ini arah & batasan, detail eksekusinya bebas kamu tentukan):
+- Bangun 1 dunia visual yang unik & spesifik untuk materi "${finalSubject}" dan brand "${brand}" — bukan template generik yang bisa ditempel ke game apa saja. Tentukan sendiri gaya ilustrasi, elemen dekoratif, dan detail maskot yang paling nyambung dengan tema ini.
+- Titik tolak warna & suasana: ${color}${visualStyleLine}${moodLine} — boleh kamu perkaya sendiri jadi palet yang lebih detail (warna aksen, gradasi halus, dsb) selama masih konsisten dengan arah ini.
+- WAJIB HINDARI tampilan generik ala-AI: gradasi ungu-pink pasaran, glassmorphism berlebihan, shadow abu-abu pudar yang sama rata di semua card, ornamen blob abstrak mengambang tanpa makna, ikon asal tempel yang nggak nyambung materi, atau layout kartu-kartu seragam tanpa hierarki.
+- Pilih fokus visual yang jelas, hierarki tipografi yang rapi, dan kontras yang enak dilihat sesuai target usia.
+- Maskot/karakter utama tetap wajib tampil di halaman welcoming dengan animasi ringan (bounce/float), tapi desainnya bebas kamu tentukan biar terasa dibuat khusus untuk game ini — bukan aset generik.`;
 
     // 🎯 Tujuan Pembelajaran — kalau diisi user, ini jadi acuan WAJIB dan menggantikan
     // instruksi generik "tentukan sendiri manfaat/goal transformasi"; kalau kosong,
@@ -59,11 +73,7 @@ Game ini dimainkan oleh pemain usia ${finalAge}. Buat konten yang berbeda per re
       return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
-🎨 KETENTUAN VISUAL:
-- MASKOT UTAMA: buat ilustrasi karakter yang relevan dengan materi "${finalSubject}" dan brand "${brand}". Tampilkan di halaman welcoming dengan animasi ringan (bounce/float).
-- Gaya visual game: pilih 2D atau 3D (CSS 3D transform / perspective boleh dipakai) — sesuaikan yang paling cocok dan mudah dieksekusi untuk jenis game "${finalGameType}" dan usia target.
-- Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
-- Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
+${visualDirectionBlock}
 
 Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
@@ -83,6 +93,7 @@ ${learningGoalBlock}
 - Semua soal/konten harus relevan dengan materi "${finalSubject}" (bukan soal generik)
 - Font besar, mudah dibaca sesuai target usia — minimal 18px untuk teks soal
 - Semua tombol & area tap: minimal ukuran 48x48px, nyaman disentuh
+- Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
 - Background: warna tema yang kaya + ornamen/pola dekoratif (gelombang, bintang, atau bentuk geometris kecil)
@@ -100,7 +111,7 @@ ${spec.layout}
 ${spec.flow}
 
 🎨 DESAIN:
-- Warna tema: ${color} — konsisten di semua halaman
+- Warna tema: ${color}${visualStyleLine}${moodLine} — konsisten di semua halaman
 - Gaya visual: sesuaikan dengan target usia (cerah & playful untuk anak, lebih clean/matang untuk usia dewasa)
 - Animasi: transisi halaman smooth, feedback animasi saat benar/salah
 
@@ -124,11 +135,7 @@ ${spec.flow}
     return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
-🎨 KETENTUAN VISUAL:
-- MASKOT UTAMA: buat ilustrasi karakter yang relevan dengan materi "${finalSubject}" dan brand "${brand}". Tampilkan di halaman welcoming dengan animasi ringan (bounce/float).
-- Gaya visual game: pilih 2D atau 3D (CSS 3D transform / perspective boleh dipakai) — sesuaikan yang paling cocok dan mudah dieksekusi untuk jenis game "${finalGameType}" dan usia target.
-- Ikon, badge, feedback benar/salah, dan elemen visual lainnya: bebas ditentukan sendiri (emoji, Font Awesome, atau SVG) — pilih yang paling kontekstual dengan materi dan konsisten, jangan generik/asal tempel untuk semua jenis game.
-- Semua elemen visual (termasuk gambar maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya.
+${visualDirectionBlock}
 
 Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
@@ -146,13 +153,14 @@ ${learningGoalBlock}
 📐 KETENTUAN TEKNIS:
 - Responsive & mobile-first
 - Font minimal 18px, tombol minimal 48x48px
+- Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 ${menuInstructions}
 
 🏠 HALAMAN WELCOMING (LAYAR PERTAMA):
 - Maskot ilustrasi sesuai ketentuan visual di atas, tampil besar beranimasi, brand "${brand}" mencolok, tagline mengundang
 - Tombol CTA untuk mulai bermain dengan pulse animation, transisi smooth ke menu
 
-🎨 DESAIN: ${color} — konsisten di semua halaman, cerah dan playful
+🎨 DESAIN: ${color}${visualStyleLine}${moodLine} — konsisten di semua halaman, cerah dan playful
 🌐 BAHASA: Indonesia untuk instruksi, konten soal sesuai materi
 🏆 SKOR AKHIR: nilai, bintang, pesan, tombol "Main Lagi" + "← Pilih Lagi"${extraSection}
 `;

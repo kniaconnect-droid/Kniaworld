@@ -39,7 +39,7 @@
   }
 
   // ── CHIPS ──
-  const multiSelectIds = ['featureChips', 'subjectChips', 'subjectChipsMath', 'subjectChipsLang', 'subjectChipsScience', 'subjectChipsWorld', 'subjectChipsLife', 'gameTypeChips', 'ageChips'];
+  const multiSelectIds = ['featureChips', 'subjectChips', 'subjectChipsMath', 'subjectChipsLang', 'subjectChipsScience', 'subjectChipsWorld', 'subjectChipsLife', 'gameTypeChips', 'ageChips', 'moodChips'];
   document.querySelectorAll('.chip-group').forEach(group => {
     const isMulti = multiSelectIds.includes(group.id);
     group.querySelectorAll('.chip').forEach(chip => {
@@ -67,8 +67,8 @@
     if (!el) return;
     el.classList.remove('ok','warn','risky');
     if (n <= 1) { el.textContent = n === 1 ? '1 dipilih' : ''; el.classList.add('ok'); }
-    else if (n <= 3) { el.textContent = `${n} ${label} · lumayan kompleks`; el.classList.add('warn'); }
-    else { el.textContent = `${n} ${label} · rumit & lama`; el.classList.add('risky'); }
+    else if (n <= 3) { el.textContent = `${n} ${label} dipilih, mulai rame nih`; el.classList.add('warn'); }
+    else { el.textContent = `${n} ${label} dipilih, bakal lama nih 😅`; el.classList.add('risky'); }
   }
   function updateSelectionCounters() {
     _setCounterBadge(document.getElementById('gameTypeCounter'), _countActive(['gameTypeChips']), 'jenis');

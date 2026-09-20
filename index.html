@@ -430,14 +430,9 @@
 <div class="page" id="pageForm">
   <div class="container animate-in">
 
-    <div class="tip-box">
-      <i class="fa-solid fa-lightbulb"></i>
-      <p>Pilih chip atau ketik sendiri. <strong>Materi & Jenis Game</strong> bisa dipilih lebih dari satu — otomatis dibuatkan menu pilihan. Mau request khusus seperti jumlah soal? Tulis di <strong>Instruksi Khusus</strong>!</p>
-    </div>
-
-    <div class="tip-box" style="background:linear-gradient(135deg,#eff6ff 0%,#e0f2fe 100%);border-left-color:#3b82f6;">
-      <i class="fa-solid fa-circle-info" style="color:#3b82f6;"></i>
-      <p style="color:#1e40af;">Disarankan <strong style="color:#1d4ed8;">pilih 1 Jenis Game & 1 Materi</strong> dulu buat hasil paling optimal. Makin banyak yang dipilih → game makin kompleks (banyak menu bertingkat, banyak set soal berbeda) → AI butuh proses & waktu generate lebih lama, dan hasilnya lebih berisiko error/setengah jadi.</p>
+    <div class="hint-strip">
+      <span class="hint-emoji">✌️</span>
+      <p>Chip-nya boleh dipencet beberapa sekaligus kok, nanti kebentuk menu pilihan otomatis. Tapi kalau ini generate pertama kamu, <strong>santai — pilih 1 Jenis Game + 1 Materi dulu aja</strong> biar cepet kelar dan rapi. Pilih kebanyakan sekaligus, game-nya jadi bertingkat-tingkat dan lebih rawan setengah jadi. Ada permintaan khusus kayak jumlah soal? Taruh aja di <strong>Instruksi Khusus</strong> di bawah.</p>
     </div>
 
     <!-- Game Type -->
@@ -456,14 +451,14 @@
         <div class="chip multi-chip" data-val="tebak gambar atau emoji"><i class="fa-solid fa-image"></i> Tebak Gambar</div>
         <div class="chip multi-chip" data-val="cerita interaktif pilih alur"><i class="fa-solid fa-book-open"></i> Cerita Interaktif</div>
         <div class="chip multi-chip" data-val="drag and drop"><i class="fa-solid fa-hand-pointer"></i> Drag & Drop</div>
-        <div class="chip multi-chip" data-val="memori kartu mencari pasangan"><i class="fa-solid fa-clone"></i> Memori Kartu</div>
-        <div class="chip multi-chip" data-val="petualangan RPG bertahap"><i class="fa-solid fa-hat-wizard"></i> Petualangan RPG</div>
-        <div class="chip multi-chip" data-val="roda putar tantangan"><i class="fa-solid fa-compact-disc"></i> Roda Putar</div>
-        <div class="chip multi-chip" data-val="puzzle gambar potongan"><i class="fa-solid fa-puzzle-piece"></i> Puzzle Gambar</div>
-        <div class="chip multi-chip" data-val="balapan cepat menjawab"><i class="fa-solid fa-flag-checkered"></i> Balapan Cepat</div>
-        <div class="chip multi-chip" data-val="papan permainan berjalan"><i class="fa-solid fa-chess-board"></i> Papan Permainan</div>
-        <div class="chip multi-chip" data-val="mencari objek tersembunyi"><i class="fa-solid fa-magnifying-glass"></i> Cari Objek</div>
-        <div class="chip multi-chip" data-val="ritme dan musik"><i class="fa-solid fa-music"></i> Ritme & Musik</div>
+        <div class="chip multi-chip" data-val="Card Flip Memory"><i class="fa-solid fa-clone"></i> Card Flip Memory</div>
+        <div class="chip multi-chip" data-val="Adventure Quest RPG"><i class="fa-solid fa-hat-wizard"></i> Adventure Quest RPG</div>
+        <div class="chip multi-chip" data-val="Spin Wheel Challenge"><i class="fa-solid fa-compact-disc"></i> Spin Wheel Challenge</div>
+        <div class="chip multi-chip" data-val="Jigsaw Puzzle"><i class="fa-solid fa-puzzle-piece"></i> Jigsaw Puzzle</div>
+        <div class="chip multi-chip" data-val="Racing / Speed Challenge"><i class="fa-solid fa-flag-checkered"></i> Racing / Speed Challenge</div>
+        <div class="chip multi-chip" data-val="Board Game"><i class="fa-solid fa-chess-board"></i> Board Game</div>
+        <div class="chip multi-chip" data-val="Hidden Object"><i class="fa-solid fa-magnifying-glass"></i> Hidden Object</div>
+        <div class="chip multi-chip" data-val="Rhythm & Music Game"><i class="fa-solid fa-music"></i> Rhythm & Music Game</div>
       </div>
       <span class="custom-toggle" onclick="toggleCustom('cGameType')">
         <i class="fa-solid fa-pencil"></i> Ketik sendiri
@@ -635,6 +630,36 @@
       </span>
       <div class="custom-input-wrap" id="cColor">
         <input type="text" id="cColorInput" placeholder="Contoh: dark mode navy dan cyan, pastel kuning hijau…" />
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-label">Gaya visual (opsional — kosongkan biar AI bebas nentuin)</div>
+      <div class="chip-group" id="visualStyleChips">
+        <div class="chip" data-val="Playful"><i class="fa-solid fa-face-laugh"></i> Playful</div>
+        <div class="chip" data-val="Cartoon"><i class="fa-solid fa-face-grin-stars"></i> Cartoon</div>
+        <div class="chip" data-val="Clean"><i class="fa-solid fa-square"></i> Clean</div>
+        <div class="chip" data-val="Storybook"><i class="fa-solid fa-book-open"></i> Storybook</div>
+        <div class="chip" data-val="Pixel-inspired"><i class="fa-solid fa-border-all"></i> Pixel-inspired</div>
+        <div class="chip" data-val="Hand-drawn"><i class="fa-solid fa-pencil"></i> Hand-drawn</div>
+        <div class="chip" data-val="Futuristic"><i class="fa-solid fa-rocket"></i> Futuristic</div>
+        <div class="chip" data-val="Minimal"><i class="fa-solid fa-minus"></i> Minimal</div>
+      </div>
+      <span class="custom-toggle" onclick="toggleCustom('cVisualStyle')">
+        <i class="fa-solid fa-pencil"></i> Ketik sendiri
+      </span>
+      <div class="custom-input-wrap" id="cVisualStyle">
+        <input type="text" id="cVisualStyleInput" placeholder="Contoh: retro comic, papercraft, watercolor…" />
+      </div>
+
+      <div class="section-label">Mood (opsional, boleh pilih lebih dari satu)</div>
+      <div class="chip-group" id="moodChips">
+        <div class="chip multi-chip" data-val="Fun"><i class="fa-solid fa-face-grin-beam"></i> Fun</div>
+        <div class="chip multi-chip" data-val="Adventurous"><i class="fa-solid fa-compass"></i> Adventurous</div>
+        <div class="chip multi-chip" data-val="Calm"><i class="fa-solid fa-leaf"></i> Calm</div>
+        <div class="chip multi-chip" data-val="Energetic"><i class="fa-solid fa-bolt"></i> Energetic</div>
+        <div class="chip multi-chip" data-val="Curious"><i class="fa-solid fa-magnifying-glass"></i> Curious</div>
+        <div class="chip multi-chip" data-val="Friendly"><i class="fa-solid fa-heart"></i> Friendly</div>
+        <div class="chip multi-chip" data-val="Challenging"><i class="fa-solid fa-dumbbell"></i> Challenging</div>
       </div>
 
       <div class="divider"></div>

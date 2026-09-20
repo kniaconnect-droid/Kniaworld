@@ -707,6 +707,15 @@ ${menuInstructions}
     window.open('https://gemini.google.com/app', '_blank');
   }
 
+  // Lovable "Build with URL" — prefill prompt lewat #prompt=, TIDAK auto-submit
+  // (user tetap harus klik kirim di sana). Batas 50.000 karakter per dokumentasi Lovable.
+  function openInLovable() {
+    const text = document.getElementById('outputText').textContent;
+    if (!text.trim()) return;
+    copyToClipboard(text);
+    window.open('https://lovable.dev/#prompt=' + encodeURIComponent(text), '_blank');
+  }
+
   // ── TEMPLATE AI OPEN ──
   // Copy synchronously (execCommand) so window.open stays in same user-gesture
   function copyToClipboard(text) {
@@ -736,5 +745,12 @@ ${menuInstructions}
     if (!text.trim()) { alert('Generate prompt dulu ya!'); return; }
     copyToClipboard(text);
     window.open('https://gemini.google.com/app', '_blank');
+  }
+
+  function openInLovableTemplate(tplId) {
+    const text = document.getElementById(`t${tplId}_text`).textContent;
+    if (!text.trim()) { alert('Generate prompt dulu ya!'); return; }
+    copyToClipboard(text);
+    window.open('https://lovable.dev/#prompt=' + encodeURIComponent(text), '_blank');
   }
 

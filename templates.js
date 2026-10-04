@@ -6,6 +6,77 @@
   // (dimuat dari Realtime Database setelah verifikasi kode akses —
   //  lihat loadProtectedContent() di atas)
 
+  // ── PETA GAYA & MOOD → KEPUTUSAN UI ──
+  // Isinya RENTANG/ARAH (bukan angka kaku) supaya AI tetap fleksibel,
+  // tapi tidak melenceng dari karakter gaya yang dipilih user.
+  const STYLE_TOKENS = {
+    'minimal':        'tampilan tenang & lega: border 0-1px halus, radius sedang (8-14px), shadow sangat tipis atau tanpa shadow, tombol flat tanpa efek 3D, banyak ruang kosong, ikon/ilustrasi garis sederhana, font weight sedang (500-600)',
+    'clean':          'rapi & modern: border 1px halus, radius 10-14px, shadow lembut satu lapis, tombol solid flat, hierarki tipografi jelas, ilustrasi sederhana tanpa outline tebal',
+    'playful':        'ceria tapi tetap rapi: radius besar & membulat (16-24px), border tipis-sedang (0-2px), shadow lembut berwarna, tombol membulat dengan sedikit bounce, ilustrasi bentuk organik',
+    'cartoon':        'gaya kartun: outline tegas boleh dipakai (2-3px), shadow offset solid boleh, tombol boleh agak chunky, warna jenuh — ini satu-satunya gaya yang memang boleh terlihat tebal',
+    'storybook':      'buku cerita: tekstur kertas/watercolor halus, tanpa outline keras, bentuk organik tidak simetris, font ramah/serif lembut, ilustrasi seperti lukisan buku anak',
+    'pixel-inspired': 'terinspirasi pixel art: sudut tajam (radius 0-4px), border bergaya pixel/blok, tanpa blur shadow, font pixel hanya untuk judul/skor (teks soal tetap mudah dibaca)',
+    'hand-drawn':     'buatan tangan: garis sedikit tidak sempurna, border seperti sketsa tipis, tanpa shadow digital, tekstur kertas/krayon, ilustrasi seperti coretan tangan',
+    'futuristic':     'futuristik: panel semi-transparan atau gelap, border 1px dengan glow tipis, radius kecil-sedang, tipografi tegas/geometris, aksen neon secukupnya (jangan semua elemen menyala)'
+  };
+  const MOOD_TOKENS = {
+    'fun':         'aksen warna berani, mikro-animasi ceria, feedback yang menyenangkan',
+    'adventurous': 'nuansa eksplorasi (peta, jalur, petualangan), aksen warna hangat, rasa "menemukan sesuatu"',
+    'calm':        'palet lembut/tidak terlalu jenuh, animasi pelan dan halus, tanpa efek glow/pulse berlebihan, ruang napas lega',
+    'energetic':   'kontras lebih tinggi, animasi cepat dan responsif, ritme visual dinamis',
+    'curious':     'detail kecil yang mengundang dieksplorasi, hint/rasa ingin tahu di setiap layar',
+    'friendly':    'sudut membulat, ilustrasi hangat, nada kata ramah dan menyapa',
+    'challenging': 'tampilan lebih tegas, indikator level/progres jelas, nuansa "naik tingkat"'
+  };
+
+  // Cari token berdasarkan teks bebas (chip atau input custom). Kalau tidak dikenali,
+  // kembalikan '' → AI diminta menafsirkan sendiri teks gaya tersebut.
+  function lookupTokens(map, raw) {
+    if (!raw) return [];
+    return raw.split(',').map(s => s.trim()).filter(Boolean).map(name => {
+      const key = name.toLowerCase();
+      return { name, tokens: map[key] || '' };
+    });
+  }
+
+  // Blok "KONTEKS VISUAL" — menghubungkan gaya + mood + materi + jenis game + usia
+  // jadi satu arahan yang konsisten. Fleksibel (rentang), bukan template kaku.
+  function buildStyleContextBlock({ visualStyle, mood, finalSubject, finalGameType, finalAge, color }) {
+    const styles = lookupTokens(STYLE_TOKENS, visualStyle);
+    const moods  = lookupTokens(MOOD_TOKENS, mood);
+
+    const styleLines = styles.length
+      ? styles.map(s => s.tokens
+          ? `- Gaya "${s.name}": ${s.tokens}`
+          : `- Gaya "${s.name}": tafsirkan sendiri secara konsisten dan jujur pada gaya ini (border, radius, shadow, tombol, tipografi, ilustrasi harus terasa seperti gaya "${s.name}")`
+        ).join('\n')
+      : `- Gaya visual tidak dipilih → pakai arah netral yang bersih: radius sedang, border tipis (1-2px), shadow lembut, tombol flat; lalu sesuaikan karakternya dengan usia (${finalAge}), materi, dan jenis game di bawah. JANGAN default ke tampilan "game anak yang tebal & gemuk".`;
+
+    const moodLines = moods.length
+      ? moods.map(m => m.tokens
+          ? `- Mood "${m.name}": ${m.tokens}`
+          : `- Mood "${m.name}": tafsirkan lewat warna, tempo animasi, dan nada kata`
+        ).join('\n')
+      : `- Mood tidak dipilih → tentukan sendiri mood yang paling cocok dengan materi dan usia.`;
+
+    return `🎯 KONTEKS VISUAL (PRIORITAS TERTINGGI — gaya & mood pilihan user mengalahkan semua default tampilan lain di prompt ini):
+${styleLines}
+${moodLines}
+- Warna tema: ${color} (boleh diperkaya aksen, tapi karakter warna tetap ikut mood: mood tenang → lebih lembut, mood energik → lebih kontras)
+
+🔗 SELARASKAN 5 HAL INI (fleksibel — kamu bebas berkreasi, tapi jangan melenceng jauh):
+- Gaya & mood di atas → menentukan karakter semua komponen UI: tombol, card, input, badge, progress bar, popup. Semua komponen harus terasa satu keluarga.
+- Materi "${finalSubject}" → menentukan ilustrasi, ikon, dekorasi, dan istilah di UI (bukan elemen generik).
+- Jenis game "${finalGameType}" → menentukan bentuk interaksi elemen utamanya (kartu, roda, papan, jalur, slot, dsb.) — terapkan gaya & mood ke elemen-elemen itu juga, bukan hanya ke tombol.
+- Usia ${finalAge} → menentukan ukuran teks, kepadatan elemen, kerumitan, dan nada bahasa. Usia sangat muda: lebih besar, lebih sedikit elemen, lebih banyak visual. Usia lebih tua/dewasa: lebih ringkas, lebih matang.
+- Jika ada dua arahan yang tampak bertabrakan (misal usia TK + gaya Minimal): pertahankan gaya & mood pilihan user, lalu sesuaikan ukuran dan kejelasan untuk usia — bukan sebaliknya.
+
+📏 TENTANG UKURAN & KETEBALAN:
+- "Besar" berarti area sentuh nyaman (minimal 48x48px) dan teks mudah dibaca — BUKAN border tebal, tombol gemuk, atau shadow keras.
+- Tebal border/outline, bentuk tombol, dan shadow ditentukan oleh gaya yang dipilih. Border tebal (>2px), shadow offset keras, tombol 3D, dan outline pada teks hanya dipakai bila gaya yang dipilih memang memintanya (mis. Cartoon).
+- Hindari efek berlebihan (glow, pulse, bounce) di semua elemen sekaligus; pakai seperlunya sesuai mood.`;
+  }
+
   // ── BUILD MAIN PROMPT ──
   function buildPrompt() {
     const gameTypes = getVal('gameTypeChips','cGameType','cGameTypeInput').split(',').map(s=>s.trim()).filter(Boolean);
@@ -33,16 +104,17 @@
     const topicLine     = learningTopic ? `\n- Topik spesifik: ${learningTopic}` : '';
     const visualStyleLine = visualStyle ? `, gaya visual "${visualStyle}"` : '';
     const moodLine         = mood ? `, mood/nuansa: ${mood}` : '';
+    const styleContextBlock = buildStyleContextBlock({ visualStyle, mood, finalSubject, finalGameType, finalAge, color });
 
     // 🎨 ARAH VISUAL — dibikin kayak "art direction brief" (arah + batasan), bukan
     // checklist prosedural. AI tetap bebas nentuin detail ilustrasi/maskot/gaya
     // selama nyambung sama tema dan hindarin tampilan generik ala-AI.
     const visualDirectionBlock = `🎨 ARAH VISUAL (ini arah & batasan, detail eksekusinya bebas kamu tentukan):
 - Bangun 1 dunia visual yang unik & spesifik untuk materi "${finalSubject}" dan brand "${brand}" — bukan template generik yang bisa ditempel ke game apa saja. Tentukan sendiri gaya ilustrasi, elemen dekoratif, dan detail maskot yang paling nyambung dengan tema ini.
-- Titik tolak warna & suasana: ${color}${visualStyleLine}${moodLine} — boleh kamu perkaya sendiri jadi palet yang lebih detail (warna aksen, gradasi halus, dsb) selama masih konsisten dengan arah ini.
+- Titik tolak warna & suasana: ${color}${visualStyleLine}${moodLine} — boleh kamu perkaya sendiri jadi palet yang lebih detail (warna aksen, gradasi halus, dsb) selama masih konsisten dengan KONTEKS VISUAL di atas.
 - WAJIB HINDARI tampilan generik ala-AI: gradasi ungu-pink pasaran, glassmorphism berlebihan, shadow abu-abu pudar yang sama rata di semua card, ornamen blob abstrak mengambang tanpa makna, ikon asal tempel yang nggak nyambung materi, atau layout kartu-kartu seragam tanpa hierarki.
 - Pilih fokus visual yang jelas, hierarki tipografi yang rapi, dan kontras yang enak dilihat sesuai target usia.
-- Maskot/karakter utama tetap wajib tampil di halaman welcoming dengan animasi ringan (bounce/float), tapi desainnya bebas kamu tentukan biar terasa dibuat khusus untuk game ini — bukan aset generik.`;
+- Maskot/karakter utama tetap wajib tampil di halaman welcoming dengan animasi ringan yang sesuai mood (mis. float pelan untuk Calm, bounce untuk Fun/Energetic), tapi desainnya bebas kamu tentukan biar terasa dibuat khusus untuk game ini — bukan aset generik. Gambar maskot juga harus mengikuti gaya visual yang dipilih.`;
 
     // 🎯 Tujuan Pembelajaran — kalau diisi user, ini jadi acuan WAJIB dan menggantikan
     // instruksi generik "tentukan sendiri manfaat/goal transformasi"; kalau kosong,
@@ -56,7 +128,7 @@
     const multiAge     = ages.length > 1;
     const needsMenu    = multiGame || multiSubject;
 
-    const ageToneNote = `\n⚠️ SESUAIKAN NADA & GAYA DENGAN TARGET USIA (${finalAge}):\n- Jika target usia menunjukkan dewasa/remaja akhir/profesional (mis. "Dewasa", "18+", "17+", atau angka ≥ 17): gunakan nada bahasa matang, praktis, tidak kekanak-kanakan — HINDARI sebutan "anak", analogi mainan anak, sapaan "adik-adik", warna pastel/karakter maskot ala anak TK. Sebut pengguna sebagai "kamu"/"pemain"/"peserta".\n- Jika target usia menunjukkan anak-anak (di bawah 12 tahun, "TK", "PAUD", "SD"): gunakan nada ramah-anak, sederhana dan playful seperti biasa.\n- Jika target usia menunjukkan remaja (13-16 tahun, SMP/SMA): nada lebih santai tapi tetap tidak kekanak-kanakan.`;
+    const ageToneNote = `\n⚠️ SESUAIKAN NADA & GAYA DENGAN TARGET USIA (${finalAge}):\n- Jika target usia menunjukkan dewasa/remaja akhir/profesional (mis. "Dewasa", "18+", "17+", atau angka ≥ 17): gunakan nada bahasa matang, praktis, tidak kekanak-kanakan — HINDARI sebutan "anak", analogi mainan anak, sapaan "adik-adik", warna pastel/karakter maskot ala anak TK. Sebut pengguna sebagai "kamu"/"pemain"/"peserta".\n- Jika target usia menunjukkan anak-anak (di bawah 12 tahun, "TK", "PAUD", "SD"): gunakan nada ramah-anak dan sederhana; tingkat "playful"-nya mengikuti gaya & mood yang dipilih (jangan dipaksa ramai kalau gayanya Minimal/Calm).\n- Jika target usia menunjukkan remaja (13-16 tahun, SMP/SMA): nada lebih santai tapi tetap tidak kekanak-kanakan.`;
 
     const varietyNote = `\n🎲 VARIASI KONTEN (WAJIB):\n- Hindari redaksi soal/konten yang generik dan template-y (pola kalimat yang sama persis di setiap nomor).\n- Variasikan gaya kalimat, konteks/skenario, dan urutan opsi jawaban antar soal — bahkan untuk materi yang sama dengan generate sebelumnya, buat pendekatan/contoh yang berbeda.\n- ID sesi acak (hanya untuk mendorong variasi internal, jangan ditampilkan ke user): ${Math.floor(Math.random()*1000000)}`;
 
@@ -72,6 +144,8 @@ Game ini dimainkan oleh pemain usia ${finalAge}. Buat konten yang berbeda per re
     if (!needsMenu) {
       return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
+
+${styleContextBlock}
 
 ${visualDirectionBlock}
 
@@ -91,16 +165,16 @@ ${learningGoalBlock}
 📐 KETENTUAN TEKNIS:
 - Responsive & mobile-first
 - Semua soal/konten harus relevan dengan materi "${finalSubject}" (bukan soal generik)
-- Font besar, mudah dibaca sesuai target usia — minimal 18px untuk teks soal
-- Semua tombol & area tap: minimal ukuran 48x48px, nyaman disentuh
+- Teks mudah dibaca sesuai target usia — minimal 18px untuk teks soal (ketebalan font mengikuti gaya visual, tidak harus bold)
+- Semua tombol & area tap: area sentuh minimal 48x48px, nyaman disentuh (ini soal ukuran area tap, bukan ketebalan border/tampilan tombol — tampilan tombol ikut gaya visual)
 - Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
-- Background: warna tema yang kaya + ornamen/pola dekoratif (gelombang, bintang, atau bentuk geometris kecil)
-- Maskot/karakter: ilustrasi sesuai ketentuan visual di atas, tampil besar, diberi animasi bounce atau float terus-menerus
-- Nama brand "${brand}" ditampilkan besar dan mencolok (font tebal, bisa ada outline atau shadow)
+- Background: warna tema + ornamen/pola dekoratif yang sesuai gaya & mood (mis. gelombang, bintang, bentuk geometris kecil, atau tekstur) — kerapatan ornamen mengikuti mood
+- Maskot/karakter: ilustrasi sesuai ketentuan visual di atas, tampil jelas sebagai fokus, diberi animasi ringan yang sesuai mood
+- Nama brand "${brand}" tampil jelas sebagai fokus visual; gaya font, ketebalan, dan efek (outline/shadow hanya bila sesuai gaya terpilih) mengikuti gaya visual
 - Tagline pendek yang mengundang, sesuaikan dengan materi
-- Tombol CTA besar dan menarik untuk mulai bermain, dengan animasi pulse atau glow
+- Tombol CTA yang jelas dan menarik untuk mulai bermain, bentuknya mengikuti gaya visual; animasi (pulse/glow/lainnya) dipilih sesuai mood dan secukupnya
 - Transisi smooth dari halaman welcoming ke halaman game (fade atau slide)
 
 🎮 LAYOUT & MEKANISME GAME (WAJIB IKUTI):
@@ -112,8 +186,8 @@ ${spec.flow}
 
 🎨 DESAIN:
 - Warna tema: ${color}${visualStyleLine}${moodLine} — konsisten di semua halaman
-- Gaya visual: sesuaikan dengan target usia (cerah & playful untuk anak, lebih clean/matang untuk usia dewasa)
-- Animasi: transisi halaman smooth, feedback animasi saat benar/salah
+- Gaya visual: ikuti KONTEKS VISUAL di atas. Jika user tidak memilih gaya, sesuaikan dengan target usia (lebih ramah & berwarna untuk anak, lebih clean/matang untuk usia dewasa) tanpa jatuh ke tampilan tebal/gemuk
+- Animasi: transisi halaman smooth, feedback animasi saat benar/salah — tempo & intensitas mengikuti mood
 
 🌐 BAHASA: Indonesia untuk instruksi, konten soal sesuai materi
 
@@ -135,6 +209,8 @@ ${spec.flow}
     return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
 
 
+${styleContextBlock}
+
 ${visualDirectionBlock}
 
 Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
@@ -152,15 +228,15 @@ ${learningGoalBlock}
 
 📐 KETENTUAN TEKNIS:
 - Responsive & mobile-first
-- Font minimal 18px, tombol minimal 48x48px
+- Teks minimal 18px, area sentuh tombol minimal 48x48px (tampilan tombol ikut gaya visual yang dipilih)
 - Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 ${menuInstructions}
 
 🏠 HALAMAN WELCOMING (LAYAR PERTAMA):
-- Maskot ilustrasi sesuai ketentuan visual di atas, tampil besar beranimasi, brand "${brand}" mencolok, tagline mengundang
+- Maskot ilustrasi sesuai ketentuan visual di atas, tampil jelas dengan animasi ringan sesuai mood, brand "${brand}" tampil jelas (gaya font mengikuti gaya visual), tagline mengundang
 - Tombol CTA untuk mulai bermain dengan pulse animation, transisi smooth ke menu
 
-🎨 DESAIN: ${color}${visualStyleLine}${moodLine} — konsisten di semua halaman, cerah dan playful
+🎨 DESAIN: ${color}${visualStyleLine}${moodLine} — konsisten di semua halaman dan semua mode/menu, ikuti KONTEKS VISUAL di atas
 🌐 BAHASA: Indonesia untuk instruksi, konten soal sesuai materi
 🏆 SKOR AKHIR: nilai, bintang, pesan, tombol "Main Lagi" + "← Pilih Lagi"${extraSection}
 `;

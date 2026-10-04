@@ -29,6 +29,58 @@
     'challenging': 'tampilan lebih tegas, indikator level/progres jelas, nuansa "naik tingkat"'
   };
 
+
+  // ── ALIAS JENIS GAME → KEY gameSpecs ──
+  // Nama chip di UI berbeda dari key di Realtime Database; tanpa alias ini
+  // 8 jenis game jatuh ke DEFAULT_SPEC (layout generik).
+  const GAME_SPEC_ALIAS = {
+    'card flip memory':         'memori kartu mencari pasangan',
+    'adventure quest rpg':      'petualangan RPG bertahap',
+    'spin wheel challenge':     'roda putar tantangan',
+    'jigsaw puzzle':            'puzzle gambar potongan',
+    'racing / speed challenge': 'balapan cepat menjawab',
+    'board game':               'papan permainan berjalan',
+    'hidden object':            'mencari objek tersembunyi',
+    'rhythm & music game':      'ritme dan musik'
+  };
+  function getSpec(name) {
+    const raw = (name || '').trim();
+    const low = raw.toLowerCase();
+    return GAME_SPECS[raw] || GAME_SPECS[low] || GAME_SPECS[GAME_SPEC_ALIAS[low]] || DEFAULT_SPEC;
+  }
+
+  // ── KOLAM ARSITIPE & KOMPOSISI (dipilih acak per generate, dibatasi oleh gaya) ──
+  // Tujuannya: pilihan gaya/mood/materi yang SAMA tetap bisa menghasilkan
+  // dunia visual berbeda, dan AI tidak selalu jatuh ke arsitipe favoritnya.
+  const ARCHETYPE_POOL = {
+    'minimal':        ['antarmuka modern minimalis ala aplikasi fokus', 'poster interaktif tipografis', 'dashboard belajar bersih'],
+    'clean':          ['dashboard belajar modern', 'jurnal belajar rapi', 'poster interaktif bersih'],
+    'playful':        ['dunia arkade ceria', 'peta petualangan berwarna', 'panggung sirkus/taman bermain', 'teman pendamping (character companion)'],
+    'cartoon':        ['halaman komik dengan panel', 'dunia kartun layar penuh', 'studio animasi/panggung kartun'],
+    'storybook':      ['buku cerita pop-up', 'jurnal petualangan bergambar', 'panggung teater kertas', 'peta harta karun di atas kertas tua'],
+    'pixel-inspired': ['arcade retro', 'peta RPG 8-bit', 'terminal misi bergaya konsol lawas'],
+    'hand-drawn':     ['buku sketsa/jurnal coretan', 'papan tulis kelas', 'meja kerja dengan benda-benda tempel'],
+    'futuristic':     ['kontrol misi luar angkasa', 'laboratorium holografik', 'antarmuka HUD futuristik'],
+    '_default':       ['peta petualangan', 'laboratorium eksperimen', 'scene eksplorasi layar penuh', 'jurnal misi', 'dunia arkade', 'ruang kelas bergaya unik']
+  };
+  const COMPOSITION_POOL = [
+    'scene layar penuh — elemen interaktif hidup di dalam ilustrasi (bukan panel terpisah)',
+    'komposisi asimetris — fokus utama bergeser ke satu sisi, panel pendukung melayang di sisi lain',
+    'split screen — satu sisi konteks/ilustrasi, sisi lain area interaksi',
+    'peta atau jalur — progres divisualkan sebagai perjalanan, bukan bar angka',
+    'panel berlapis (layered cards) dengan kedalaman nyata',
+    'komposisi radial — elemen utama melingkar mengelilingi satu pusat',
+    'objek-di-atas-permukaan — item tersebar natural seperti benda di meja/papan, bukan grid kaku'
+  ];
+  function pickFrom(arr, seed, offset) { return arr[(seed + (offset || 0)) % arr.length]; }
+  function pickArchetypes(visualStyle, seed) {
+    const first = (visualStyle || '').split(',')[0].trim().toLowerCase();
+    const pool = ARCHETYPE_POOL[first] || ARCHETYPE_POOL._default;
+    const a = pickFrom(pool, seed, 0);
+    const b = pool.length > 1 ? pickFrom(pool, seed, 1) : '';
+    return { primary: a, alt: b === a ? '' : b };
+  }
+
   // Cari token berdasarkan teks bebas (chip atau input custom). Kalau tidak dikenali,
   // kembalikan '' → AI diminta menafsirkan sendiri teks gaya tersebut.
   function lookupTokens(map, raw) {
@@ -109,12 +161,22 @@ ${moodLines}
     // 🎨 ARAH VISUAL — dibikin kayak "art direction brief" (arah + batasan), bukan
     // checklist prosedural. AI tetap bebas nentuin detail ilustrasi/maskot/gaya
     // selama nyambung sama tema dan hindarin tampilan generik ala-AI.
-    const visualDirectionBlock = `🎨 ARAH VISUAL (ini arah & batasan, detail eksekusinya bebas kamu tentukan):
-- Bangun 1 dunia visual yang unik & spesifik untuk materi "${finalSubject}" dan brand "${brand}" — bukan template generik yang bisa ditempel ke game apa saja. Tentukan sendiri gaya ilustrasi, elemen dekoratif, dan detail maskot yang paling nyambung dengan tema ini.
-- Titik tolak warna & suasana: ${color}${visualStyleLine}${moodLine} — boleh kamu perkaya sendiri jadi palet yang lebih detail (warna aksen, gradasi halus, dsb) selama masih konsisten dengan KONTEKS VISUAL di atas.
-- WAJIB HINDARI tampilan generik ala-AI: gradasi ungu-pink pasaran, glassmorphism berlebihan, shadow abu-abu pudar yang sama rata di semua card, ornamen blob abstrak mengambang tanpa makna, ikon asal tempel yang nggak nyambung materi, atau layout kartu-kartu seragam tanpa hierarki.
-- Pilih fokus visual yang jelas, hierarki tipografi yang rapi, dan kontras yang enak dilihat sesuai target usia.
-- Maskot/karakter utama tetap wajib tampil di halaman welcoming dengan animasi ringan yang sesuai mood (mis. float pelan untuk Calm, bounce untuk Fun/Energetic), tapi desainnya bebas kamu tentukan biar terasa dibuat khusus untuk game ini — bukan aset generik. Gambar maskot juga harus mengikuti gaya visual yang dipilih.`;
+    const _seed = Math.floor(Math.random()*1000000);
+    const _arch = pickArchetypes(visualStyle, _seed);
+    const _comp = pickFrom(COMPOSITION_POOL, Math.floor(_seed / 11), 0);
+    const visualDirectionBlock = `🎨 VISUAL DNA & DIREKSI PENGALAMAN (jenis game menentukan CARA MAIN-nya; Visual DNA menentukan RASA & TAMPILANNYA — jangan perlakukan jenis game sebagai template visual tetap):
+Sebelum menulis kode, rumuskan singkat Visual DNA untuk game ini dari kombinasi: jenis game + materi "${finalSubject}" + usia ${finalAge} + gaya${visualStyle ? ` "${visualStyle}"` : ''} + mood${mood ? ` "${mood}"` : ''} + warna ${color}. Tentukan: konsep visual, hierarki warna, kepribadian tipografi (sebut nama font Google Fonts yang dipakai), bahasa bentuk, teknik ilustrasi (SVG/CSS), karakter/maskot, lingkungan/background, tekstur, kedalaman, dan kepribadian animasi. Tulis ringkasannya 5-6 baris sebagai komentar HTML di awal kode, lalu pakai konsisten di SEMUA layar. Simpan semua keputusan visual sebagai CSS variables terpusat agar mudah diubah.
+
+🧭 ARAH AWAL (titik berangkat, boleh kamu modifikasi atau ganti kalau ada yang lebih nyambung dengan materi — tapi jangan balik ke tampilan generik):
+- Arsitipe UI: ${_arch.primary}${_arch.alt ? ` (alternatif: ${_arch.alt})` : ''}
+- Komposisi layar: ${_comp}
+- Dunia visual harus lahir dari MATERI "${finalSubject}" (mis. matematika → objek geometris/manipulatif; hewan → habitat; sains → laboratorium/observasi; bahasa → buku/dialog) — bukan sekadar mengganti teks di template yang sama.
+
+🔁 VARIATION CHECK (wajib sebelum finalisasi): "Kalau user mengganti gaya atau tema, apakah tampilan ini masih hampir sama?" Jika ya, rancang ulang komposisi. Yang BOLEH berubah total: background, komposisi, bentuk kartu/tombol, tipografi, gaya ilustrasi, metafora interaksi, visual progres, visual reward. Yang TETAP: mekanik game dan alur di bawah.
+
+🚫 HINDARI default generik: gradasi ungu-pink, glassmorphism berlebihan, kartu putih membulat seragam, shadow abu-abu rata, blob abstrak tanpa makna, ikon asal tempel, grid tombol 2x2 di tengah layar, atau komposisi terpusat — kecuali memang paling cocok untuk gaya yang dipilih.
+
+✅ UX TETAP AMAN: interaksi harus jelas, area tap nyaman, teks terbaca dan kontras cukup, feedback benar/salah mudah dipahami, dekorasi tidak boleh mengalahkan tugas belajar. Maskot/karakter tetap tampil di halaman welcoming dengan animasi ringan sesuai mood, desainnya khusus untuk game ini dan mengikuti gaya visual.`;
 
     // 🎯 Tujuan Pembelajaran — kalau diisi user, ini jadi acuan WAJIB dan menggantikan
     // instruksi generik "tentukan sendiri manfaat/goal transformasi"; kalau kosong,
@@ -139,7 +201,7 @@ Game ini dimainkan oleh pemain usia ${finalAge}. Buat konten yang berbeda per re
 - Tampilkan pilihan usia di halaman intro sebelum game dimulai (tombol pilih usia, bukan menu terpisah)` : '';
 
     const primaryGameKey = gameTypes[0] || 'kuis pilihan ganda';
-    const spec = GAME_SPECS[primaryGameKey] || DEFAULT_SPEC;
+    const spec = getSpec(primaryGameKey);
 
     if (!needsMenu) {
       return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
@@ -177,7 +239,7 @@ ${learningGoalBlock}
 - Tombol CTA yang jelas dan menarik untuk mulai bermain, bentuknya mengikuti gaya visual; animasi (pulse/glow/lainnya) dipilih sesuai mood dan secukupnya
 - Transisi smooth dari halaman welcoming ke halaman game (fade atau slide)
 
-🎮 LAYOUT & MEKANISME GAME (WAJIB IKUTI):
+🎮 KEBUTUHAN INTERAKSI (WAJIB ADA — posisi, bentuk, dan metafora visualnya boleh disesuaikan dengan Visual DNA selama interaksinya tetap jelas):
 ${spec.layout}
 
 ⚙️ ALUR GAME:
@@ -199,11 +261,11 @@ ${spec.flow}
 
     let menuInstructions = '';
     if (multiGame && !multiSubject) {
-      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. Card "${gt}"`).join('\n')}\n- Setiap card: ikon Font Awesome relevan + nama game + deskripsi singkat + tombol "Pilih"\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
+      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. Card "${gt}"`).join('\n')}\n- Setiap card: ikon Font Awesome relevan + nama game + deskripsi singkat + tombol "Pilih"\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI INTERAKSI PER JENIS GAME (mekanik wajib; tampilan mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt);return `\n▶ "${gt}":\n  Kebutuhan interaksi: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     } else if (!multiGame && multiSubject) {
       menuInstructions = `\n🗂️ MENU PILIH MATERI (WAJIB ADA):\n${subjects.map((s,i)=>`  ${i+1}. Card "${s}"`).join('\n')}\n- Setiap card: ikon Font Awesome relevan + nama materi + contoh soal singkat + tombol "Pilih"\n- Setiap materi punya set soal SENDIRI yang berbeda\n- Tombol "← Pilih Materi Lain" di dalam game`;
     } else {
-      menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown)\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME:\n${gameTypes.map(gt=>{const s=GAME_SPECS[gt]||DEFAULT_SPEC;return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
+      menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown)\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI INTERAKSI PER JENIS GAME (mekanik wajib; tampilan mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt);return `\n▶ "${gt}":\n  Kebutuhan interaksi: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
     }
 
     return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.

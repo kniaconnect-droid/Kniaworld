@@ -1,5 +1,5 @@
 // ══════════════════════════════════════
-// templates.js — hasil pecahan dari index.html (KniaWorld Prompt Generator)
+// template.js — versi perbaikan: anti kotak-seragam, anti miring, font & bentuk acak (KniaWorld Prompt Generator)
 // ══════════════════════════════════════
 
   // ── GAME SPECS ──
@@ -55,17 +55,30 @@
     if (vars && vars.length && typeof seed === 'number') {
       let h = 0;
       for (let k = 0; k < low.length; k++) h = (h * 31 + low.charCodeAt(k)) % 9973;
-      return { layout: vars[(seed + h) % vars.length], flow: spec.flow };
+      return { layout: vars[(seed + h) % vars.length], flow: normFlow(spec.flow), requirements: spec.requirements || '', freedom: spec.freedom || '' };
     }
-    return spec;
+    return { layout: spec.layout || '', flow: normFlow(spec.flow), requirements: spec.requirements || '', freedom: spec.freedom || '' };
+  }
+  // flow boleh string (format lama) atau array (format V2) — selalu jadi string bernomor
+  function normFlow(f) {
+    if (Array.isArray(f)) return f.map((x, i) => (i + 1) + '. ' + x).join('\n');
+    if (f && typeof f === 'object') return Object.values(f).map((x, i) => (i + 1) + '. ' + x).join('\n');
+    return f || '';
+  }
+  // Blok syarat interaksi + batas kebebasan visual (dari GameSpecs V2). Kosong kalau spec belum punya.
+  function specExtraBlock(spec) {
+    let o = '';
+    if (spec.requirements) o += `\n\n✅ SYARAT INTERAKSI (WAJIB):\n${spec.requirements}`;
+    if (spec.freedom) o += `\n\n🎨 BATAS KEBEBASAN VISUAL (layout di atas adalah titik berangkat WAJIB; poin berikut menjelaskan variasi yang diizinkan dan pola default yang harus dihindari — bukan izin kembali ke tampilan generik):\n${spec.freedom}`;
+    return o;
   }
 
   // ── KOLAM ARSITIPE & KOMPOSISI (dipilih acak per generate, dibatasi oleh gaya) ──
   // Tujuannya: pilihan gaya/mood/materi yang SAMA tetap bisa menghasilkan
   // dunia visual berbeda, dan AI tidak selalu jatuh ke arsitipe favoritnya.
   const ARCHETYPE_POOL = {
-    'minimal':        ['antarmuka modern minimalis ala aplikasi fokus', 'poster interaktif tipografis', 'dashboard belajar bersih'],
-    'clean':          ['dashboard belajar modern', 'jurnal belajar rapi', 'poster interaktif bersih'],
+    'minimal':        ['antarmuka modern minimalis ala aplikasi fokus', 'poster interaktif tipografis', 'ilustrasi editorial layar penuh dengan sedikit objek interaktif', 'pemandangan siluet satu warna dengan objek pilihan di dalamnya'],
+    'clean':          ['ilustrasi editorial layar penuh dengan elemen interaktif di dalamnya', 'jurnal belajar rapi', 'poster interaktif bersih (satu bidang, tanpa tumpukan kartu)', 'pemandangan bersih berlapis dengan karakter pemandu'],
     'playful':        ['dunia arkade ceria', 'peta petualangan berwarna', 'panggung sirkus/taman bermain', 'teman pendamping (character companion)'],
     'cartoon':        ['halaman komik dengan panel', 'dunia kartun layar penuh', 'studio animasi/panggung kartun'],
     'storybook':      ['buku cerita pop-up', 'jurnal petualangan bergambar', 'panggung teater kertas', 'peta harta karun di atas kertas tua'],
@@ -79,7 +92,8 @@
     'komposisi asimetris — fokus utama bergeser ke satu sisi, panel pendukung melayang di sisi lain',
     'split screen — satu sisi konteks/ilustrasi, sisi lain area interaksi',
     'peta atau jalur — progres divisualkan sebagai perjalanan, bukan bar angka',
-    'panel berlapis (layered cards) dengan kedalaman nyata',
+    'scene berlapis depan-tengah-belakang dengan kedalaman (parallax halus); elemen UI menyatu sebagai objek di dalam scene, bukan panel/kartu bertumpuk',
+    'satu karakter pemandu besar di satu sisi layar yang "berbicara" lewat balon ucapan; area interaksi berupa objek-objek di sisi lainnya',
     'komposisi radial — elemen utama melingkar mengelilingi satu pusat',
     'objek-di-atas-permukaan — item tersebar natural seperti benda di meja/papan, bukan grid kaku'
   ];
@@ -96,19 +110,22 @@
   // Welcome, menu, area jawaban, dan layar hasil adalah 4 tempat yang dulu selalu
   // berbentuk sama (judul → gambar → teks → tombol; tumpukan kartu; kolom tombol).
   const WELCOME_FORMS = [
-    'judul besar miring di sudut atas, maskot SANGAT besar menyembul dari tepi bawah-kanan layar (sebagian terpotong), tagline di balon ucapan kecil, tombol mulai berbentuk benda tematik (bukan persegi panjang) di kiri bawah',
+    'judul besar tegak di sudut atas, maskot SANGAT besar menyembul dari tepi bawah-kanan layar (sebagian terpotong), tagline di balon ucapan kecil, tombol mulai berbentuk benda tematik (bukan persegi panjang) di kiri bawah',
     'scene layar penuh berlapis (minimal 3 lapis: langit/latar, objek tengah, objek depan); maskot kecil di dalam scene, judul menggantung seperti papan/spanduk, tombol mulai menyatu sebagai objek di scene',
     'split diagonal: separuh layar ilustrasi besar, separuh lagi judul + tagline + tombol, dipisah garis diagonal',
     'poster tipografis: judul sangat besar memenuhi lebar layar, maskot menumpuk di atas huruf-hurufnya, tombol mulai mengambang di bawah dengan label besar',
-    'jalur melengkung turun dari judul ke tombol mulai, maskot berdiri di atas jalur, dekorasi tematik di kiri-kanan jalur'
+    'jalur melengkung turun dari judul ke tombol mulai, maskot berdiri di atas jalur, dekorasi tematik di kiri-kanan jalur',
+    'maskot berbicara di balon ucapan besar di tengah scene; judul kecil sebagai plakat di pojok; "mulai" berupa objek yang bisa disentuh maskot (pintu, tuas, balon, kapal) di dalam scene',
+    'layar dibuka seperti tirai/gerbang tematik; judul tampil di pusat dengan huruf bertingkat ukuran berbeda; "mulai" muncul setelah maskot melambai'
   ];
   const MENU_FORMS = [
     'pilihan = lokasi/landmark berbeda bentuk dan ukuran di satu peta/scene (tiap game satu landmark + label), BUKAN kartu seragam',
-    'pilihan = pintu/gerbang/jendela dengan bentuk berbeda, berjajar tidak sejajar (tinggi dan sudut berbeda)',
-    'pilihan = benda tematik berbeda di atas satu permukaan (rak/meja/papan) dengan posisi dan kemiringan berbeda',
-    'pilihan = kartu bertingkat (stagger) dengan ukuran berbeda, satu pilihan utama dibuat lebih besar',
-    'pilihan = papan penunjuk arah bercabang dari satu tiang, tiap papan berbeda panjang dan arah',
-    'pilihan = tombol besar menempel bergantian di tepi kiri dan kanan layar, maskot di tengah memberi penjelasan'
+    'pilihan = pintu/gerbang/jendela dengan bentuk berbeda, berjajar dengan tinggi berbeda (semuanya tegak, tanpa rotasi)',
+    'pilihan = benda tematik berbeda siluet di atas satu permukaan (rak/meja/papan), posisi dan ukuran berbeda, tetap tegak',
+    'pilihan = objek-objek besar di kiri dan kanan scene bergantian (mis. pohon, kapal, menara), maskot di tengah memberi penjelasan; label teks tegak, tanpa bingkai kotak',
+    'pilihan = papan penunjuk arah bercabang dari satu tiang, tiap papan berbeda panjang; panah menunjuk arah berbeda, tulisan tetap tegak',
+    'pilihan = karakter/hewan berbeda yang berdiri di scene, masing-masing mewakili satu pilihan; menyentuh karakter memilihnya',
+    'pilihan = pulau/planet/balon dengan ukuran berbeda yang melayang pelan (gerak naik-turun, bukan berputar), label tegak'
   ];
   const RESULT_FORMS = [
     'medali/piala/lencana besar sebagai pusat layar, bintang dan skor menempel di pita/dasarnya',
@@ -123,6 +140,45 @@
       menu:    pickFrom(MENU_FORMS, Math.floor(seed / 5), 0),
       result:  pickFrom(RESULT_FORMS, Math.floor(seed / 29), 0)
     };
+  }
+
+  // ── TIPOGRAFI & BAHASA BENTUK (dipilih per generate agar AI tidak selalu jatuh ke font/bentuk favoritnya) ──
+  // Tanpa ini, hasil generate hampir selalu memakai pasangan font dan kartu persegi yang sama.
+  const FONT_POOL = {
+    'minimal':        [['Fraunces','Hanken Grotesk'], ['Outfit','Atkinson Hyperlegible'], ['Instrument Serif','Lexend']],
+    'clean':          [['Young Serif','Work Sans'], ['Outfit','Atkinson Hyperlegible'], ['Sora','Lexend']],
+    'playful':        [['DynaPuff','Hanken Grotesk'], ['Chewy','Andika'], ['Baloo 2','Outfit'], ['Sniglet','Mulish']],
+    'cartoon':        [['Lilita One','Atkinson Hyperlegible'], ['Chewy','Andika'], ['Luckiest Guy','Lexend']],
+    'storybook':      [['Young Serif','Andika'], ['Fraunces','Mulish'], ['Gaegu','Lexend']],
+    'pixel-inspired': [['Silkscreen','Atkinson Hyperlegible'], ['Press Start 2P','Lexend']],
+    'hand-drawn':     [['Caveat Brush','Lexend'], ['Gaegu','Andika'], ['Patrick Hand','Mulish']],
+    'futuristic':     [['Space Grotesk','DM Sans'], ['Orbitron','Lexend'], ['Sora','Hanken Grotesk']],
+    '_default':       [['DynaPuff','Hanken Grotesk'], ['Young Serif','Work Sans'], ['Chewy','Andika'], ['Sora','Lexend'], ['Gaegu','Lexend']]
+  };
+  const SHAPE_LANGS = [
+    'lengkung organik (batu kali, daun, awan, tetesan) — hampir tanpa sudut siku',
+    'geometri tegas campuran (lingkaran, segitiga, hexagon, trapesium) dengan ukuran berbeda-beda',
+    'potongan kertas dengan tepi bergelombang atau bergerigi halus (tetap tegak lurus, tanpa rotasi)',
+    'balok bangunan bertingkat dengan tinggi berbeda, seperti kota atau menara mainan',
+    'siluet benda yang diambil langsung dari materi (bukan bentuk umum), digambar SVG',
+    'tanpa wadah: teks langsung di atas ilustrasi dengan sorotan warna atau garis bawah animasi sebagai penanda pilihan'
+  ];
+  function pickLook(visualStyle, seed) {
+    const first = (visualStyle || '').split(',')[0].trim().toLowerCase();
+    const fonts = FONT_POOL[first] || FONT_POOL._default;
+    const f = pickFrom(fonts, Math.floor(seed / 3), 0);
+    return { display: f[0], body: f[1], shape: pickFrom(SHAPE_LANGS, Math.floor(seed / 7), 0) };
+  }
+  // Aturan bentuk elemen interaktif — melawan 3 gejala: kotak/tombol besar seragam,
+  // elemen miring-miring, dan kartu bertumpuk. Ukuran tap tetap 48px, tapi lewat area sentuh, bukan tampilan gemuk.
+  function buildShapeRulesBlock(look) {
+    return `🧱 ATURAN BENTUK ELEMEN INTERAKTIF (WAJIB — kalau dilanggar, game terlihat "basic" dan mirip game lain):
+1. DILARANG memakai CSS rotate()/skew() atau kemiringan apa pun pada elemen interaktif, teks, kartu, tombol, dan panel. Semua tegak lurus. Variasi posisi dibuat lewat ukuran, ketinggian, jarak yang tidak sama, bentuk, dan lapisan — BUKAN dengan memiringkan. Rotasi hanya untuk dekorasi latar (awan, bintang, daun) dan animasi yang memang berputar (roda, loading).
+2. Pilihan jawaban/aksi adalah OBJEK DI DALAM SCENE (siluet berbeda, digambar dengan SVG/CSS), bukan <button> persegi panjang seragam. Tiga pilihan atau lebih TIDAK BOLEH punya lebar, tinggi, dan bentuk yang sama persis.
+3. Bagian yang wajib 48x48px hanyalah AREA SENTUH. Tampilan boleh kecil atau sedang; perluas area sentuh dengan padding transparan atau pseudo-element, bukan dengan menggemukkan tampilan. Hindari tombol selebar penuh kecuali itu satu-satunya aksi utama di layar.
+4. DILARANG: tumpukan panel dengan translate/rotate (efek "kartu bertumpuk" lewat ::before/::after), garis tepi tebal seragam di semua elemen, dan panel putih membulat yang diulang di setiap layar.
+5. Bahasa bentuk game ini: ${look.shape}. Pakai konsisten untuk semua pilihan, wadah, dan lencana.
+6. Setiap layar dibuka dengan satu elemen yang BUKAN persegi panjang (siluet, kurva, lingkaran besar, atau ilustrasi yang menembus tepi layar).`;
   }
 
   // Cari token berdasarkan teks bebas (chip atau input custom). Kalau tidak dikenali,
@@ -208,12 +264,15 @@ ${moodLines}
     const _seed = Math.floor(Math.random()*1000000);
     const _arch = pickArchetypes(visualStyle, _seed);
     const _comp = pickFrom(COMPOSITION_POOL, Math.floor(_seed / 11), 0);
+    const _look = pickLook(visualStyle, _seed);
+    const shapeRulesBlock = buildShapeRulesBlock(_look);
     const visualDirectionBlock = `🎨 VISUAL DNA & DIREKSI PENGALAMAN (jenis game menentukan CARA MAIN-nya; Visual DNA menentukan RASA & TAMPILANNYA — jangan perlakukan jenis game sebagai template visual tetap):
-Sebelum menulis kode, rumuskan singkat Visual DNA untuk game ini dari kombinasi: jenis game + materi "${finalSubject}" + usia ${finalAge} + gaya${visualStyle ? ` "${visualStyle}"` : ''} + mood${mood ? ` "${mood}"` : ''} + warna ${color}. Tentukan: konsep visual, hierarki warna, kepribadian tipografi (sebut nama font Google Fonts yang dipakai), bahasa bentuk, teknik ilustrasi (SVG/CSS), karakter/maskot, lingkungan/background, tekstur, kedalaman, dan kepribadian animasi. Tulis ringkasannya 5-6 baris sebagai komentar HTML di awal kode, lalu pakai konsisten di SEMUA layar. Simpan semua keputusan visual sebagai CSS variables terpusat agar mudah diubah.
+Sebelum menulis kode, rumuskan singkat Visual DNA untuk game ini dari kombinasi: jenis game + materi "${finalSubject}" + usia ${finalAge} + gaya${visualStyle ? ` "${visualStyle}"` : ''} + mood${mood ? ` "${mood}"` : ''} + warna ${color}. Tentukan: konsep visual, hierarki warna, kepribadian tipografi, bahasa bentuk, teknik ilustrasi (SVG/CSS), karakter/maskot, lingkungan/background, tekstur, kedalaman, dan kepribadian animasi. Tulis ringkasannya 5-6 baris sebagai komentar HTML di awal kode, lalu pakai konsisten di SEMUA layar. Simpan semua keputusan visual sebagai CSS variables terpusat agar mudah diubah.
 
 🧭 ARAH WAJIB (pakai arsitipe dan komposisi ini; hanya boleh diganti bila benar-benar tidak cocok dengan materi — jika diganti, tulis alasannya satu baris di komentar Visual DNA):
 - Arsitipe UI: ${_arch.primary}${_arch.alt ? ` (alternatif: ${_arch.alt})` : ''}
 - Komposisi layar: ${_comp}
+- Tipografi WAJIB (muat dari Google Fonts): judul/karakter "${_look.display}", teks isi "${_look.body}". Jangan pakai Bricolage Grotesque, Figtree, JetBrains Mono, Poppins, Inter, atau Nunito kecuali memang ada di pasangan ini.
 - Dunia visual harus lahir dari MATERI "${finalSubject}" (mis. matematika → objek geometris/manipulatif; hewan → habitat; sains → laboratorium/observasi; bahasa → buku/dialog) — bukan sekadar mengganti teks di template yang sama.
 
 🔁 VARIATION CHECK (wajib sebelum finalisasi): "Kalau user mengganti gaya atau tema, apakah tampilan ini masih hampir sama?" Jika ya, rancang ulang komposisi. Yang BOLEH berubah total: background, komposisi, bentuk kartu/tombol, tipografi, gaya ilustrasi, metafora interaksi, visual progres, visual reward. Yang TETAP: mekanik game dan alur di bawah.
@@ -228,7 +287,7 @@ Sebelum menulis kode, rumuskan singkat Visual DNA untuk game ini dari kombinasi:
 - Layar menu/pilihan: ${_forms.menu}
 - Layar hasil: ${_forms.result}
 Untuk gaya Minimal/Clean: pakai versi paling sederhana dari bentuk di atas (tanpa ornamen), tapi tetap bedakan posisi dan ukuran elemen.
-🚫 DILARANG: (1) menu berupa tumpukan kartu seragam, (2) semua layar memakai tata letak yang sama, (3) hanya mengganti warna dan emoji pada template yang sama. (Layout area game mengikuti spesifikasi per jenis game di bawah.)`;
+🚫 DILARANG: (1) menu berupa tumpukan kartu seragam, (2) semua layar memakai tata letak yang sama, (3) hanya mengganti warna dan emoji pada template yang sama, (4) elemen atau teks yang dimiringkan/diputar. (Layout area game mengikuti spesifikasi per jenis game di bawah.)`;
 
     const finalCheckBlock = `\n\n🔎 CEK AKHIR (periksa kodemu sebelum mengirim; kalau ada jawaban "tidak", perbaiki dulu):
 [ ] Layar welcome, menu, game, dan hasil punya komposisi yang berbeda satu sama lain (bukan susunan vertikal yang sama)?
@@ -236,6 +295,10 @@ Untuk gaya Minimal/Clean: pakai versi paling sederhana dari bentuk di atas (tanp
 [ ] Ada ilustrasi/scene yang detail (minimal 3 lapis) dan elemen khas materi, bukan sekadar emoji?
 [ ] Bentuk tiap layar mengikuti "BENTUK TIAP LAYAR" dan arsitipe di atas?
 [ ] Huruf/teks penting (termasuk huruf Arab) selalu terbaca tegak, tidak terbalik atau miring?
+[ ] Tidak ada rotate()/skew() pada elemen interaktif, teks, kartu, atau panel (cari di CSS-mu)?
+[ ] Pilihan jawaban/aksi berupa objek bersiluet berbeda di dalam scene, bukan deretan kotak/tombol berukuran sama?
+[ ] Tidak ada tumpukan panel (::before/::after yang menggandakan panel) dan tidak ada tombol selebar penuh yang tidak perlu?
+[ ] Font yang dipakai persis sesuai "Tipografi WAJIB"?
 Kode yang terlalu pendek/sederhana berarti belum selesai — kerjakan sampai visualnya benar-benar terasa dibuat khusus untuk game ini.`;
 
     // 🎯 Tujuan Pembelajaran — kalau diisi user, ini jadi acuan WAJIB dan menggantikan
@@ -273,6 +336,8 @@ ${visualDirectionBlock}
 
 ${screenFormsBlock}
 
+${shapeRulesBlock}
+
 Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
 📋 SPESIFIKASI GAME:
@@ -291,7 +356,7 @@ ${learningGoalBlock}
 - Huruf/teks penting (termasuk huruf Arab dan label di roda/papan) harus selalu terbaca tegak — jangan diputar terbalik atau miring mengikuti posisi elemennya
 - Semua soal/konten harus relevan dengan materi "${finalSubject}" (bukan soal generik)
 - Teks mudah dibaca sesuai target usia — minimal 18px untuk teks soal (ketebalan font mengikuti gaya visual, tidak harus bold)
-- Semua tombol & area tap: area sentuh minimal 48x48px, nyaman disentuh (ini soal ukuran area tap, bukan ketebalan border/tampilan tombol — tampilan tombol ikut gaya visual)
+- Semua elemen yang bisa disentuh: AREA SENTUH minimal 48x48px (diperluas lewat padding/pseudo-element transparan). Ini soal area tap, bukan ukuran atau ketebalan tampilan — tampilan ikut gaya visual dan ATURAN BENTUK ELEMEN INTERAKTIF
 - Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 
 🏠 HALAMAN WELCOMING (WAJIB — LAYAR PERTAMA SEBELUM GAME):
@@ -304,7 +369,7 @@ ${learningGoalBlock}
 - Transisi smooth dari halaman welcoming ke halaman game (fade atau slide)
 
 🎮 LAYOUT & MEKANISME GAME (WAJIB IKUTI — gaya visual, warna, dan ilustrasinya mengikuti Visual DNA):
-${spec.layout}
+${spec.layout}${specExtraBlock(spec)}
 
 ⚙️ ALUR GAME:
 0. Halaman Welcoming → klik "Mulai Main!" → masuk game
@@ -325,11 +390,11 @@ ${spec.flow}
 
     let menuInstructions = '';
     if (multiGame && !multiSubject) {
-      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\n- Bentuk menu: ${_forms.menu}\n- Setiap pilihan: ikon/ilustrasi relevan (Font Awesome atau SVG buatan sendiri) + nama game + deskripsi singkat + penanda "Pilih" yang jelas\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI PER JENIS GAME (WAJIB IKUTI layout dan alur; gaya visual mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt, _seed);return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
+      menuInstructions = `\n🗂️ MENU PILIH JENIS GAME (WAJIB ADA):\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\n- Bentuk menu: ${_forms.menu}\n- Setiap pilihan: ikon/ilustrasi relevan (Font Awesome atau SVG buatan sendiri) + nama game + deskripsi singkat + penanda "Pilih" yang jelas\n- Materi semua game: ${finalSubject}\n- Tombol "← Ganti Jenis Game" di dalam game\n\nSPESIFIKASI PER JENIS GAME (WAJIB IKUTI layout dan alur; gaya visual mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt, _seed);return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}${s.requirements ? '\n  Syarat interaksi:\n' + s.requirements.split('\n').map(l => '    ' + l).join('\n') : ''}${s.freedom ? '\n  Batas kebebasan visual (hindari default):\n' + s.freedom.split('\n').map(l => '    ' + l).join('\n') : ''}`;}).join('\n')}`;
     } else if (!multiGame && multiSubject) {
       menuInstructions = `\n🗂️ MENU PILIH MATERI (WAJIB ADA):\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Bentuk menu: ${_forms.menu}\n- Setiap pilihan: ikon/ilustrasi relevan (Font Awesome atau SVG buatan sendiri) + nama materi + contoh soal singkat + penanda "Pilih" yang jelas\n- Setiap materi punya set soal SENDIRI yang berbeda\n- Tombol "← Pilih Materi Lain" di dalam game`;
     } else {
-      menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown), bentuk pilihan: ${_forms.menu}\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME (WAJIB IKUTI layout dan alur; gaya visual mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt, _seed);return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}`;}).join('\n')}`;
+      menuInstructions = `\n🗂️ MENU BERTINGKAT (2 LANGKAH):\nLangkah 1 — Pilih Jenis Game:\n${gameTypes.map((gt,i)=>`  ${i+1}. "${gt}"`).join('\n')}\nLangkah 2 — Pilih Materi:\n${subjects.map((s,i)=>`  ${i+1}. "${s}"`).join('\n')}\n- Setiap langkah = halaman tersendiri (bukan dropdown), bentuk pilihan: ${_forms.menu}\n- Konten soal disesuaikan kombinasi unik\n\nSPESIFIKASI PER JENIS GAME (WAJIB IKUTI layout dan alur; gaya visual mengikuti Visual DNA):\n${gameTypes.map(gt=>{const s=getSpec(gt, _seed);return `\n▶ "${gt}":\n  Layout: ${s.layout}\n  Alur: ${s.flow}${s.requirements ? '\n  Syarat interaksi:\n' + s.requirements.split('\n').map(l => '    ' + l).join('\n') : ''}${s.freedom ? '\n  Batas kebebasan visual (hindari default):\n' + s.freedom.split('\n').map(l => '    ' + l).join('\n') : ''}`;}).join('\n')}`;
     }
 
     return `Kamu adalah game developer dan educational content creator yang berpengalaman membuat game edukasi interaktif. Kamu memahami prinsip desain UI yang disesuaikan target usia, learning psychology, dan cara membuat kode yang bersih serta maintainable. Setiap game yang kamu buat harus terasa seperti produk final yang polished — bukan demo atau prototipe.
@@ -340,6 +405,8 @@ ${styleContextBlock}
 ${visualDirectionBlock}
 
 ${screenFormsBlock}
+
+${shapeRulesBlock}
 
 Buatkan game edukasi interaktif sesuai target usia yang ditentukan di bawah.
 
@@ -357,7 +424,7 @@ ${learningGoalBlock}
 📐 KETENTUAN TEKNIS:
 - Responsive & mobile-first (mobile-first bukan berarti satu kolom vertikal — komposisi tetap mengikuti BENTUK TIAP LAYAR)
 - Huruf/teks penting (termasuk huruf Arab dan label di roda/papan) harus selalu terbaca tegak — jangan diputar terbalik atau miring mengikuti posisi elemennya
-- Teks minimal 18px, area sentuh tombol minimal 48x48px (tampilan tombol ikut gaya visual yang dipilih)
+- Teks minimal 18px, area sentuh minimal 48x48px (lewat padding/pseudo-element; tampilan ikut gaya visual dan ATURAN BENTUK ELEMEN INTERAKTIF)
 - Semua elemen visual (termasuk ilustrasi maskot) HARUS tergenerate dalam satu kali proses/respons — jangan minta generate atau upload aset terpisah setelahnya
 ${menuInstructions}
 

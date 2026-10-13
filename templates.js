@@ -68,7 +68,12 @@
   function getSpec(name, seed) {
     const raw = (name || '').trim();
     const low = raw.toLowerCase();
-    const spec = GAME_SPECS[raw] || GAME_SPECS[low] || GAME_SPECS[GAME_SPEC_ALIAS[low]] || GAME_SPECS[matchSpecKey(low)] || DEFAULT_SPEC;
+    let spec = GAME_SPECS[raw] || GAME_SPECS[low] || GAME_SPECS[GAME_SPEC_ALIAS[low]] || GAME_SPECS[matchSpecKey(low)] || DEFAULT_SPEC;
+    const _empty = o => !o || (!o.layout && !o.variants && !o.flow);
+    // data terbungkus satu tingkat terlalu dalam (hasil impor JSON) → buka bungkusnya
+    if (_empty(spec)) { const kids = Object.values(spec || {}); if (kids.length === 1 && kids[0] && typeof kids[0] === 'object') spec = kids[0]; }
+    // spesifikasi tetap kosong → jangan biarkan bagian LAYOUT/ALUR kosong, pakai default
+    if (_empty(spec)) spec = DEFAULT_SPEC;
     let vars = spec && spec.variants;
     if (vars && !Array.isArray(vars)) vars = Object.values(vars);
     if (vars && vars.length && typeof seed === 'number') {

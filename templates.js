@@ -43,13 +43,32 @@
     'hidden object':            'mencari objek tersembunyi',
     'rhythm & music game':      'ritme dan musik'
   };
+  GAME_SPEC_ALIAS['platformer adventure'] = 'platformer petualangan';
+  // Jenis game "Ketik sendiri" → cocokkan lewat kata kunci ke key gameSpecs yang sudah ada
+  const GAME_SPEC_KEYWORDS = [
+    { re: /mario|platform|lompat|runner/i,        key: 'platformer petualangan' },
+    { re: /memori|memory|pasang(an)? kartu/i,     key: 'memori kartu mencari pasangan' },
+    { re: /puzzle|jigsaw|potongan/i,              key: 'puzzle gambar potongan' },
+    { re: /roda|spin/i,                           key: 'roda putar tantangan' },
+    { re: /balap|racing|kebut/i,                  key: 'balapan cepat menjawab' },
+    { re: /susun (huruf|kata)|anagram/i,          key: 'menyusun huruf atau kata' },
+    { re: /cerita|story/i,                        key: 'cerita interaktif pilih alur' }
+  ];
+  function matchSpecKey(low) {
+    const hit = GAME_SPEC_KEYWORDS.find(k => k.re.test(low));
+    return hit ? hit.key : null;
+  }
+  // Nama merek dagang tidak boleh masuk ke prompt
+  function cleanGameType(t) {
+    return /mario|sonic|pokemon|zelda/i.test(t) ? 'platformer petualangan (karakter orisinal)' : t;
+  }
   // Spec bisa punya `variants` (beberapa layout KONKRET). Kode memilih satu secara acak
   // (deterministik per seed + jenis game) — AI tetap menerima instruksi konkret, bukan
   // "bebas", tapi tiap generate bisa mendapat layout berbeda.
   function getSpec(name, seed) {
     const raw = (name || '').trim();
     const low = raw.toLowerCase();
-    const spec = GAME_SPECS[raw] || GAME_SPECS[low] || GAME_SPECS[GAME_SPEC_ALIAS[low]] || DEFAULT_SPEC;
+    const spec = GAME_SPECS[raw] || GAME_SPECS[low] || GAME_SPECS[GAME_SPEC_ALIAS[low]] || GAME_SPECS[matchSpecKey(low)] || DEFAULT_SPEC;
     let vars = spec && spec.variants;
     if (vars && !Array.isArray(vars)) vars = Object.values(vars);
     if (vars && vars.length && typeof seed === 'number') {
@@ -233,7 +252,7 @@ ${moodLines}
 
   // ── BUILD MAIN PROMPT ──
   function buildPrompt() {
-    const gameTypes = getVal('gameTypeChips','cGameType','cGameTypeInput').split(',').map(s=>s.trim()).filter(Boolean);
+    const gameTypes = getVal('gameTypeChips','cGameType','cGameTypeInput').split(',').map(s=>s.trim()).filter(Boolean).map(cleanGameType);
     const subjects  = getValMulti(['subjectChips','subjectChipsMath','subjectChipsLang','subjectChipsScience','subjectChipsWorld','subjectChipsLife'],'cSubject','cSubjectInput').split(',').map(s=>s.trim()).filter(Boolean);
     const ages      = getVal('ageChips','cAge','cAgeInput').split(',').map(s=>s.trim()).filter(Boolean);
     const difficulty  = getVal('diffChips','cDiff','cDiffInput') || 'mudah dan menyenangkan';

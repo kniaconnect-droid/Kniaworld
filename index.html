@@ -92,7 +92,7 @@
 <!-- BONUS: MENU 3 BONUS POPUP -->
 <div class="popup-overlay" id="bonusMenuPopup" style="display:none;" onclick="if(event.target===this) closeBonusMenuPopup()">
   <div class="popup-card popup-card-wide">
-    <button onclick="closeBonusMenuPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(15,23,42,0.06);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">
+    <button class="popup-close" aria-label="Tutup" onclick="closeBonusMenuPopup()">
       <i class="fa-solid fa-xmark"></i>
     </button>
     <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,0.35);">
@@ -161,7 +161,7 @@
 <!-- BONUS: AI ASISTEN PROMOSI POPUP -->
 <div class="popup-overlay" id="bonusPopup" style="display:none;" onclick="if(event.target===this) closeBonusPopup()">
   <div class="popup-card">
-    <button onclick="closeBonusPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(15,23,42,0.06);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">
+    <button class="popup-close" aria-label="Tutup" onclick="closeBonusPopup()">
       <i class="fa-solid fa-xmark"></i>
     </button>
     <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,0.35);">
@@ -2402,7 +2402,7 @@
   </div>
 </div>
 
-<div style="text-align:center;padding:20px;font-size:11px;color:var(--muted);font-weight:600;cursor:default;user-select:none;">
+<div class="app-footer" style="text-align:center;padding:20px;font-size:11px;color:var(--muted);font-weight:600;cursor:default;user-select:none;">
   kniaWorld Generator × by KNIACONNECT · v4.1 Pro
 </div>
 

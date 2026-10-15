@@ -15,6 +15,7 @@
   function goTo(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.getElementById(pageId).classList.add('active');
+    document.body.classList.toggle('ms-mode', pageId === 'pageMagicsheets'); // header disembunyikan, frame memenuhi layar HP
     window.scrollTo({ top: 0, behavior: 'smooth' });
     const subs = {
       pageGuide:    'Bikin game edukasi anak dalam hitungan detik!',

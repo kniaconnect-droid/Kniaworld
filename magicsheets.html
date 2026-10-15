@@ -63,6 +63,7 @@ header{padding-top:10px}
 pre{max-height:60vh;font-size:12px}
 #suggList .btn{width:100%;text-align:left;border-radius:14px}
 }
+@media(max-width:640px){.logo{width:min(92px,26vw);border-width:3px}header{padding:6px 0 0}header p{font-size:13px;margin:2px 0}.brand{font-size:12px}#nav .btn{padding:8px 10px;font-size:14px;line-height:1.2}#nav #gen{flex:1.8}.emb header p{display:none}}
 @media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%}.pg{border:0;margin:0;page-break-after:always;zoom:1!important}}
 </style></head><body>
 <div class="wrap">
@@ -111,7 +112,7 @@ pre{max-height:60vh;font-size:12px}
 <div class="f"><label for="nd">Name and date fields</label><select id="nd"><option>Yes</option><option>No</option></select></div>
 <div class="f"><label for="pnum">Page numbering</label><select id="pnum"><option>Yes</option><option>No</option></select></div>
 <div class="f"><label for="diff">Difficulty</label><select id="diff"><option>Easy</option><option selected>Medium</option><option>Advanced</option><option>Progressive</option></select></div>
-<div class="f"><label for="fmt">Output format</label><select id="fmt"><option value="html">HTML Printable + PDF Export (Rekomendasi)</option><option value="plan">Worksheet Prompt + Illustration Prompts</option></select><span class="hint">Rekomendasi: HTML Printable. Hasilnya bisa dibuka di browser, lalu Print &gt; Save as PDF.</span></div>
+<div class="f"><label for="fmt">Output format</label><select id="fmt"><option value="html">HTML Printable + PDF Export (Rekomendasi)</option><option value="plan">Worksheet Prompt + Illustrasi (ChatGPT, 1 halaman per gambar)</option></select><span class="hint" id="fmtHint">Rekomendasi: HTML Printable. Hasilnya bisa dibuka di browser, lalu Print &gt; Save as PDF.</span></div>
 <div class="f full"><label for="extra">Additional instructions (optional)</label><textarea id="extra" placeholder="e.g. Use a friendly turtle mascot named Tori. Avoid pictures of spiders."></textarea></div>
 </div></section>
 
@@ -394,8 +395,260 @@ ${c.outTxt}
 KUALITAS
 Pastikan semua jawaban benar, elemen berada di dalam margin, dan karakter tetap konsisten di semua halaman. Langsung kerjakan sampai semua halaman selesai tanpa bertanya balik.${c.extraTxt}`}
 return build()}
+// ===== Master Prompt: Sequential Worksheet Image Generator (ChatGPT, 1 halaman per gambar) =====
+// Dipakai saat Output format = "Worksheet Prompt + Illustrasi". Semua nilai diambil dari field form.
+function buildSeq(){
+const n=pageCount(),age=pick("age","ageC"),lang=pick("lang","langC"),subj=pick("subj","subjC"),
+topic=$("topic").value==="Custom Topic"?$("topicC").value.trim():$("topic").value,
+theme=pick("theme","themeC"),style=pick("style","styleC"),color=pick("color","colorC"),orient=pick("orient","orientC"),
+acts=[...$("acts").querySelectorAll("input:checked")].map(i=>i.value==="Custom Activity"?"Custom: "+$("actC").value.trim():i.value),
+goal=$("goal").value.trim(),cover=$("cover").value==="Yes",key=$("key").value==="Yes",nd=$("nd").value==="Yes",pn=$("pnum").value==="Yes",
+diff=$("diff").value,extra=$("extra").value.trim();
+const title=$("title").value.trim()||`${theme} ${topic} Worksheet`;
+const kid=/PAUD|TK|SD/.test(age);
+const langTxt=lang==="Indonesian + English"?"Indonesian + English (bilingual: write each instruction in Indonesian with a short English translation beneath it)":lang;
+const bw=/Black and White|Grayscale/.test(color)?" Prioritize clean outlines, high contrast, printable line art and coloring-friendly shapes.":"";
+let sizeLbl,ratio,noun;
+if(orient==="A4 Portrait"){sizeLbl="A4 portrait, 210 × 297 mm";ratio="approximately 1:1.414, width to height";noun="A4 portrait worksheet"}
+else if(orient==="A4 Landscape"){sizeLbl="A4 landscape, 297 × 210 mm";ratio="approximately 1.414:1, width to height";noun="A4 landscape worksheet"}
+else if(orient==="Square"){sizeLbl="square";ratio="1:1";noun="square worksheet"}
+else{sizeLbl=orient;ratio="the closest available aspect ratio to the requested format ("+orient+")";noun="worksheet in the requested format ("+orient+")"}
+const actTxt=!acts.length?"No activity type chosen: select the most suitable activity types for this topic and age (briefly justify each in the page plan).":
+acts.includes("Mixed Activities")?`Mixed Activities: choose varied activities suited to the subject and goal.${acts.filter(a=>a!=="Mixed Activities").length?" Also include: "+acts.filter(a=>a!=="Mixed Activities").join(", ")+".":""}`:
+acts.join(", ")+". Only use an activity where it makes educational sense for the topic.";
+const goalTxt=goal||"Not specified. Infer one clear, measurable learning objective suited to the audience, topic and difficulty, and show it in the page plan.";
+const prog=diff==="Progressive";
+const keyImgs=key?Math.ceil(n/4):0;
+const total=(cover?1:0)+n+keyImgs;
+const first=cover?"Cover":"Page 1";
+const coverRule=cover?`- Add ONE cover image BEFORE Page 1. It is the "Cover": title, theme illustration and the main character only, no activity and no page number. It is NOT counted in the ${n} activity pages.`:"- No cover page.";
+const keyRule=key?`- After the last activity page, generate separate answer-key image(s) for teachers/parents: answers only, large readable text, covering up to 4 activity pages per image (${keyImgs} image${keyImgs>1?"s":""}). They are NOT counted in the ${n} activity pages. Never put answers on student-facing pages.`:"- No separate answer-key page.";
+const ndRule=nd?"- Every activity page must contain Name and Date fields.":"- Do not add Name and Date fields.";
+const pnRule=pn?"- Every activity page must show its correct page number.":"- Do not print page numbers.";
+const keyStep=key?` After Page ${n}, continue with the answer-key image(s), then finish.`:"";
+let o=`# MASTER PROMPT — SEQUENTIAL WORKSHEET IMAGE GENERATOR
+## ChatGPT Image Generation | One Page per Image | Print-Ready Worksheet Design
+
+### 1. ROLE
+
+You are an expert curriculum designer, early childhood educator, educational illustrator, worksheet art director, and print-layout specialist.
+
+Your primary responsibility is to create actual illustrated worksheet page images using the available image-generation capability in ChatGPT.
+
+Do not stop after writing a lesson plan, content outline, or illustration prompts. The requested deliverable is the actual worksheet image for each page.
+
+Write your status messages and continuation hints in Indonesian. The text printed on the worksheet pages must be in the worksheet language below.
+
+### 2. WORKSHEET CONFIGURATION
+
+- Title: ${title}
+- Target audience: ${age}${kid?" (young learners: simple vocabulary, large friendly visuals, short instructions)":" (adjust vocabulary, task complexity and visual maturity to this audience; do not make it childish unless appropriate)"}
+- Language: ${langTxt}
+- Subject: ${subj}
+- Topic: ${topic}
+- Learning objective: ${goalTxt}
+- Difficulty: ${diff}${prog?" (start easy and gradually increase difficulty across pages)":""}
+- Theme (visual story world only; it does not change the subject): ${theme}
+- Illustration style: ${style}
+- Color mode: ${color}.${bw}
+- Page format: ${sizeLbl}
+- Total activity pages: ${n}
+- Activities: ${actTxt}
+
+### 3. STRICT PAGE COUNT AND CONTENT RULES
+
+Generate exactly ${n} distinct activity page${n>1?"s":""}.
+
+${coverRule}
+${keyRule}
+- No duplicate or incomplete activity pages.
+- Every page must have a meaningful educational activity.${prog?" Order the pages from easiest to hardest.":""}
+${ndRule}
+${pnRule}
+- Use short, age-appropriate instructions in ${lang}.
+- Every page must include functional illustrations relevant to its activity.
+- Leave adequate space for writing, tracing, coloring, drawing, or answering.
+- Keep all content within the safe print margins.
+- Ensure every question has a valid answer or an appropriate open-ended assessment criterion.
+- Verify calculations, object counts, matching pairs, and logical solutions before generating each page.
+
+Do not force an activity type when it does not serve the learning objective. For example, addition and subtraction must only be used when appropriate to the learner's age and subject.
+
+### 4. CONTENT PLANNING
+
+Before generating images, establish a complete production plan for every page. For each page, determine:
+1. Page number and title.
+2. Specific learning objective.
+3. Activity and instructions in ${lang}.
+4. Exact questions and answer choices.
+5. Correct answers and validation criteria.
+6. Exact number and type of illustrated objects.
+7. Illustration composition and placement.
+8. Writing areas and other required blank spaces.
+9. Potential educational or visual errors to avoid.
+
+Check that the full sequence progresses logically from foundational skills to practice and review. Avoid repetitive activities unless repetition is intentional for learning reinforcement.
+
+IMPORTANT: Hidden planning is not kept between turns. So in your FIRST reply, show a COMPACT PAGE PLAN: one short line per page (page number, title, activity, key object counts and answers). This plan stays visible in the conversation and is the single source of truth for every later page. Then, in the same reply, generate the ${first} image. Do not print the long-form detailed plan and do not ask for approval.
+
+Keep the plan consistent throughout the project. Do not change approved questions, answers, object counts, or page themes during image generation unless a genuine error is discovered.
+
+### 5. SEQUENTIAL IMAGE GENERATION PROTOCOL
+
+The most important requirement is to generate ONE COMPLETE WORKSHEET PAGE PER IMAGE.
+
+#### Initial execution
+
+1. Establish the complete plan for all ${n} page${n>1?"s":""} and show the compact page plan.
+2. Generate the actual ${first} image using the available image-generation tool.
+3. ${cover?"Do not combine the Cover with Page 1 or any other page.":"Do not generate a cover page, and do not combine Page 1 with any other page."}
+4. Once it has been generated successfully, report its completion and identify the next page number.
+
+#### Subsequent execution
+
+When the user requests "Lanjut", "Next page", "Halaman berikutnya", or equivalent:
+
+1. Read the established page plan and the last successfully completed page number available in the conversation.
+2. Select the next unfinished page.
+3. Generate that page as a new, separate image using the actual image-generation capability.${keyStep}
+4. Do not repeat or regenerate previously completed pages.
+5. Maintain the original page order.
+6. Update the completion status only after the image-generation tool returns a successful result.
+7. If image generation fails, report the failure and retry that same page when requested. Do not skip ahead.
+
+If the user explicitly requests a particular page number, generate that page if its plan is available. Do not silently renumber it.
+
+#### Automatic continuation
+
+After each successful page generation, continue to the next page only if the available tools and execution environment genuinely support another image-generation operation in the same execution flow.
+
+If the platform requires another user turn, stop after the successfully generated page and provide a concise continuation instruction. Never pretend that the remaining pages were generated.
+
+Do not claim that all pages have been created merely because their prompts or plans have been written.
+
+### 6. VISUAL CONSISTENCY SYSTEM
+
+Establish a reusable visual identity before generating the first image, based on the "${theme}" theme and the "${style}" style.
+
+Define and preserve:
+- Main character appearance and proportions.
+- Supporting character designs.
+- Exact color palette (${color}).
+- Illustration style and outline weight.
+- Background treatment.
+- Typography character and hierarchy.
+- Header, instruction panel, activity panel, and footer structure.
+${nd?"- Name and Date field placement.\n":""}${pn?"- Page-number placement.\n":""}- Safe margins and writing-space requirements.
+
+When supported, use an approved reference image to maintain character consistency. Reuse the same reference across subsequent image generations when possible.
+
+If reference-image reuse is unavailable, repeat the relevant character and art-direction specifications in each page's image prompt.
+
+Do not assume the image generator remembers every visual detail from earlier images.
+
+### 7. IMAGE COMPOSITION AND PRINT REQUIREMENTS
+
+Every generated image must represent one complete ${noun}.
+
+- Intended aspect ratio: ${ratio}.
+- Use a clean, uncluttered composition.
+- Keep instructions and question text large and legible.
+- Use high-contrast text and clear activity boundaries.
+- Provide generous white space for children to respond.
+- Avoid text near page edges.
+- Keep illustrations inside safe margins.
+- Do not use remote image URLs or depend on external assets.
+- Do not create collages, contact sheets, multi-page previews, or miniature worksheet collections.
+
+Use the closest suitable image-generation aspect ratio available. Do not claim that the generated image has exact physical page dimensions or print resolution unless those properties have been verified.
+
+The generated image is a visual page draft. If precise typography, exact print dimensions, bleed, or guaranteed text accuracy is essential, recommend a separate layout and prepress validation step.
+
+### 8. PAGE-SPECIFIC IMAGE PROMPT
+
+For each page, create a focused image-generation instruction using the approved content plan.
+
+Include:
+- Exact page number and title.
+- The specific learning activity.
+- Exact visible instructions and question text.
+- Exact object counts and number labels.
+- Correct answer choices.
+- Illustration subject and composition.
+- Required blank writing or drawing areas.
+- Consistent visual identity (${theme}, ${style}, ${color}).
+- Page format (${sizeLbl}) and safe margins.
+- Explicit prohibitions against extra countable objects or incorrect numerals.
+
+Do not overload the image with long paragraphs. Use concise worksheet wording.
+
+Where accurate educational text cannot be reliably rendered inside an image, do not silently invent or omit content. Report the limitation and recommend assembling the final page using a layout tool with editable text.
+
+### 9. QUALITY CONTROL AFTER EACH PAGE
+
+After each successful image generation, inspect the available image as carefully as possible.
+
+Verify:
+${pn?"- The intended page number is visible and correct.\n":""}${nd?"- The Name and Date fields are present.\n":""}- The activity matches the approved plan.
+- The illustrated objects appear in the correct quantities.
+- Number labels and answer choices are correct and readable.
+- The instructions are in ${lang}.
+- There is adequate writing or drawing space.
+- No major illustration or text element is clipped.
+- The image contains only one worksheet page.
+
+If an obvious error is found, disclose it and regenerate the same page when requested or when regeneration is supported.
+
+Visual inspection is not a guarantee that every character, calculation, or pixel is correct. State any unresolved limitations honestly.
+
+### 10. PROGRESS TRACKER
+
+Maintain the following project state in the conversation and update it after every image:
+
+- Total planned activity pages: ${n}${total>n?` (total images including ${[cover?"cover":"",key?"answer key":""].filter(Boolean).join(" and ")}: ${total})`:""}
+- Successfully generated pages: none yet
+- Pages requiring regeneration: none
+- Next page to generate: ${first}
+- Current visual style: ${theme}, ${style}, ${color}
+
+Never mark a page complete based only on a written prompt.
+
+When continuing in a new turn, reconstruct the tracker from the available conversation. If the previous state cannot be established confidently, ask for the last completed page number instead of guessing.
+
+### 11. RESPONSE FORMAT
+
+After each successful image generation, provide a short status message:
+
+"Halaman [N] — [TITLE] berhasil dibuat."
+
+Then state:
+- Activity included.
+- Any visible issue that requires correction.
+- Next page number.
+
+Keep status messages brief. Do not repeat the complete master prompt or content plan after every page.
+
+If the user asks to continue, generate the next image rather than merely describing what the next page should look like.
+
+After the final page, report the total number of successfully generated images, list any missing or regenerated pages, and identify any remaining print-quality checks.
+
+### 12. START NOW
+
+Use the worksheet configuration above.
+
+Build the plan for all ${n} page${n>1?"s":""}, show the compact page plan, then generate the actual ${first} image immediately in the same reply.
+
+Do not ask for approval of the plan.
+Do not output only an illustration prompt.
+Do not generate multiple worksheet pages inside one image.
+Do not claim success before the image-generation tool returns the actual image.
+
+Begin with ${cover?"the Cover":"Page 1"} now.`;
+if(extra)o+=`\n\n### ADDITIONAL INSTRUCTIONS FROM THE USER\n${extra}`;
+return o}
+
 function buildV(v){return v===0?build():buildAlt(v)}
-function gen(v){if(!validate())return;$("prompt").textContent=buildV(VI=v||0);$("varLabel").textContent="Varian "+(VI+1)+" dari "+VN+": "+VNAMES[VI]+". Klik Regenerate untuk melihat varian lain.";renderGo();$("out").classList.remove("hide");$("out").scrollIntoView({behavior:"smooth"})}
+function gen(v){if(!validate())return;const seq=$("fmt").value==="plan";$("prompt").textContent=seq?buildSeq():buildV(VI=v||0);$("varLabel").textContent=seq?"Master Prompt ChatGPT: plan + generate gambar 1 halaman per gambar. Tempel di ChatGPT (fitur gambar aktif). Halaman pertama langsung dibuat, lalu ketik \"Lanjut\" untuk halaman berikutnya.":"Varian "+(VI+1)+" dari "+VN+": "+VNAMES[VI]+". Klik Regenerate untuk melihat varian lain.";$("regen").classList.toggle("hide",seq);renderGo();$("out").classList.remove("hide");$("out").scrollIntoView({behavior:"smooth"})}
 $("gen").onclick=()=>gen(0);$("regen").onclick=()=>{gen((VI+1)%VN);toast("Varian: "+VNAMES[VI])};
 function copyText(t){return(navigator.clipboard&&navigator.clipboard.writeText?navigator.clipboard.writeText(t):Promise.reject()).catch(()=>{const a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();const ok=document.execCommand("copy");a.remove();if(!ok)throw 0})}
 $("copy").onclick=()=>copyText($("prompt").textContent).then(()=>toast("Prompt copied"),()=>toast("Copy failed. Select the text and copy manually."));
@@ -409,11 +662,13 @@ topics();document.querySelectorAll("select[data-other]").forEach(sync);$("actCw"
 
 // ===== Tombol lanjut ke AI =====
 const GO={html:[["Buka Claude.ai","https://claude.ai/new"],["Buka Lovable.dev","https://lovable.dev"]],plan:[["Buka ChatGPT","https://chatgpt.com"]]};
+const FMT_HINT={html:"Rekomendasi: HTML Printable. Hasilnya bisa dibuka di browser, lalu Print > Save as PDF.",plan:"Untuk ChatGPT: dibuat plan halaman lalu gambar worksheet halaman 1. Ketik \"Lanjut\" untuk halaman berikutnya (1 halaman = 1 gambar)."};
+$("fmt").addEventListener("change",()=>{$("fmtHint").textContent=FMT_HINT[$("fmt").value]});
 function renderGo(){const f=$("fmt").value;
 $("go").innerHTML=GO[f].map((x,i)=>`<button type="button" class="btn ${i?"":"t"}" data-u="${x[1]}">${x[0]}</button>`).join("");
-$("goHint").textContent=f==="html"?"Klik tombol: prompt otomatis disalin dan situs terbuka di tab baru. Tinggal tempel (Ctrl+V / tahan lalu Paste) di sana.":"Klik tombol: prompt otomatis disalin dan ChatGPT terbuka di tab baru. Tinggal tempel di sana."}
+$("goHint").textContent=f==="html"?"Klik tombol: prompt otomatis disalin dan situs terbuka di tab baru. Tinggal tempel (Ctrl+V / tahan lalu Paste) di sana.":"Klik tombol: prompt otomatis disalin dan ChatGPT terbuka di tab baru. Tempel lalu kirim: halaman 1 langsung dibuat. Ketik \"Lanjut\" untuk halaman berikutnya."}
 $("go").onclick=e=>{const b=e.target.closest("button");if(!b)return;
 window.open(b.dataset.u,"_blank","noopener");
 copyText($("prompt").textContent).then(()=>toast("Prompt disalin. Tempel di tab baru."),()=>toast("Salin manual dulu lewat Copy Prompt, lalu tempel."))};
-</script><script>if(window.self!==window.top){var b=document.getElementById("backLink");if(b)b.style.display="none"}</script>
+</script><script>if(window.self!==window.top){document.documentElement.classList.add("emb");var b=document.getElementById("backLink");if(b)b.style.display="none"}</script>
 </body></html>

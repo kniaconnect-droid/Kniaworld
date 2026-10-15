@@ -20,7 +20,8 @@
       pageGuide:    'Bikin game edukasi anak dalam hitungan detik!',
       pageForm:     'Isi form sesuai kebutuhan game kamu',
       pageResult:   'Prompt siap! Tinggal copy & paste ke Claude / Gemini',
-      pageTemplate: '✨ Template Pro Eksklusif — kniaWorld'
+      pageTemplate: '✨ Template Pro Eksklusif — kniaWorld',
+      pageMagicsheets: '📄 Magicsheets — bikin prompt worksheet printable'
     };
     document.getElementById('headerSub').textContent = subs[pageId] || '';
     updateProUI();

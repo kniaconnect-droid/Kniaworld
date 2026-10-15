@@ -3,6 +3,11 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#0ea5e9">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <title>KniaWorld × Game Edukasi Prompt Generator</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -90,7 +95,7 @@
     <button onclick="closeBonusMenuPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(15,23,42,0.06);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#ec4899);box-shadow:0 8px 24px rgba(236,72,153,0.35);">
+    <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,0.35);">
       <i class="fa-solid fa-gift"></i>
     </div>
     <h2>3 Bonus Spesial Buat Kamu! 🎁</h2>
@@ -116,7 +121,7 @@
       </div>
 
       <div class="bonus-item">
-        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#3b82f6,#6366f1);">
+        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#3b82f6,#0ea5e9);">
           <i class="fa-solid fa-file-lines"></i>
         </div>
         <div class="bonus-item-body">
@@ -133,7 +138,7 @@
       </div>
 
       <div class="bonus-item">
-        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#a855f7,#ec4899);">
+        <div class="bonus-item-icon" style="background:linear-gradient(135deg,#a855f7,#0ea5e9);">
           <i class="fa-solid fa-language"></i>
         </div>
         <div class="bonus-item-body">
@@ -159,17 +164,17 @@
     <button onclick="closeBonusPopup()" style="position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:50%;border:none;background:rgba(15,23,42,0.06);color:var(--muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;">
       <i class="fa-solid fa-xmark"></i>
     </button>
-    <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#ec4899);box-shadow:0 8px 24px rgba(236,72,153,0.35);">
+    <div class="popup-icon" style="background:linear-gradient(135deg,#f59e0b,#0ea5e9);box-shadow:0 8px 24px rgba(14,165,233,0.35);">
       <i class="fa-solid fa-gift"></i>
     </div>
     <h2>Bonus: AI Asisten Bikin Konten Promosi 🎁</h2>
     <p>Bingung mau jualan gimana atau promosi gimana? Pakai AI asisten khusus ini buat bikin caption, script reels, sampai ide konten jualan game edukasi kamu — otomatis!</p>
 
-    <div style="background:linear-gradient(135deg,#fff7ed,#fdf2f8);border:1.5px solid rgba(236,72,153,0.2);border-radius:16px;padding:14px 16px;margin-bottom:18px;text-align:left;">
-      <p style="font-size:12px;font-weight:800;color:#be185d;margin:0 0 6px;display:flex;align-items:center;gap:6px;">
+    <div style="background:linear-gradient(135deg,#fff7ed,#f0f9ff);border:1.5px solid rgba(14,165,233,0.2);border-radius:16px;padding:14px 16px;margin-bottom:18px;text-align:left;">
+      <p style="font-size:12px;font-weight:800;color:#0369a1;margin:0 0 6px;display:flex;align-items:center;gap:6px;">
         <i class="fa-solid fa-lightbulb"></i> Quick Tips
       </p>
-      <p style="font-size:12.5px;color:#9d174d;font-weight:500;line-height:1.6;margin:0;">
+      <p style="font-size:12.5px;color:#0c4a6e;font-weight:500;line-height:1.6;margin:0;">
         Cukup buka lewat <strong>browser HP/laptop</strong> kamu (Chrome, Safari, dll) — <strong>gak perlu download aplikasi apapun.</strong> Tinggal klik tombol di bawah, lalu ceritakan game yang mau kamu promosikan.
       </p>
     </div>
@@ -195,7 +200,7 @@
   <div class="header-orb"></div>
   <div class="header-badge">
     <i class="fi fi-rr-magic-wand"></i>
-    kniaWorld × by KNIACONNECT
+    kniaWorld × by <span class="hl-orange">KNIACONNECT</span>
   </div>
   <h1>
     <i class="fi fi-sr-gamepad" style="font-size:22px;"></i>
@@ -217,13 +222,14 @@
   <div class="container animate-in">
 
     <div class="guide-hero">
-      <div class="hero-icon-wrap">
-        <i class="fi fi-sr-gamepad"></i>
+      <div class="hero-icon-wrap hero-logo-wrap">
+        <img src="assets/logo-kniaworld.webp" alt="Logo KniaWorld Game Prompt Generator" class="hero-logo" width="200" height="200">
       </div>
       <h2>Selamat Datang di<br>kniaWorld Generator!</h2>
       <p>Tool ini membantu kamu bikin <strong>prompt siap pakai</strong> untuk generate game edukasi anak langsung di Claude AI — cepat, mudah, tanpa coding sama sekali!</p>
     </div>
 
+    <p class="menu-label">Game edukasi</p>
     <button class="btn-primary" onclick="goToForm()">
       <i class="fi fi-sr-rocket-lunch"></i> Generate Game Basic
     </button>
@@ -235,7 +241,19 @@
       <span>⚡ Generate Prompt Custom & Advance</span>
     </button>
 
-    <button onclick="openBonusMenuPopup()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,#f59e0b,#ec4899);color:white;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 6px 20px rgba(236,72,153,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(236,72,153,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(236,72,153,0.35)'">
+    <p class="menu-label">Worksheet</p>
+    <div class="ms-card">
+      <div class="ms-top">
+        <div class="ms-icon"><i class="fi fi-sr-magic-wand"></i></div>
+        <div class="ms-info">
+          <div class="ms-name">Magicsheets <span class="ms-new">NEW</span></div>
+          <p>Bikin prompt worksheet printable: usia, topik, tema, aktivitas.</p>
+        </div>
+      </div>
+      <button class="ms-btn" onclick="openMagicsheets()">Buka Magicsheets →</button>
+    </div>
+
+    <button onclick="openBonusMenuPopup()" style="width:100%;padding:15px 16px;background:linear-gradient(135deg,#f59e0b,#0ea5e9);color:white;border:none;border-radius:16px;font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 6px 20px rgba(14,165,233,0.35);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 10px 28px rgba(14,165,233,0.45)'" onmouseout="this.style.transform='';this.style.boxShadow='0 6px 20px rgba(14,165,233,0.35)'">
       <i class="fi fi-sr-gift" style="font-size:17px;"></i>
       <span>🎁 Akses Bonus (3 Bonus Spesial!)</span>
     </button>
@@ -271,7 +289,7 @@
         <div class="step-content">
           <h4>Download, Deploy & Jual Aplikasinya!</h4>
           <p>Klik Artifacts → download file HTML → hosting gratis ke <strong>Netlify</strong>, <strong>Vercel</strong>, atau <strong>Cloudflare Pages</strong> → dapat link publik → <strong>jual sebagai produk digital!</strong></p>
-          <button onclick="toggleDeployGuide()" id="btnDeployToggle" style="margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#ede9fe,#fae8ff);color:var(--violet-deep);border:1.5px solid rgba(124,58,237,0.2);border-radius:10px;padding:7px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">
+          <button onclick="toggleDeployGuide()" id="btnDeployToggle" style="margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#e0f2fe,#fae8ff);color:var(--violet-deep);border:1.5px solid rgba(2,132,199,0.2);border-radius:10px;padding:7px 14px;font-family:'Plus Jakarta Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all 0.2s;">
             <i class="fi fi-rr-angle-small-down" id="deployChevron" style="transition:transform 0.3s;font-size:10px;"></i> Lihat Cara Deploy
           </button>
         </div>
@@ -296,7 +314,7 @@
 
         <!-- TAB BUTTONS -->
         <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
-          <button onclick="switchDeployTab('netlify')" id="tab-netlify" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid #7c3aed;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🟢 Netlify</button>
+          <button onclick="switchDeployTab('netlify')" id="tab-netlify" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid #0284c7;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🟢 Netlify</button>
           <button onclick="switchDeployTab('vercel')" id="tab-vercel" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid var(--border);background:white;color:var(--muted);font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">⚡ Vercel</button>
           <button onclick="switchDeployTab('cloudflare')" id="tab-cloudflare" style="flex:1;min-width:80px;padding:8px 10px;border-radius:10px;border:2px solid var(--border);background:white;color:var(--muted);font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">🔶 Cloudflare</button>
         </div>
@@ -309,23 +327,23 @@
           </div>
           <div style="display:flex;flex-direction:column;gap:10px;">
             <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">1</div>
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#0284c7,#0ea5e9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">1</div>
               <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Daftar / Login ke Netlify</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Buka <a href="https://app.netlify.com/" target="_blank" rel="noopener" style="color:var(--violet-deep);font-weight:700;">app.netlify.com</a> → Sign up gratis pakai email atau Google.</p></div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">2</div>
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#0284c7,#0ea5e9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">2</div>
               <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Download file HTML dari Claude</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di Claude Artifacts → klik tombol Download → simpan file <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">.html</code> ke komputer kamu.</p></div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">3</div>
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#0284c7,#0ea5e9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">3</div>
               <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Buka Tab "Sites" → Deploy Manually</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Di dashboard Netlify, scroll ke bawah → ada kotak <strong>"Want to deploy a new site without connecting to Git?"</strong></p></div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">4</div>
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#0284c7,#0ea5e9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">4</div>
               <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Drag & Drop file HTML</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Seret file <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">.html</code> ke kotak drop zone → Netlify langsung upload otomatis.</p></div>
             </div>
             <div style="display:flex;gap:12px;align-items:flex-start;">
-              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#7c3aed,#ec4899);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">5</div>
+              <div style="width:26px;height:26px;min-width:26px;background:linear-gradient(135deg,#0284c7,#0ea5e9);border-radius:8px;display:flex;align-items:center;justify-content:center;color:white;font-family:'Sora',sans-serif;font-size:12px;font-weight:800;">5</div>
               <div><p style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px;">Dapat Link Publik! 🎉</p><p style="font-size:12px;color:var(--muted);font-weight:500;">Selesai! Netlify kasih link seperti <code style="background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:11px;">namamu.netlify.app</code> — siap dibagikan atau dijual!</p></div>
             </div>
           </div>
@@ -427,6 +445,15 @@
 </div>
 
 <!-- PAGE 2: FORM -->
+<!-- PAGE: MAGICSHEETS (dalam frame) -->
+<div class="page" id="pageMagicsheets">
+  <div class="ms-frame-bar">
+    <button class="ms-back" onclick="goTo('pageGuide')">← Kembali</button>
+    <span>Magicsheets · Worksheet Prompt Generator</span>
+  </div>
+  <iframe id="msFrame" class="ms-frame" title="Magicsheets" allow="clipboard-write" referrerpolicy="no-referrer"></iframe>
+</div>
+
 <div class="page" id="pageForm">
   <div class="container animate-in">
 
@@ -620,9 +647,9 @@
       <div class="section-label">Tema warna</div>
       <div class="chip-group" id="colorChips">
         <div class="chip active" data-val="hijau toska dan putih"><i class="fa-solid fa-circle" style="color:#2dd4bf;"></i> Teal</div>
-        <div class="chip" data-val="ungu dan kuning"><i class="fa-solid fa-circle" style="color:#a78bfa;"></i> Purple</div>
+        <div class="chip" data-val="ungu dan kuning"><i class="fa-solid fa-circle" style="color:#38bdf8;"></i> Purple</div>
         <div class="chip" data-val="biru langit dan orange"><i class="fa-solid fa-circle" style="color:#38bdf8;"></i> Blue-Orange</div>
-        <div class="chip" data-val="pink dan mint"><i class="fa-solid fa-circle" style="color:#f472b6;"></i> Pink-Mint</div>
+        <div class="chip" data-val="pink dan mint"><i class="fa-solid fa-circle" style="color:#7dd3fc;"></i> Pink-Mint</div>
         <div class="chip" data-val="gradient warna-warni cerah playful"><i class="fa-solid fa-circle" style="color:#fb923c;"></i> Rainbow</div>
       </div>
       <span class="custom-toggle" onclick="toggleCustom('cColor')">
@@ -717,7 +744,7 @@
       </button>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px;">
-      <button onclick="openInClaude()" style="padding:13px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(124,58,237,0.3);transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">
+      <button onclick="openInClaude()" style="padding:13px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(2,132,199,0.3);transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">
         <i class="fa-solid fa-robot"></i> Buka Claude AI
       </button>
       <button onclick="openInGemini()" style="padding:13px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:14px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;box-shadow:0 4px 14px rgba(26,115,232,0.3);transition:transform 0.15s;" onmouseover="this.style.transform='translateY(-1px)'" onmouseout="this.style.transform=''">
@@ -797,22 +824,22 @@
 
       <!-- TEMPLATE 1: CARD FLIP -->
       <div class="template-card">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#7c3aed,#a78bfa);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0284c7,#38bdf8);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);">🃏</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#e0f2fe,#ddd6fe);">🃏</div>
           <div class="tpl-meta">
             <h3>Card Flip Universe</h3>
             <div class="tpl-sub">Memory 3D · CSS Perspective · Pasangan Kartu</div>
           </div>
         </div>
-        <div class="tpl-explain" style="background:linear-gradient(135deg,#faf5ff,#f3e8ff);border:1px solid rgba(124,58,237,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0f9ff,#f3e8ff);border:1px solid rgba(2,132,199,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:4px;">Cara Main</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Anak membuka kartu satu per satu untuk mencari pasangannya, lalu mencocokkan isinya. Melatih daya ingat visual lewat animasi 3D flip yang halus — makin banyak pasangan, makin naik levelnya.</div>
         </div>
         <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#ede9fe;color:#5b21b6;">✨ 3D Flip</span>
-          <span class="tpl-tag" style="background:#f3e8ff;color:#6d28d9;">🧠 Hafalan</span>
-          <span class="tpl-tag" style="background:#faf5ff;color:#7c3aed;">🎴 Match Game</span>
+          <span class="tpl-tag" style="background:#e0f2fe;color:#075985;">✨ 3D Flip</span>
+          <span class="tpl-tag" style="background:#f3e8ff;color:#0369a1;">🧠 Hafalan</span>
+          <span class="tpl-tag" style="background:#f0f9ff;color:#0284c7;">🎴 Match Game</span>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -844,7 +871,7 @@
             <input type="text" id="t1_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);box-shadow:0 4px 14px rgba(124,58,237,0.3);" onclick="generateTemplate(1)">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0284c7,#38bdf8);box-shadow:0 4px 14px rgba(2,132,199,0.3);" onclick="generateTemplate(1)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="t1_copyBtn" onclick="copyTemplateResult(1)" style="display:none;">
@@ -853,13 +880,13 @@
         </div>
         <div class="tpl-result-wrap" id="t1_result">
           <div class="tpl-result-box">
-            <div class="tpl-result-box" style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#7c3aed,#a78bfa);border-radius:14px 14px 0 0;"></div>
+            <div class="tpl-result-box" style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#0284c7,#38bdf8);border-radius:14px 14px 0 0;"></div>
             <div class="tpl-result-label"><i class="fa-solid fa-code"></i> Prompt Siap</div>
             <div class="tpl-result-text" id="t1_text"></div>
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(1)" id="tpl1CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(1)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(1)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(1)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -934,7 +961,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(2)" id="tpl2CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(2)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(2)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(2)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1009,7 +1036,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(3)" id="tpl3CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(3)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(3)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(3)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1025,18 +1052,18 @@
       <div class="template-card">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#dc2626,#f97316);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);">⚡</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);">⚡</div>
           <div class="tpl-meta">
             <h3>Speed Challenge Arcade</h3>
             <div class="tpl-sub">Timer · Combo Streak · Screen Shake · Retro Vibes</div>
           </div>
         </div>
-        <div class="tpl-explain" style="background:linear-gradient(135deg,#fff1f2,#ffe4e6);border:1px solid rgba(220,38,38,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid rgba(220,38,38,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:4px;">Cara Main</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Anak menjawab soal secepat mungkin sebelum waktu di timer habis. Jawaban benar berturut-turut membangun combo dan skor makin tinggi — cocok untuk melatih kecepatan berpikir dan bikin suasana seru ala arcade.</div>
         </div>
         <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fff1f2;color:#9f1239;">⚡ Speed Mode</span>
+          <span class="tpl-tag" style="background:#f0f9ff;color:#9f1239;">⚡ Speed Mode</span>
           <span class="tpl-tag" style="background:#fee2e2;color:#b91c1c;">🔥 Combo</span>
           <span class="tpl-tag" style="background:#fef2f2;color:#dc2626;">🕹️ Arcade</span>
         </div>
@@ -1084,7 +1111,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(4)" id="tpl4CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(4)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(4)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(4)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1159,7 +1186,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(5)" id="tpl5CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(5)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(5)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(5)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1173,20 +1200,20 @@
 
       <!-- TEMPLATE 16: SPIN WHEEL CHALLENGE -->
       <div class="template-card">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#db2777,#f472b6);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0284c7,#7dd3fc);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);">🎡</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);">🎡</div>
           <div class="tpl-meta">
             <h3>Spin Wheel Challenge</h3>
             <div class="tpl-sub">Roda Putar · Kategori Acak · Wheel of Fortune</div>
           </div>
         </div>
         <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fdf2f8;color:#9d174d;">🎡 Spin Wheel</span>
-          <span class="tpl-tag" style="background:#fce7f3;color:#be185d;">🎯 Kategori Acak</span>
-          <span class="tpl-tag" style="background:#fbcfe8;color:#9d174d;">🔥 Combo</span>
+          <span class="tpl-tag" style="background:#f0f9ff;color:#0c4a6e;">🎡 Spin Wheel</span>
+          <span class="tpl-tag" style="background:#e0f2fe;color:#0369a1;">🎯 Kategori Acak</span>
+          <span class="tpl-tag" style="background:#fbcfe8;color:#0c4a6e;">🔥 Combo</span>
         </div>
-        <div class="tpl-explain" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3);border:1px solid rgba(219,39,119,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
+        <div class="tpl-explain" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid rgba(219,39,119,0.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13px;font-weight:800;color:#0f172a;margin-bottom:4px;">Cara Main</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Anak menekan tombol "Putar Roda" berisi 6-8 kategori berwarna, roda berputar dan berhenti acak, lalu muncul soal dari kategori yang didapat. Serunya karena tantangannya tidak bisa ditebak — cocok untuk materi yang punya beberapa sub-topik sekaligus.</div>
         </div>
@@ -1220,7 +1247,7 @@
             <input type="text" id="t16_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#db2777,#f472b6);box-shadow:0 4px 14px rgba(219,39,119,0.3);" onclick="generateTemplate(16)">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0284c7,#7dd3fc);box-shadow:0 4px 14px rgba(219,39,119,0.3);" onclick="generateTemplate(16)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="t16_copyBtn" onclick="copyTemplateResult(16)" style="display:none;">
@@ -1234,7 +1261,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(16)" id="tpl16CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(16)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(16)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(16)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1309,7 +1336,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(17)" id="tpl17CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(17)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(17)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(17)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1393,7 +1420,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(18)" id="tpl18CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(18)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(18)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(18)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1488,7 +1515,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(6)" id="tpl6CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(6)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(6)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(6)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1504,16 +1531,16 @@
       <div class="template-card">
         <div class="template-card-accent" style="background:linear-gradient(90deg,#dc2626,#f43f5e);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#fff1f2,#fecdd3);">🔢</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#f0f9ff,#fecdd3);">🔢</div>
           <div class="tpl-meta">
             <h3>Singapore Math Game</h3>
             <div class="tpl-sub">Kurikulum Singapore · Bar Model · Number Bonds</div>
           </div>
         </div>
         <div class="tpl-tags">
-          <span class="tpl-tag" style="background:#fff1f2;color:#9f1239;">🇸🇬 Singapore</span>
+          <span class="tpl-tag" style="background:#f0f9ff;color:#9f1239;">🇸🇬 Singapore</span>
           <span class="tpl-tag" style="background:#fecdd3;color:#be123c;">📊 Bar Model</span>
-          <span class="tpl-tag" style="background:#ffe4e6;color:#e11d48;">🔗 Number Bonds</span>
+          <span class="tpl-tag" style="background:#e0f2fe;color:#e11d48;">🔗 Number Bonds</span>
         </div>
         <div class="tpl-fields">
           <div class="tpl-field">
@@ -1566,7 +1593,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(7)" id="tpl7CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(7)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(7)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(7)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1654,7 +1681,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(8)" id="tpl8CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(8)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(8)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(8)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1708,9 +1735,9 @@
       <!-- UNIFIED TOOLS SELECTOR -->
       <!-- ══════════════════════════════════════ -->
       <div class="template-card" style="margin-bottom:16px;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#7c3aed,#10b981);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#0284c7,#10b981);"></div>
         <div class="tpl-header">
-          <div class="tpl-icon" style="background:linear-gradient(135deg,#f5f3ff,#ede9fe);">🧰</div>
+          <div class="tpl-icon" style="background:linear-gradient(135deg,#f0f9ff,#e0f2fe);">🧰</div>
           <div class="tpl-meta">
             <h3>Pilih Kebutuhan Kamu</h3>
             <div class="tpl-sub">1 tools buat semua kebutuhan revisi & upgrade game</div>
@@ -1782,7 +1809,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(9)" id="tpl9CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(9)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(9)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(9)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1797,7 +1824,7 @@
 
       <!-- BLOCK: REVISI_FITUR -->
       <div class="template-card" id="block_revisi_fitur" style="display:none;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#7c3aed,#ec4899);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0284c7,#0ea5e9);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🚀 Revisi: Upgrade Fitur & Level</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk nambahin fitur baru ke game yang sudah jadi — misalnya level baru, leaderboard, sistem nyawa, timer, sertifikat, atau audio.<br><br>📎 <strong>Yang perlu disiapkan:</strong> lampirkan file kode HTML game yang sudah digenerate sebelumnya. Jelaskan sedetail mungkin fitur yang kamu mau di kolom "Detail / Spesifikasi Fitur Baru" supaya hasilnya sesuai ekspektasi.</div>
@@ -1829,7 +1856,7 @@
             <input type="text" id="t10_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#ec4899);box-shadow:0 4px 14px rgba(124,58,237,0.3);" onclick="generateTemplate(10)">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0284c7,#0ea5e9);box-shadow:0 4px 14px rgba(2,132,199,0.3);" onclick="generateTemplate(10)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="t10_copyBtn" onclick="copyTemplateResult(10)" style="display:none;">
@@ -1843,7 +1870,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(10)" id="tpl10CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(10)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(10)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(10)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1903,7 +1930,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(11)" id="tpl11CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(11)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(11)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(11)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -1918,7 +1945,7 @@
 
       <!-- BLOCK: BUNDLING -->
       <div class="template-card" id="block_bundling" style="display:none;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#7c3aed,#f59e0b);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0f172a,#0284c7,#f59e0b);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📦 Membuat Game Bundling 5 in 1</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk bikin 1 file game baru yang isinya 5 paket materi berbeda dalam 1 menu pilihan — cocok dijual sebagai paket bernilai lebih tinggi.<br><br>📎 <strong>Yang perlu disiapkan:</strong> ini untuk BUAT BARU, jadi kamu nggak perlu lampirkan kode lama. Cukup isi 5 materi di kolom di bawah. Kalau salah satu materi berasal dari worksheet yang sudah ada, lampirkan juga file worksheet-nya supaya kontennya presisi.</div>
@@ -1979,7 +2006,7 @@
             <input type="text" id="t12_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0f172a,#7c3aed);box-shadow:0 4px 14px rgba(124,58,237,0.35);" onclick="generateTemplate(12)">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0f172a,#0284c7);box-shadow:0 4px 14px rgba(2,132,199,0.35);" onclick="generateTemplate(12)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="t12_copyBtn" onclick="copyTemplateResult(12)" style="display:none;">
@@ -1993,7 +2020,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(12)" id="tpl12CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(12)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(12)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(12)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2008,7 +2035,7 @@
 
       <!-- BLOCK: WORKSHEET -->
       <div class="template-card" id="block_worksheet" style="display:none;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#7c3aed,#06b6d4,#10b981);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0284c7,#06b6d4,#10b981);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">📄 Ubah Worksheet jadi Game</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk mengubah worksheet, lembar soal, atau materi ajar yang sudah kamu punya menjadi game interaktif siap jual.<br><br>📎 <strong>WAJIB</strong> lampirkan file worksheet-nya (PDF, Word, atau foto/scan) di chat Claude/Gemini bareng prompt ini, supaya AI membaca isi soalnya persis seperti aslinya. Kalau filenya nggak ada, minimal ringkas isi soalnya selengkap mungkin di kolom "Ringkasan Isi Worksheet / Materi".</div>
@@ -2042,7 +2069,7 @@
             <input type="text" id="t13_tambahan" placeholder="Contoh: minimal 20 soal, tambahkan audio Web Audio API, gunakan ikon Font Awesome, tambah sertifikat…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#7c3aed,#06b6d4);box-shadow:0 4px 14px rgba(124,58,237,0.35);" onclick="generateTemplate(13)">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0284c7,#06b6d4);box-shadow:0 4px 14px rgba(2,132,199,0.35);" onclick="generateTemplate(13)">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="t13_copyBtn" onclick="copyTemplateResult(13)" style="display:none;">
@@ -2056,7 +2083,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(13)" id="tpl13CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(13)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(13)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(13)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2071,7 +2098,7 @@
 
       <!-- BLOCK: GAMBAR -->
       <div class="template-card" id="block_gambar" style="display:none;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#ec4899,#f472b6);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#0ea5e9,#7dd3fc);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🖼️ Tambah / Ganti Gambar Sendiri</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini kalau kamu mau ganti ilustrasi/emoji generik di game jadi gambar atau ilustrasi buatan sendiri — maskot custom, ikon custom, background, dan sejenisnya.<br><br>📎 <strong>WAJIB</strong> lampirkan 2 hal ke chat Claude/Gemini: (1) file kode HTML game yang sudah digenerate, dan (2) contoh gambar yang mau dipakai (boleh beberapa sekaligus). Kasih nama file yang jelas — misalnya <em>maskot.png</em>, <em>ikon-benar.png</em>, <em>background.jpg</em> — supaya AI tahu gambar mana untuk elemen yang mana.</div>
@@ -2095,7 +2122,7 @@
             <input type="text" id="tgambar_tambahan" placeholder="Contoh: pertahankan animasi yang sudah ada, jangan ubah warna tema…" />
           </div>
         <div class="tpl-actions">
-          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#ec4899,#f472b6);box-shadow:0 4px 14px rgba(236,72,153,0.3);" onclick="generateTemplate('gambar')">
+          <button class="btn-tpl-gen" style="background:linear-gradient(135deg,#0ea5e9,#7dd3fc);box-shadow:0 4px 14px rgba(14,165,233,0.3);" onclick="generateTemplate('gambar')">
             <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
           </button>
           <button class="btn-tpl-copy" id="tgambar_copyBtn" onclick="copyTemplateResult('gambar')" style="display:none;">
@@ -2109,7 +2136,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult('gambar')" id="tplgambarCopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate('gambar')" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate('gambar')" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate('gambar')" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2171,7 +2198,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult('suara')" id="tplsuaraCopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate('suara')" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate('suara')" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate('suara')" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2186,7 +2213,7 @@
 
       <!-- BLOCK: AUDIT -->
       <div class="template-card" id="block_audit" style="display:none;">
-        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444,#7c3aed);"></div>
+        <div class="template-card-accent" style="background:linear-gradient(90deg,#f59e0b,#ef4444,#0284c7);"></div>
         <div class="tpl-explain" style="background:linear-gradient(135deg,#f0fdfa,#ecfeff);border:1px solid rgba(20,184,166,0.25);border-radius:14px;padding:14px 16px;margin-bottom:16px;">
           <div style="font-family:'Sora',sans-serif;font-size:13.5px;font-weight:800;color:#0f172a;margin-bottom:6px;">🔍 Audit Game Siap Jual</div>
           <div style="font-size:12.5px;font-weight:600;color:#334155;line-height:1.7;">Pilih ini untuk mengecek kelayakan jual game kamu — hasilnya berupa skor /100 plus rekomendasi detail apa yang perlu diperbaiki sebelum dijual.<br><br>📎 <strong>WAJIB</strong> lampirkan file kode HTML game yang mau diaudit, supaya AI bisa mengevaluasi kode dan isinya langsung.</div>
@@ -2232,7 +2259,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(14)" id="tpl14CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(14)" style="flex:1;padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(14)" style="flex:1;padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(14)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2259,8 +2286,8 @@
         </div>
 
         <!-- INFO BOX — PWA (hidden by default) -->
-        <div id="t15_infoPWA" style="display:none;background:linear-gradient(135deg,#fdf4ff,#ede9fe);border-radius:12px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(139,92,246,0.2);font-size:12px;font-weight:600;color:#5b21b6;gap:10px;align-items:flex-start;">
-          <i class="fa-solid fa-circle-info" style="color:#8b5cf6;margin-top:1px;flex-shrink:0;"></i>
+        <div id="t15_infoPWA" style="display:none;background:linear-gradient(135deg,#fdf4ff,#e0f2fe);border-radius:12px;padding:12px 14px;margin-bottom:14px;border:1px solid rgba(14,165,233,0.2);font-size:12px;font-weight:600;color:#075985;gap:10px;align-items:flex-start;">
+          <i class="fa-solid fa-circle-info" style="color:#0ea5e9;margin-top:1px;flex-shrink:0;"></i>
           <span>Claude akan generate <strong>3 file</strong>: index.html + manifest.json + sw.js → zip → drag ke <strong>netlify.com/drop</strong> → dapat URL publik dalam 30 detik. Gratis 100%!</span>
         </div>
 
@@ -2321,7 +2348,7 @@
             <div class="tpl-copy-row" style="flex-direction:column;gap:6px;">
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
                 <button class="btn-copy-full" onclick="copyTemplateResult(15)" id="tpl15CopyBtn"><i class="fa-solid fa-copy"></i> Copy</button>
-                <button onclick="openInClaudeTemplate(15)" style="padding:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
+                <button onclick="openInClaudeTemplate(15)" style="padding:10px;background:linear-gradient(135deg,#0284c7,#0ea5e9);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-robot"></i> Claude</button>
               </div>
               <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;">
                 <button onclick="openInGeminiTemplate(15)" style="flex:1;padding:10px;background:linear-gradient(135deg,#1a73e8,#4285f4);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px;"><i class="fa-solid fa-gem"></i> Gemini</button>
@@ -2343,9 +2370,9 @@
             </div>
 
             <!-- NEXT STEP PWA -->
-            <div id="t15_nextPWA" style="display:none;background:linear-gradient(135deg,#faf5ff,#ede9fe);border-radius:10px;padding:12px 14px;margin-top:10px;border:1px solid rgba(139,92,246,0.2);">
-              <div style="font-size:11px;font-weight:800;color:#5b21b6;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-rocket" style="color:#8b5cf6;"></i> NEXT STEP: Deploy PWA Gratis</div>
-              <div style="font-size:11.5px;font-weight:600;color:#6d28d9;line-height:1.8;">
+            <div id="t15_nextPWA" style="display:none;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:10px;padding:12px 14px;margin-top:10px;border:1px solid rgba(14,165,233,0.2);">
+              <div style="font-size:11px;font-weight:800;color:#075985;margin-bottom:8px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-rocket" style="color:#0ea5e9;"></i> NEXT STEP: Deploy PWA Gratis</div>
+              <div style="font-size:11.5px;font-weight:600;color:#0369a1;line-height:1.8;">
                 1️⃣ Copy prompt → Generate di Claude → Simpan 3 file:<br>
                 &nbsp;&nbsp;&nbsp;📄 <strong>index.html</strong> · 📋 <strong>manifest.json</strong> · ⚙️ <strong>sw.js</strong><br>
                 2️⃣ Taruh 3 file dalam 1 folder → zip jadi .zip<br>

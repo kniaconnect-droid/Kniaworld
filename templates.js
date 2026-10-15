@@ -487,9 +487,9 @@ ${menuInstructions}
         pwaBtn.style.background = '#f8fafc';
         pwaBtn.style.color = '#64748b';
       } else {
-        pwaBtn.style.border = '2px solid #8b5cf6';
-        pwaBtn.style.background = 'linear-gradient(135deg,#faf5ff,#ede9fe)';
-        pwaBtn.style.color = '#5b21b6';
+        pwaBtn.style.border = '2px solid #0ea5e9';
+        pwaBtn.style.background = 'linear-gradient(135deg,#f0f9ff,#e0f2fe)';
+        pwaBtn.style.color = '#075985';
         apkBtn.style.border = '2px solid #e2e8f0';
         apkBtn.style.background = '#f8fafc';
         apkBtn.style.color = '#64748b';
@@ -505,8 +505,8 @@ ${menuInstructions}
     if (genLabel) genLabel.textContent = isAPK ? 'Generate Prompt APK' : 'Generate Prompt PWA';
     const genBtn = document.getElementById('t15_genBtn');
     if (genBtn) {
-      genBtn.style.background = isAPK ? 'linear-gradient(135deg,#10b981,#06b6d4)' : 'linear-gradient(135deg,#8b5cf6,#6d28d9)';
-      genBtn.style.boxShadow = isAPK ? '0 4px 14px rgba(16,185,129,0.35)' : '0 4px 14px rgba(139,92,246,0.35)';
+      genBtn.style.background = isAPK ? 'linear-gradient(135deg,#10b981,#06b6d4)' : 'linear-gradient(135deg,#0ea5e9,#0369a1)';
+      genBtn.style.boxShadow = isAPK ? '0 4px 14px rgba(16,185,129,0.35)' : '0 4px 14px rgba(14,165,233,0.35)';
     }
     const res = document.getElementById('t15_result');
     if (res) { res.style.display = 'none'; res.classList.remove('open'); }

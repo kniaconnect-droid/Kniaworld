@@ -3,6 +3,10 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48.png">
+<link rel="shortcut icon" href="assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <title>KniaWorld Admin Panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -19,8 +23,8 @@
   --border: rgba(99,120,210,0.18);
   --border2: rgba(99,120,210,0.32);
   --violet: #818cf8;
-  --violet-deep: #6366f1;
-  --pink: #f472b6;
+  --violet-deep: #0ea5e9;
+  --pink: #7dd3fc;
   --cyan: #22d3ee;
   --orange: #fb923c;
   --yellow: #fbbf24;
@@ -30,7 +34,7 @@
   --text: #e2e8f0;
   --text2: #94a3b8;
   --white: #ffffff;
-  --grad1: linear-gradient(135deg, #6366f1 0%, #f472b6 100%);
+  --grad1: linear-gradient(135deg, #0ea5e9 0%, #7dd3fc 100%);
   --grad2: linear-gradient(135deg, #0891b2 0%, #22d3ee 100%);
   --grad3: linear-gradient(135deg, #16a34a 0%, #34d399 100%);
   --shadow-glow: 0 0 30px rgba(99,102,241,0.25);
@@ -66,8 +70,8 @@ body::before {
   z-index: 0;
   opacity: 0.12;
 }
-.bg-orb-1 { width: 400px; height: 400px; background: #6366f1; top: -100px; left: -100px; animation: orbFloat1 12s ease-in-out infinite; }
-.bg-orb-2 { width: 300px; height: 300px; background: #f472b6; bottom: -80px; right: -80px; animation: orbFloat2 14s ease-in-out infinite; }
+.bg-orb-1 { width: 400px; height: 400px; background: #0ea5e9; top: -100px; left: -100px; animation: orbFloat1 12s ease-in-out infinite; }
+.bg-orb-2 { width: 300px; height: 300px; background: #7dd3fc; bottom: -80px; right: -80px; animation: orbFloat2 14s ease-in-out infinite; }
 .bg-orb-3 { width: 200px; height: 200px; background: #22d3ee; top: 40%; left: 50%; animation: orbFloat3 10s ease-in-out infinite; }
 @keyframes orbFloat1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
 @keyframes orbFloat2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }

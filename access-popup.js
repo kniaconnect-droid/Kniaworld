@@ -217,7 +217,7 @@
   function switchDeployTab(platform) {
     const platforms = ['netlify', 'vercel', 'cloudflare'];
     const colors = {
-      netlify: 'linear-gradient(135deg,#7c3aed,#ec4899)',
+      netlify: 'linear-gradient(135deg,#0284c7,#0ea5e9)',
       vercel: 'linear-gradient(135deg,#1d4ed8,#3b82f6)',
       cloudflare: 'linear-gradient(135deg,#ea580c,#fb923c)'
     };
@@ -236,4 +236,19 @@
         content.style.display = 'none';
       }
     });
+  }
+
+  // ── MAGICSHEETS: hanya untuk user yang sudah verified (email pembeli / kode akses) ──
+  async function openMagicsheets() {
+    await _authReady;
+    const ok = _uid ? await loadProtectedContent() : false;
+    if (ok) {
+      const fr = document.getElementById('msFrame');
+      if (!fr.getAttribute('src')) fr.setAttribute('src', 'magicsheets.html'); // dimuat hanya setelah verified
+      goTo('pageMagicsheets');
+      return;
+    }
+    const overlay = document.getElementById('accessPopup');
+    overlay.classList.remove('hide');
+    overlay.style.display = 'flex';
   }

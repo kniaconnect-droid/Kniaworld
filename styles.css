@@ -1394,3 +1394,49 @@ body { background: #ffffff; }
 /* ═══ TOMBOL BACK (atas halaman) ═══ */
 .top-back { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; padding: 8px 14px; background: #ffffff; border: 1.5px solid #bae6fd; border-radius: 12px; color: #0284c7; font-family: inherit; font-size: 13px; font-weight: 700; cursor: pointer; transition: background .15s; }
 .top-back:hover { background: #f0f9ff; }
+
+/* ═══ POPUP: muat di layar HP (scroll di dalam kartu, tidak terpotong) ═══ */
+.popup-overlay {
+  padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+.popup-card {
+  max-height: calc(100vh - 24px);
+  max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.popup-close {
+  position: sticky; top: 6px; z-index: 3;
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  margin: -22px -14px -36px auto;
+  border: none; border-radius: 50%;
+  background: rgba(15,23,42,0.06); color: var(--muted);
+  font-size: 14px; cursor: pointer;
+}
+@media (max-width: 480px) {
+  .popup-card { padding: 26px 16px 18px; border-radius: 22px; }
+  .popup-icon { width: 52px; height: 52px; border-radius: 16px; margin-bottom: 12px; }
+  .popup-icon i { font-size: 22px; }
+  .popup-card h2 { font-size: 18px; }
+  .popup-card p { margin-bottom: 14px; }
+  .bonus-list { gap: 10px; margin-bottom: 12px; }
+  .bonus-item { padding: 12px; gap: 10px; }
+  .bonus-item-btn { min-height: 40px; }
+}
+
+/* ═══ MAGICSHEETS: layar penuh di HP (tanpa scroll ganda) ═══ */
+body.ms-mode .app-header,
+body.ms-mode .pro-badge-header,
+body.ms-mode .app-footer { display: none !important; }
+#pageMagicsheets.active {
+  display: flex; flex-direction: column;
+  height: 100vh; height: 100dvh;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#pageMagicsheets .ms-frame-bar {
+  flex: 0 0 auto;
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+#pageMagicsheets .ms-frame { flex: 1 1 auto; height: auto; min-height: 0; }

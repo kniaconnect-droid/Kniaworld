@@ -39,12 +39,36 @@
     if (map[tabId]) document.getElementById(map[tabId]).classList.add('active');
   }
 
+  // ── PEMETAAN "KETIK SENDIRI" ↔ GRUP CHIP ──
+  const CUSTOM_TO_CHIP_GROUPS = {
+    cGameType:   ['gameTypeChips'],
+    cSubject:    ['subjectChips','subjectChipsMath','subjectChipsLang','subjectChipsScience','subjectChipsWorld','subjectChipsLife'],
+    cAge:        ['ageChips'],
+    cDiff:       ['diffChips'],
+    cFeature:    ['featureChips'],
+    cColor:      ['colorChips'],
+    cVisualStyle:['visualStyleChips']
+  };
+  function _closeCustomForGroup(groupId) {
+    Object.keys(CUSTOM_TO_CHIP_GROUPS).forEach(wrapId => {
+      if (!CUSTOM_TO_CHIP_GROUPS[wrapId].includes(groupId)) return;
+      const wrap = document.getElementById(wrapId);
+      if (!wrap || !wrap.classList.contains('open')) return;
+      wrap.classList.remove('open');
+      const inp = wrap.querySelector('input, textarea');
+      if (inp) inp.value = '';
+    });
+  }
+
   // ── CHIPS ──
   const multiSelectIds = ['featureChips', 'subjectChips', 'subjectChipsMath', 'subjectChipsLang', 'subjectChipsScience', 'subjectChipsWorld', 'subjectChipsLife', 'gameTypeChips', 'ageChips', 'moodChips'];
   document.querySelectorAll('.chip-group').forEach(group => {
     const isMulti = multiSelectIds.includes(group.id);
     group.querySelectorAll('.chip').forEach(chip => {
       chip.addEventListener('click', () => {
+        // Kalau user klik chip, mode "Ketik sendiri" untuk grup ini dimatikan
+        // (chip & input custom saling eksklusif).
+        _closeCustomForGroup(group.id);
         if (isMulti) { chip.classList.toggle('active'); }
         else { group.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); chip.classList.add('active'); }
         chip.classList.add('pop');
@@ -118,6 +142,13 @@
     const el = document.getElementById(id);
     el.classList.toggle('open');
     if (el.classList.contains('open')) {
+      // Mode "Ketik sendiri" aktif → semua chip di grup terkait dilepas,
+      // supaya tidak ada pilihan ganda yang tumpang tindih.
+      (CUSTOM_TO_CHIP_GROUPS[id] || []).forEach(gid => {
+        const g = document.getElementById(gid);
+        if (g) g.querySelectorAll('.chip.active').forEach(c => c.classList.remove('active'));
+      });
+      updateSelectionCounters();
       const inp = el.querySelector('input, textarea');
       if (inp) setTimeout(() => inp.focus(), 50);
     }
